@@ -19,7 +19,7 @@
       /* Цвета ночной темы Telegram */
       --tg-bg-base: #0b141d;
       --tg-bg-secondary: rgba(23, 33, 43, 0.65);
-      --tg-bg-glass: rgba(19, 28, 38, 0.72);
+      --tg-bg-glass: rgba(19, 28, 38, 0.75);
       --tg-bg-card: rgba(23, 33, 43, 0.6);
       --tg-bg-card-hover: rgba(30, 44, 57, 0.75);
       --tg-border: rgba(255, 255, 255, 0.08);
@@ -27,6 +27,9 @@
       --tg-blue-accent: #2ea6ff;
       --tg-blue-hover: #1e8fe1;
       --tg-blue-subtle: rgba(46, 166, 255, 0.12);
+      --tg-gold: #f59e0b;
+      --tg-gold-subtle: rgba(245, 158, 11, 0.15);
+      --tg-purple: #a855f7;
       --tg-text: #ffffff;
       --tg-text-secondary: #7f91a4;
       --tg-text-muted: #536577;
@@ -81,7 +84,7 @@
       }
     }
 
-    /* ================= ВЕРХНЯЯ ПАНЕЛЬ ================= */
+    /* ================= ВЕРХНЯЯ ПАНЕЛЬ ШАПКИ ================= */
     .header {
       position: absolute;
       top: 0;
@@ -98,7 +101,6 @@
       border-bottom: 1px solid var(--tg-border);
     }
 
-    /* Аватарка слева */
     .top-avatar-box {
       width: 40px;
       height: 40px;
@@ -123,7 +125,6 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* Центр: Онлайн 0 */
     .online-badge {
       display: flex;
       align-items: center;
@@ -149,7 +150,6 @@
       letter-spacing: 0.2px;
     }
 
-    /* Правее: Баланс 0 с плюсиком */
     .header-balance-box {
       display: flex;
       align-items: center;
@@ -197,7 +197,7 @@
     /* ================= КОНТЕНТ ================= */
     .content-area {
       flex: 1;
-      padding: 82px 18px 105px;
+      padding: 80px 16px 105px;
       position: relative;
       overflow-y: auto;
       overflow-x: hidden;
@@ -221,45 +221,449 @@
       transform: translateY(0);
     }
 
-    /* Пустые заглушки для других страниц */
-    .empty-card {
-      padding: 45px 20px;
-      margin-top: 40px;
+    /* Общие стили карточек */
+    .glass-card {
       background: var(--tg-bg-card);
-      border: 1px dashed var(--tg-border);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid var(--tg-border);
       border-radius: var(--tg-radius);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      padding: 14px;
+      position: relative;
+    }
+
+    /* ================= СТРАНИЦА: ПВП ================= */
+    .pvp-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* 1. Верхняя панель: ПРЕД. ИГРА слева и ТОП ИГРА справа */
+    .pvp-header-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .pvp-stat-box {
+      background: var(--tg-bg-card);
+      border: 1px solid var(--tg-border);
+      border-radius: 18px;
+      padding: 11px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      backdrop-filter: blur(16px);
+    }
+
+    .stat-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stat-title {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--tg-text-secondary);
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+
+    .stat-winrate-tag {
+      font-size: 11px;
+      font-weight: 800;
+      color: #4ade80;
+      background: rgba(34, 197, 94, 0.14);
+      padding: 2px 7px;
+      border-radius: 8px;
+      border: 1px solid rgba(34, 197, 94, 0.25);
+    }
+
+    .stat-player-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-player-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--tg-border);
+      background: #17212b;
+      flex-shrink: 0;
+    }
+
+    .stat-player-text {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .stat-player-user {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--tg-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .stat-player-val {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--tg-blue-accent);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* 2. Колесо рулетки */
+    .wheel-arena-wrapper {
+      position: relative;
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      text-align: center;
+      justify-content: center;
+      padding: 18px 0 10px;
     }
 
-    .empty-icon-wrap {
-      width: 64px;
-      height: 64px;
-      border-radius: 20px;
-      background: var(--tg-blue-subtle);
-      border: 1px solid var(--tg-border-blue);
+    /* Стрелка-указатель сверху колеса */
+    .wheel-pointer {
+      position: absolute;
+      top: 6px;
+      z-index: 10;
+      width: 20px;
+      height: 22px;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+    }
+
+    .wheel-pointer polygon {
+      fill: #ef4444;
+      stroke: #ffffff;
+      stroke-width: 1.5;
+    }
+
+    .wheel-circle-outer {
+      position: relative;
+      width: 220px;
+      height: 220px;
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    /* Колесо, которое медленно вращается */
+    .wheel-rotor {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        #2ea6ff 0% 12%,
+        #3b82f6 12% 25%,
+        #6366f1 25% 37%,
+        #a855f7 37% 50%,
+        #ec4899 50% 63%,
+        #f59e0b 63% 75%,
+        #10b981 75% 88%,
+        #06b6d4 88% 100%
+      );
+      padding: 8px;
+      box-shadow: 
+        0 0 28px rgba(46, 166, 255, 0.25),
+        inset 0 0 16px rgba(0, 0, 0, 0.7);
+      animation: rotateWheel 24s linear infinite;
+    }
+
+    .wheel-ticks {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 3px dashed rgba(255, 255, 255, 0.45);
+    }
+
+    @keyframes rotateWheel {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Центр колеса - статичный круг поверх */
+    .wheel-center-content {
+      position: relative;
+      z-index: 5;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #172533 0%, #0d151e 100%);
+      border: 3px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .wheel-waiting-icon {
       color: var(--tg-blue-accent);
-      margin-bottom: 16px;
+      animation: pulseAnim 2s ease-in-out infinite;
+      margin-bottom: 4px;
     }
 
-    .empty-title {
-      font-size: 19px;
+    .wheel-waiting-text {
+      font-size: 12px;
       font-weight: 700;
-      margin-bottom: 6px;
+      color: var(--tg-text);
+      line-height: 1.25;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
     }
 
-    .empty-desc {
-      font-size: 13px;
+    @keyframes pulseAnim {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+
+    /* 3. Кнопка выбора валюты ставки: Gram / Gift */
+    .currency-selector-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px;
+      background: var(--tg-bg-card);
+      border-radius: 18px;
+      border: 1px solid var(--tg-border);
+    }
+
+    .curr-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      background: transparent;
       color: var(--tg-text-secondary);
-      max-width: 240px;
-      line-height: 1.4;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-smooth);
+    }
+
+    .curr-btn.active {
+      background: var(--tg-blue-subtle);
+      border-color: var(--tg-border-blue);
+      color: var(--tg-blue-accent);
+    }
+
+    .curr-btn.active.gift-active {
+      background: rgba(168, 85, 247, 0.15);
+      border-color: rgba(168, 85, 247, 0.35);
+      color: #c084fc;
+    }
+
+    .curr-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* 4. Кнопки ставок: 1, 5, 10, ALL IN */
+    .bet-grid-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .btn-bet-preset {
+      background: var(--tg-bg-card);
+      border: 1px solid var(--tg-border);
+      border-radius: 14px;
+      padding: 11px 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--tg-text);
+      cursor: pointer;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      transition: all 0.2s var(--ease-smooth);
+    }
+
+    .btn-bet-preset:active {
+      transform: scale(0.93);
+      border-color: var(--tg-blue-accent);
+      background: var(--tg-blue-subtle);
+    }
+
+    .btn-bet-preset.btn-all-in {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(239, 68, 68, 0.12));
+      border-color: rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+    }
+
+    /* 5. Нижние кнопки: Настроить, Автоплей */
+    .bet-actions-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn-pvp-action {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--tg-border);
+      border-radius: 16px;
+      padding: 12px 14px;
+      color: var(--tg-text);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-smooth);
+    }
+
+    .btn-pvp-action:active {
+      transform: scale(0.96);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-pvp-action.autoplay-btn {
+      background: var(--tg-blue-subtle);
+      border-color: var(--tg-border-blue);
+      color: var(--tg-blue-accent);
+    }
+
+    /* 6. Панель "0 Игроков" и список ставок */
+    .players-list-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 2px;
+    }
+
+    .players-count-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--tg-bg-card);
+      border: 1px solid var(--tg-border);
+      border-radius: 16px;
+    }
+
+    .players-count-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--tg-text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .players-count-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--tg-text-secondary);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3px 8px;
+      border-radius: 10px;
+    }
+
+    /* Карточки ставок игроков */
+    .bets-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .bet-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: rgba(23, 33, 43, 0.45);
+      border: 1px solid var(--tg-border);
+      border-radius: 16px;
+      transition: background 0.2s ease;
+    }
+
+    .bet-item-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bet-item-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--tg-border);
+      background: #17212b;
+    }
+
+    .bet-item-userinfo {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .bet-item-username {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--tg-text);
+    }
+
+    .bet-item-amount {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--tg-blue-accent);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .bet-item-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+    }
+
+    .bet-winrate-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--tg-text-secondary);
+      text-transform: uppercase;
+    }
+
+    .bet-winrate-val {
+      font-size: 13px;
+      font-weight: 800;
+      color: #4ade80;
+    }
+
+    .empty-bets-placeholder {
+      padding: 24px;
+      text-align: center;
+      color: var(--tg-text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px dashed var(--tg-border);
+      border-radius: 16px;
     }
 
     /* ================= СТРАНИЦА: ПРОФИЛЬ ================= */
@@ -270,7 +674,6 @@
       padding-top: 6px;
     }
 
-    /* Аватарка по центру + Username */
     .profile-hero {
       display: flex;
       flex-direction: column;
@@ -314,19 +717,6 @@
       letter-spacing: 0.2px;
     }
 
-    /* Стеклянные панели карточек */
-    .glass-card {
-      background: var(--tg-bg-card);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
-      border: 1px solid var(--tg-border);
-      border-radius: var(--tg-radius);
-      padding: 16px;
-      position: relative;
-      transition: background 0.25s var(--ease-smooth), border-color 0.25s var(--ease-smooth);
-    }
-
-    /* Панель: Баланс слева + Кнопки справа */
     .balance-card-grid {
       display: flex;
       align-items: center;
@@ -406,7 +796,6 @@
       background: rgba(255, 255, 255, 0.1);
     }
 
-    /* Карточки: Всего игр и Всего выиграно */
     .stats-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -449,7 +838,6 @@
       font-size: 16px;
     }
 
-    /* Панель Промокода */
     .promo-card {
       padding: 7px 7px 7px 14px;
       display: flex;
@@ -504,7 +892,6 @@
       color: #fff;
     }
 
-    /* Панель Рефералов */
     .referral-card {
       display: flex;
       align-items: center;
@@ -564,6 +951,45 @@
       color: var(--tg-blue-accent);
     }
 
+    /* Заглушки для других страниц */
+    .empty-card {
+      padding: 45px 20px;
+      margin-top: 40px;
+      background: var(--tg-bg-card);
+      border: 1px dashed var(--tg-border);
+      border-radius: var(--tg-radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .empty-icon-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: 20px;
+      background: var(--tg-blue-subtle);
+      border: 1px solid var(--tg-border-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--tg-blue-accent);
+      margin-bottom: 16px;
+    }
+
+    .empty-title {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .empty-desc {
+      font-size: 13px;
+      color: var(--tg-text-secondary);
+      max-width: 240px;
+      line-height: 1.4;
+    }
+
     /* ================= НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ ================= */
     .nav-bar-wrapper {
       position: absolute;
@@ -615,7 +1041,6 @@
       transform: scale(0.94);
     }
 
-    /* Активная вкладка */
     .nav-item.active {
       color: var(--tg-blue-accent);
       background: var(--tg-blue-subtle);
@@ -630,20 +1055,17 @@
 
   <div class="app-viewport">
     
-    <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+    <!-- ВЕРХНЯЯ ПАНЕЛЬ ШАПКИ -->
     <header class="header">
-      <!-- Слева: круглая аватарка -->
       <div class="top-avatar-box" onclick="switchTab('profile')">
         <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80" alt="Avatar" class="top-avatar-img">
       </div>
 
-      <!-- По центру: Онлайн 0 -->
       <div class="online-badge">
         <div class="status-dot"></div>
         <span class="online-text">Онлайн: 0</span>
       </div>
 
-      <!-- Правее: Баланс 0 с плюсиком -->
       <div class="header-balance-box">
         <div class="header-balance-val">
           <span id="headerBalance">0</span>
@@ -658,44 +1080,153 @@
     <!-- ОСНОВНОЙ КОНТЕНТ -->
     <main class="content-area">
       
-      <!-- СТРАНИЦА: ПВП (ПУСТАЯ) -->
-      <section class="page" id="page-pvp">
-        <div class="empty-card">
-          <div class="empty-icon-wrap">
-            <i data-lucide="swords" style="width: 28px; height: 28px;"></i>
+      <!-- СТРАНИЦА: ПВП (АКТИВНАЯ ПО УМОЛЧАНИЮ) -->
+      <section class="page active" id="page-pvp">
+        <div class="pvp-container">
+
+          <!-- 1. Верхняя статистика Пвп: ПРЕД. ИГРА и ТОП ИГРА -->
+          <div class="pvp-header-stats">
+            
+            <!-- Слева: ПРЕД. ИГРА + % Победы правее + Аватарка, юзернейм, сумма -->
+            <div class="pvp-stat-box">
+              <div class="stat-top-row">
+                <span class="stat-title">Пред. игра</span>
+                <span class="stat-winrate-tag">58%</span>
+              </div>
+              <div class="stat-player-info">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="Winner" class="stat-player-avatar">
+                <div class="stat-player-text">
+                  <span class="stat-player-user">@crypto_king</span>
+                  <span class="stat-player-val">42.50 Gram</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Справа: ТОП ИГРА + Аватарка, юзернейм, сумма -->
+            <div class="pvp-stat-box">
+              <div class="stat-top-row">
+                <span class="stat-title" style="color: #fbbf24;">Топ игра</span>
+                <i data-lucide="crown" style="width: 14px; height: 14px; color: #fbbf24;"></i>
+              </div>
+              <div class="stat-player-info">
+                <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=100&q=80" alt="Top Player" class="stat-player-avatar">
+                <div class="stat-player-text">
+                  <span class="stat-player-user">@ton_master</span>
+                  <span class="stat-player-val" style="color: #fbbf24;">180.00 Gram</span>
+                </div>
+              </div>
+            </div>
+
           </div>
-          <h2 class="empty-title">Арена Пвп</h2>
-          <p class="empty-desc">Здесь пока пусто. Создайте первую дуэль или примите вызов.</p>
+
+          <!-- 2. Колесо рулетки по центру с медленным вращением и центром "Ожидание Игроков" -->
+          <div class="wheel-arena-wrapper">
+            <!-- Указатель стрелки сверху -->
+            <svg class="wheel-pointer" viewBox="0 0 24 24">
+              <polygon points="12,24 2,2 22,2"/>
+            </svg>
+
+            <div class="wheel-circle-outer">
+              <!-- Вращающееся колесо -->
+              <div class="wheel-rotor">
+                <div class="wheel-ticks"></div>
+              </div>
+              
+              <!-- Центр колеса: статичный круг -->
+              <div class="wheel-center-content">
+                <i data-lucide="hourglass" class="wheel-waiting-icon" style="width: 24px; height: 24px;"></i>
+                <span class="wheel-waiting-text">Ожидание<br>Игроков</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Кнопка выбора валюты ставки: Gram / Gift -->
+          <div class="currency-selector-card">
+            <button class="curr-btn active" id="btnCurGram" onclick="setCurrency('Gram')">
+              <i data-lucide="gem" style="width: 16px; height: 16px;"></i>
+              <span>Gram</span>
+            </button>
+            <button class="curr-btn" id="btnCurGift" onclick="setCurrency('Gift')">
+              <i data-lucide="gift" style="width: 16px; height: 16px;"></i>
+              <span>Gift</span>
+            </button>
+          </div>
+
+          <!-- 4. Быстрые кнопки ставок: 1 Gram, 5 Gram, 10 Gram, ALL IN -->
+          <div class="bet-grid-row">
+            <button class="btn-bet-preset" onclick="placeQuickBet(1)">
+              <span id="preset1Text">1 Gram</span>
+            </button>
+            <button class="btn-bet-preset" onclick="placeQuickBet(5)">
+              <span id="preset5Text">5 Gram</span>
+            </button>
+            <button class="btn-bet-preset" onclick="placeQuickBet(10)">
+              <span id="preset10Text">10 Gram</span>
+            </button>
+            <button class="btn-bet-preset btn-all-in" onclick="placeQuickBet('ALL')">
+              <span>ALL IN</span>
+            </button>
+          </div>
+
+          <!-- 5. Нижние кнопки: Настроить, Автоплей -->
+          <div class="bet-actions-row">
+            <button class="btn-pvp-action" onclick="openSettingsModal()">
+              <i data-lucide="sliders-horizontal" style="width: 16px; height: 16px;"></i>
+              <span>Настроить</span>
+            </button>
+            <button class="btn-pvp-action autoplay-btn" id="autoPlayBtn" onclick="toggleAutoPlay()">
+              <i data-lucide="play" style="width: 16px; height: 16px;"></i>
+              <span>Автоплей</span>
+            </button>
+          </div>
+
+          <!-- 6. Панель "0 Игроков" и список ставок -->
+          <div class="players-list-panel">
+            <div class="players-count-header">
+              <div class="players-count-title">
+                <i data-lucide="users-round" style="width: 16px; height: 16px; color: var(--tg-blue-accent);"></i>
+                <span id="playersCountText">0 Игроков</span>
+              </div>
+              <span class="players-count-badge" id="bankSummary">Банк: 0 Gram</span>
+            </div>
+
+            <!-- Список текущих ставок игроков -->
+            <div class="bets-list" id="betsListContainer">
+              <div class="empty-bets-placeholder" id="emptyBetsText">
+                Ставок пока нет. Будьте первым!
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      <!-- СТРАНИЦА: ИГРЫ (ПУСТАЯ) -->
+      <!-- СТРАНИЦА: ИГРЫ -->
       <section class="page" id="page-games">
         <div class="empty-card">
           <div class="empty-icon-wrap">
             <i data-lucide="gamepad-2" style="width: 28px; height: 28px;"></i>
           </div>
           <h2 class="empty-title">Игры</h2>
-          <p class="empty-desc">Каталог пуст. В ближайшем обновлении появятся новые игры.</p>
+          <p class="empty-desc">Каталог игр в разработке. Загляните позже!</p>
         </div>
       </section>
 
-      <!-- СТРАНИЦА: МАРКЕТ (ПУСТАЯ) -->
+      <!-- СТРАНИЦА: МАРКЕТ -->
       <section class="page" id="page-market">
         <div class="empty-card">
           <div class="empty-icon-wrap">
             <i data-lucide="shopping-bag" style="width: 28px; height: 28px;"></i>
           </div>
           <h2 class="empty-title">Маркет</h2>
-          <p class="empty-desc">В магазине пока нет товаров. Загляните позже за новинками.</p>
+          <p class="empty-desc">В магазине пока нет товаров. Скоро появятся подарки и кейсы.</p>
         </div>
       </section>
 
       <!-- СТРАНИЦА: ПРОФИЛЬ -->
-      <section class="page active" id="page-profile">
+      <section class="page" id="page-profile">
         <div class="profile-container">
 
-          <!-- Центр: круглая аватарка и @username -->
           <div class="profile-hero">
             <div class="profile-avatar-wrapper">
               <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Avatar" class="profile-avatar-img">
@@ -706,7 +1237,6 @@
             </div>
           </div>
 
-          <!-- Слева: Баланс 0, справа: Пополнить и Вывести -->
           <div class="glass-card">
             <div class="balance-card-grid">
               <div class="balance-left">
@@ -729,7 +1259,6 @@
             </div>
           </div>
 
-          <!-- Ниже: Всего игр (0) и Всего выиграно (0) -->
           <div class="stats-row">
             <div class="glass-card stat-card">
               <div class="stat-label-wrap">
@@ -751,7 +1280,6 @@
             </div>
           </div>
 
-          <!-- Ниже: Панель Промокод и справа Активировать -->
           <div class="glass-card promo-card">
             <div class="promo-input-wrapper">
               <i data-lucide="ticket" style="width: 17px; height: 17px;"></i>
@@ -760,7 +1288,6 @@
             <button class="btn-promo" onclick="activatePromo()">Активировать</button>
           </div>
 
-          <!-- Ниже: Панель Рефералы (0) -->
           <div class="glass-card referral-card" onclick="openReferrals()">
             <div class="referral-left">
               <div class="referral-icon-box">
@@ -784,7 +1311,7 @@
     <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
     <div class="nav-bar-wrapper">
       <nav class="nav-bar">
-        <button class="nav-item" onclick="switchTab('pvp')">
+        <button class="nav-item active" onclick="switchTab('pvp')">
           <i data-lucide="swords" style="width: 20px; height: 20px;"></i>
           <span>Пвп</span>
         </button>
@@ -799,7 +1326,7 @@
           <span>Маркет</span>
         </button>
 
-        <button class="nav-item active" onclick="switchTab('profile')">
+        <button class="nav-item" onclick="switchTab('profile')">
           <i data-lucide="user" style="width: 20px; height: 20px;"></i>
           <span>Профиль</span>
         </button>
@@ -809,10 +1336,10 @@
   </div>
 
   <script>
-    // Рендер иконок
+    // Рендер Lucide иконок
     lucide.createIcons();
 
-    // Интеграция с Telegram WebApp
+    // Telegram WebApp
     const tg = window.Telegram?.WebApp;
     if (tg) {
       tg.ready();
@@ -827,7 +1354,6 @@
       } catch (e) {}
     }
 
-    // Тактильный отклик
     function haptic(type = 'light') {
       if (tg?.HapticFeedback) {
         if (type === 'selection') tg.HapticFeedback.selectionChanged();
@@ -836,7 +1362,7 @@
       }
     }
 
-    // Плавное переключение страниц
+    // Переключение вкладок
     function switchTab(tabId) {
       haptic('selection');
 
@@ -851,7 +1377,7 @@
       if (activeBtn) activeBtn.classList.add('active');
     }
 
-    // Баланс везде 0
+    // Состояние баланса
     let currentBalance = 0;
 
     function updateBalanceDisplay() {
@@ -905,6 +1431,106 @@
       } else {
         alert('Ваша ссылка: https://t.me/your_bot?start=ref_00000');
       }
+    }
+
+    // ================= ЛОГИКА СТАВОК И ВАЛЮТЫ PVP =================
+    let selectedCurrency = 'Gram'; // 'Gram' или 'Gift'
+    let isAutoPlay = false;
+    let playersBets = [];
+
+    function setCurrency(cur) {
+      haptic('selection');
+      selectedCurrency = cur;
+
+      const btnGram = document.getElementById('btnCurGram');
+      const btnGift = document.getElementById('btnCurGift');
+
+      if (cur === 'Gram') {
+        btnGram.classList.add('active');
+        btnGift.classList.remove('active', 'gift-active');
+      } else {
+        btnGift.classList.add('active', 'gift-active');
+        btnGram.classList.remove('active');
+      }
+
+      // Обновляем текст на кнопках
+      document.getElementById('preset1Text').innerText = `1 ${cur}`;
+      document.getElementById('preset5Text').innerText = `5 ${cur}`;
+      document.getElementById('preset10Text').innerText = `10 ${cur}`;
+    }
+
+    function placeQuickBet(amount) {
+      haptic('medium');
+      const curUser = document.getElementById('userName').innerText || '@alex_player';
+      let betVal = amount === 'ALL' ? (currentBalance > 0 ? currentBalance : 10) : amount;
+
+      // Добавим демо-ставку в список ставок игроков
+      playersBets.unshift({
+        user: curUser,
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80',
+        amount: betVal,
+        currency: selectedCurrency,
+        winRate: Math.floor(Math.random() * 40) + 20
+      });
+
+      renderBetsList();
+    }
+
+    function renderBetsList() {
+      const container = document.getElementById('betsListContainer');
+      const countHeader = document.getElementById('playersCountText');
+      const bankSummary = document.getElementById('bankSummary');
+
+      const count = playersBets.length;
+      countHeader.innerText = `${count} Игроков`;
+
+      let totalBank = playersBets.reduce((acc, curr) => acc + Number(curr.amount), 0);
+      bankSummary.innerText = `Банк: ${totalBank} ${selectedCurrency}`;
+
+      if (count === 0) {
+        container.innerHTML = `<div class="empty-bets-placeholder" id="emptyBetsText">Ставок пока нет. Будьте первым!</div>`;
+        return;
+      }
+
+      container.innerHTML = playersBets.map(bet => `
+        <div class="bet-item-row">
+          <div class="bet-item-left">
+            <img src="${bet.avatar}" class="bet-item-avatar" alt="Avatar">
+            <div class="bet-item-userinfo">
+              <span class="bet-item-username">${bet.user}</span>
+              <span class="bet-item-amount">${bet.amount} ${bet.currency}</span>
+            </div>
+          </div>
+          <div class="bet-item-right">
+            <span class="bet-winrate-label">Шанс</span>
+            <span class="bet-winrate-val">${bet.winRate}%</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleAutoPlay() {
+      haptic('medium');
+      isAutoPlay = !isAutoPlay;
+      const btn = document.getElementById('autoPlayBtn');
+
+      if (isAutoPlay) {
+        btn.innerHTML = `<i data-lucide="pause" style="width: 16px; height: 16px;"></i><span>Стоп авто</span>`;
+        btn.style.background = 'rgba(239, 68, 68, 0.2)';
+        btn.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+        btn.style.color = '#f87171';
+      } else {
+        btn.innerHTML = `<i data-lucide="play" style="width: 16px; height: 16px;"></i><span>Автоплей</span>`;
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }
+      lucide.createIcons();
+    }
+
+    function openSettingsModal() {
+      haptic('medium');
+      alert('Настройки ставок:\n- Фильтр мин./макс. ставки\n- Автовывод при выигрыше\n- Звуки и виброотклик');
     }
   </script>
 </body>
