@@ -16,20 +16,24 @@
 
   <style>
     :root {
-      --tg-bg-base: #0b141d;
-      --tg-bg-secondary: rgba(23, 33, 43, 0.65);
-      --tg-bg-glass: rgba(19, 28, 38, 0.82);
-      --tg-bg-card: rgba(23, 33, 43, 0.62);
-      --tg-border: rgba(255, 255, 255, 0.08);
-      --tg-border-blue: rgba(69, 152, 246, 0.3);
-      --tg-blue-accent: #4598f6;
-      --tg-blue-hover: #3287e5;
-      --tg-blue-subtle: rgba(69, 152, 246, 0.12);
+      --tg-bg-base: #080f17;
+      --tg-glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(16, 25, 36, 0.65);
+      --tg-glass-card: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(20, 31, 45, 0.55);
+      --tg-glass-border: rgba(255, 255, 255, 0.12);
+      --tg-glass-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.22);
+      --tg-glass-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.45);
+      
+      --tg-blue-accent: #248bfa;
+      --tg-blue-hover: #1b7ce3;
+      --tg-blue-glow: rgba(36, 139, 250, 0.35);
+      --tg-border-blue: rgba(36, 139, 250, 0.3);
+      --tg-blue-subtle: rgba(36, 139, 250, 0.14);
+
       --tg-text: #ffffff;
-      --tg-text-secondary: #7f91a4;
-      --tg-text-muted: #536577;
+      --tg-text-secondary: #8aa0b7;
+      --tg-text-muted: #53677d;
       --tg-green-online: #22c55e;
-      --tg-radius: 20px;
+      --tg-radius: 22px;
       --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -53,8 +57,9 @@
       align-items: center;
       overflow: hidden;
       background-image: 
-        radial-gradient(circle at 10% 10%, rgba(69, 152, 246, 0.1) 0%, transparent 45%),
-        radial-gradient(circle at 90% 85%, rgba(46, 166, 255, 0.08) 0%, transparent 45%);
+        radial-gradient(circle at 15% 15%, rgba(36, 139, 250, 0.16) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.08) 0%, transparent 60%);
     }
 
     .app-viewport {
@@ -65,33 +70,47 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      background: rgba(11, 20, 29, 0.88);
+      background: rgba(8, 15, 23, 0.82);
       overflow: hidden;
     }
 
     @media (min-width: 480px) {
       .app-viewport {
         height: 850px;
-        border-radius: 36px;
-        border: 1px solid var(--tg-border);
-        box-shadow: 0 16px 60px rgba(0, 0, 0, 0.65);
+        border-radius: 38px;
+        border: 1px solid var(--tg-glass-border);
+        box-shadow: 0 20px 70px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.15);
       }
     }
 
-    /* ИКОНКА ВАЛЮТЫ (СИНИЙ КРИСТАЛЛ СО ЗВЕЗДОЙ) */
+    /* КРУГЛАЯ ВАЛЮТА (1 В 1 С ФОТО) */
     .gem-icon {
-      width: 17px;
-      height: 17px;
+      width: 18px;
+      height: 18px;
       display: inline-block;
-      vertical-align: -2.5px;
+      vertical-align: -3px;
       flex-shrink: 0;
-      filter: drop-shadow(0 2px 4px rgba(69, 152, 246, 0.35));
+      filter: drop-shadow(0 2px 6px rgba(36, 139, 250, 0.4));
+      transition: transform 0.2s var(--ease-smooth);
     }
 
     .gem-icon-lg {
-      width: 22px;
-      height: 22px;
-      vertical-align: -4px;
+      width: 24px;
+      height: 24px;
+      vertical-align: -5px;
+    }
+
+    /* СТЕКЛЯННЫЕ КАРТОЧКИ */
+    .glass-card {
+      background: var(--tg-glass-card);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border: 1px solid var(--tg-glass-border);
+      box-shadow: var(--tg-glass-shadow), var(--tg-glass-highlight);
+      border-radius: var(--tg-radius);
+      padding: 14px;
+      position: relative;
+      transition: all 0.25s var(--ease-smooth);
     }
 
     /* ШАПКА */
@@ -105,10 +124,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      background: var(--tg-bg-glass);
-      border-bottom: 1px solid var(--tg-border);
+      backdrop-filter: blur(30px) saturate(200%);
+      -webkit-backdrop-filter: blur(30px) saturate(200%);
+      background: var(--tg-glass-bg);
+      border-bottom: 1px solid var(--tg-glass-border);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), var(--tg-glass-highlight);
     }
 
     .top-avatar-box {
@@ -119,6 +139,7 @@
       background: linear-gradient(135deg, var(--tg-blue-accent), transparent 75%);
       cursor: pointer;
       flex-shrink: 0;
+      box-shadow: 0 2px 10px var(--tg-blue-glow);
     }
 
     .top-avatar-img {
@@ -126,7 +147,7 @@
       height: 100%;
       border-radius: 50%;
       object-fit: cover;
-      background: #17212b;
+      background: #131f2d;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -140,9 +161,11 @@
       align-items: center;
       gap: 7px;
       padding: 6px 14px;
-      background: rgba(34, 197, 94, 0.08);
-      border: 1px solid rgba(34, 197, 94, 0.2);
-      border-radius: 18px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
     .status-dot {
@@ -150,27 +173,29 @@
       height: 7px;
       border-radius: 50%;
       background-color: var(--tg-green-online);
+      box-shadow: 0 0 8px var(--tg-green-online);
     }
 
     .online-text {
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       color: #4ade80;
     }
 
     .header-balance-box {
       display: flex;
       align-items: center;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--tg-border-blue);
-      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--tg-glass-border);
+      border-radius: 22px;
       padding: 4px 6px 4px 12px;
       gap: 6px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
 
     .header-balance-val {
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--tg-text);
       display: flex;
       align-items: center;
@@ -189,12 +214,13 @@
       justify-content: center;
       cursor: pointer;
       color: #fff;
+      box-shadow: 0 2px 8px var(--tg-blue-glow);
     }
 
     /* ОСНОВНОЙ КОНТЕНТ */
     .content-area {
       flex: 1;
-      padding: 82px 16px max(100px, calc(80px + env(safe-area-inset-bottom)));
+      padding: 82px 16px max(100px, calc(82px + env(safe-area-inset-bottom)));
       position: relative;
       overflow-y: auto;
       scrollbar-width: none;
@@ -217,29 +243,36 @@
       transform: translateY(0);
     }
 
-    /* ================= СТРАНИЦА ПВП ================= */
+    /* ================= СТРАНИЦА: ПВП ================= */
     .pvp-container {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    /* Верхняя панель: Пред. игра и Топ игра */
+    /* Верхние статы (Пред. игра и Топ игра) */
     .pvp-header-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
 
+    .pvp-stat-column {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
     .pvp-stat-box {
-      background: var(--tg-bg-card);
-      border: 1px solid var(--tg-border);
-      border-radius: 18px;
+      background: var(--tg-glass-card);
+      border: 1px solid var(--tg-glass-border);
+      box-shadow: var(--tg-glass-shadow), var(--tg-glass-highlight);
+      border-radius: 20px;
       padding: 10px 12px;
       display: flex;
       flex-direction: column;
       gap: 7px;
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(24px);
     }
 
     .stat-top-row {
@@ -260,10 +293,10 @@
       font-size: 11px;
       font-weight: 800;
       color: #4ade80;
-      background: rgba(34, 197, 94, 0.14);
+      background: rgba(34, 197, 94, 0.15);
       padding: 2px 6px;
       border-radius: 8px;
-      border: 1px solid rgba(34, 197, 94, 0.25);
+      border: 1px solid rgba(34, 197, 94, 0.3);
     }
 
     .stat-player-info {
@@ -277,8 +310,8 @@
       height: 32px;
       border-radius: 50%;
       object-fit: cover;
-      border: 1px solid var(--tg-border);
-      background: #17212b;
+      border: 1.5px solid var(--tg-glass-border);
+      background: #131f2d;
       flex-shrink: 0;
     }
 
@@ -299,14 +332,45 @@
 
     .stat-player-val {
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--tg-blue-accent);
       display: flex;
       align-items: center;
       gap: 3px;
     }
 
-    /* АРЕНА РУЛЕТКИ С ПРИБЛИЖЕНИЕМ */
+    /* КРУГЛЫЕ КНОПКИ ПОД КАРТОЧКАМИ (ИСТОРИЯ И ЧАТ) */
+    .round-glass-btn-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .round-glass-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--tg-glass-card);
+      backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid var(--tg-glass-border);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), var(--tg-glass-highlight);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--tg-text);
+      transition: all 0.22s var(--ease-smooth);
+    }
+
+    .round-glass-btn:active {
+      transform: scale(0.9);
+      background: var(--tg-blue-subtle);
+      border-color: var(--tg-blue-accent);
+      color: var(--tg-blue-accent);
+    }
+
+    /* АРЕНА РУЛЕТКИ */
     .wheel-arena-wrapper {
       position: relative;
       width: 100%;
@@ -314,7 +378,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 16px 0 8px;
+      padding: 12px 0 6px;
       transition: transform 2.8s cubic-bezier(0.12, 0.88, 0.2, 1);
       transform-origin: center center;
     }
@@ -325,10 +389,10 @@
 
     .wheel-pointer {
       position: absolute;
-      top: 5px;
+      top: 1px;
       z-index: 30;
-      width: 22px;
-      height: 24px;
+      width: 24px;
+      height: 26px;
       filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.8));
     }
 
@@ -346,19 +410,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 0 45px rgba(0, 0, 0, 0.85), inset 0 0 20px rgba(36, 139, 250, 0.15);
+      border: 1px solid var(--tg-glass-border);
     }
 
-    /* Вращающееся колесо */
     .wheel-rotor {
       position: absolute;
       inset: 0;
       border-radius: 50%;
       padding: 6px;
       box-shadow: 
-        0 0 25px rgba(69, 152, 246, 0.22),
-        inset 0 0 16px rgba(0, 0, 0, 0.8);
-      background: conic-gradient(from 0deg, #1e293b 0% 100%);
+        0 0 28px rgba(36, 139, 250, 0.25),
+        inset 0 0 18px rgba(0, 0, 0, 0.8);
+      background: conic-gradient(from 0deg, #182535 0% 100%);
       will-change: transform;
     }
 
@@ -374,8 +438,8 @@
     }
 
     .wheel-avatar-mark.is-me {
-      border: 2.5px solid #4598f6;
-      box-shadow: 0 0 14px #4598f6, 0 0 6px #fff;
+      border: 2.5px solid var(--tg-blue-accent);
+      box-shadow: 0 0 14px var(--tg-blue-accent), 0 0 6px #fff;
     }
 
     .wheel-avatar-mark.is-me::after {
@@ -384,7 +448,7 @@
       bottom: -7px;
       left: 50%;
       transform: translateX(-50%);
-      background: #4598f6;
+      background: var(--tg-blue-accent);
       color: #fff;
       font-size: 7.5px;
       font-weight: 800;
@@ -392,16 +456,15 @@
       border-radius: 6px;
     }
 
-    /* Центр колеса */
     .wheel-center-content {
       position: relative;
       z-index: 10;
       width: 134px;
       height: 134px;
       border-radius: 50%;
-      background: radial-gradient(circle at center, #182736 0%, #0c141d 100%);
-      border: 3px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+      background: radial-gradient(circle at center, #1b2c3f 0%, #0c1520 100%);
+      border: 3px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.85), var(--tg-glass-highlight);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -418,7 +481,7 @@
 
     .wheel-waiting-text {
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--tg-text);
       line-height: 1.25;
       text-transform: uppercase;
@@ -430,12 +493,12 @@
       font-weight: 800;
       color: #4ade80;
       line-height: 1;
-      text-shadow: 0 0 16px rgba(74, 222, 128, 0.4);
+      text-shadow: 0 0 16px rgba(74, 222, 128, 0.5);
     }
 
     .wheel-countdown-label {
       font-size: 10px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--tg-text-secondary);
       text-transform: uppercase;
       margin-top: 2px;
@@ -446,16 +509,17 @@
       50% { transform: scale(1.15); opacity: 1; }
     }
 
-    /* ПЕРЕКЛЮЧАТЕЛЬ СТАВКИ ВАЛЮТЫ И ПОДАРКОВ */
+    /* ВЫБОР СТАВКИ ВАЛЮТА И ПОДАРКИ */
     .currency-selector-card {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
       padding: 5px;
-      background: var(--tg-bg-card);
-      border-radius: 18px;
-      border: 1px solid var(--tg-border);
+      background: var(--tg-glass-card);
+      border-radius: 20px;
+      border: 1px solid var(--tg-glass-border);
+      box-shadow: var(--tg-glass-highlight);
     }
 
     .curr-btn {
@@ -465,7 +529,7 @@
       justify-content: center;
       gap: 8px;
       padding: 9px 12px;
-      border-radius: 14px;
+      border-radius: 15px;
       border: 1px solid transparent;
       background: transparent;
       color: var(--tg-text-secondary);
@@ -479,6 +543,7 @@
       background: var(--tg-blue-subtle);
       border-color: var(--tg-border-blue);
       color: var(--tg-blue-accent);
+      box-shadow: 0 2px 10px var(--tg-blue-glow);
     }
 
     /* БЫСТРЫЕ СТАВКИ */
@@ -489,12 +554,13 @@
     }
 
     .btn-bet-preset {
-      background: var(--tg-bg-card);
-      border: 1px solid var(--tg-border);
-      border-radius: 14px;
+      background: var(--tg-glass-card);
+      border: 1px solid var(--tg-glass-border);
+      box-shadow: var(--tg-glass-highlight), 0 4px 12px rgba(0,0,0,0.25);
+      border-radius: 16px;
       padding: 10px 4px;
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 800;
       color: var(--tg-text);
       cursor: pointer;
       display: flex;
@@ -511,8 +577,8 @@
     }
 
     .btn-bet-preset.btn-all-in {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(239, 68, 68, 0.12));
-      border-color: rgba(245, 158, 11, 0.35);
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.15));
+      border-color: rgba(245, 158, 11, 0.4);
       color: #fbbf24;
     }
 
@@ -524,18 +590,20 @@
     }
 
     .btn-pvp-action {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--tg-border);
-      border-radius: 16px;
+      background: var(--tg-glass-card);
+      border: 1px solid var(--tg-glass-border);
+      box-shadow: var(--tg-glass-highlight);
+      border-radius: 18px;
       padding: 11px 14px;
       color: var(--tg-text);
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
       cursor: pointer;
+      transition: all 0.2s var(--ease-smooth);
     }
 
     .btn-pvp-action:active {
@@ -549,13 +617,13 @@
     }
 
     .btn-add-bot-helper {
-      background: rgba(34, 197, 94, 0.1);
-      border: 1px dashed rgba(34, 197, 94, 0.35);
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px dashed rgba(34, 197, 94, 0.4);
       color: #4ade80;
       font-size: 11px;
       font-weight: 700;
-      border-radius: 12px;
-      padding: 7px;
+      border-radius: 14px;
+      padding: 8px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -575,9 +643,10 @@
       align-items: center;
       justify-content: space-between;
       padding: 9px 14px;
-      background: var(--tg-bg-card);
-      border: 1px solid var(--tg-border);
-      border-radius: 16px;
+      background: var(--tg-glass-card);
+      border: 1px solid var(--tg-glass-border);
+      border-radius: 18px;
+      box-shadow: var(--tg-glass-highlight);
     }
 
     .players-count-title {
@@ -590,12 +659,12 @@
     }
 
     .players-count-badge {
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 12px;
+      font-weight: 800;
       color: var(--tg-text-secondary);
       background: rgba(255, 255, 255, 0.05);
-      padding: 3px 8px;
-      border-radius: 10px;
+      padding: 4px 10px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       gap: 4px;
@@ -611,15 +680,16 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 12px;
-      background: rgba(23, 33, 43, 0.45);
-      border: 1px solid var(--tg-border);
-      border-radius: 16px;
+      padding: 10px 14px;
+      background: var(--tg-glass-card);
+      border: 1px solid var(--tg-glass-border);
+      box-shadow: var(--tg-glass-highlight);
+      border-radius: 18px;
     }
 
     .bet-item-row.is-me {
       border-color: var(--tg-border-blue);
-      background: rgba(69, 152, 246, 0.08);
+      background: rgba(36, 139, 250, 0.1);
     }
 
     .bet-item-left {
@@ -629,12 +699,12 @@
     }
 
     .bet-item-avatar {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       object-fit: cover;
-      border: 1px solid var(--tg-border);
-      background: #17212b;
+      border: 1.5px solid var(--tg-glass-border);
+      background: #131f2d;
     }
 
     .bet-item-userinfo {
@@ -663,7 +733,7 @@
 
     .bet-item-amount {
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--tg-blue-accent);
       display: flex;
       align-items: center;
@@ -695,16 +765,181 @@
       text-align: center;
       color: var(--tg-text-secondary);
       font-size: 13px;
-      border: 1px dashed var(--tg-border);
-      border-radius: 16px;
+      border: 1px dashed var(--tg-glass-border);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.02);
     }
 
-    /* МОДАЛЬНОЕ ОКНО ВЫБОРА GIFT */
+    /* ================= СТРАНИЦА: ПРОФИЛЬ ================= */
+    .profile-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .profile-avatar-wrapper {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--tg-blue-accent), transparent);
+      box-shadow: 0 4px 20px var(--tg-blue-glow);
+    }
+
+    .profile-avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      font-weight: 800;
+      background: #152232;
+      color: #fff;
+    }
+
+    .profile-username {
+      margin-top: 8px;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .balance-card-grid {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .balance-number {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--tg-text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-action {
+      padding: 9px 15px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .btn-action:active {
+      transform: scale(0.95);
+    }
+
+    .btn-deposit { 
+      background: var(--tg-blue-accent); 
+      color: #fff; 
+      box-shadow: 0 2px 10px var(--tg-blue-glow);
+    }
+
+    .btn-withdraw { 
+      background: rgba(255, 255, 255, 0.08); 
+      color: #fff; 
+      border: 1px solid var(--tg-glass-border);
+    }
+
+    /* Статистика выше промокода */
+    .stats-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .stat-card-glass {
+      padding: 12px 14px;
+    }
+
+    /* Панель Промокода */
+    .promo-card {
+      padding: 6px 6px 6px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .promo-input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .promo-input-wrapper i {
+      color: var(--tg-blue-accent);
+      flex-shrink: 0;
+    }
+
+    .promo-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--tg-text);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .btn-promo {
+      background: var(--tg-blue-subtle);
+      border: 1px solid var(--tg-border-blue);
+      color: var(--tg-blue-accent);
+      padding: 10px 16px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      outline: none;
+      flex-shrink: 0;
+    }
+
+    /* Реферальная система ниже промокода */
+    .referral-card {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .referral-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .referral-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: var(--tg-blue-subtle);
+      border: 1px solid var(--tg-border-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--tg-blue-accent);
+      box-shadow: 0 2px 10px var(--tg-blue-glow);
+    }
+
+    /* МОДАЛЬНЫЕ ОКНА */
     .modal-overlay {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.78);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       z-index: 100;
       display: none;
       align-items: flex-end;
@@ -718,22 +953,23 @@
       opacity: 1;
     }
 
-    .gift-modal-card {
+    .modal-glass-card {
       width: 100%;
       max-width: 440px;
-      background: #111d29;
-      border: 1px solid var(--tg-border);
-      border-radius: 28px 28px 0 0;
+      background: linear-gradient(180deg, rgba(23, 34, 49, 0.94) 0%, rgba(13, 20, 29, 0.98) 100%);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: 1px solid var(--tg-glass-border);
+      border-radius: 30px 30px 0 0;
       padding: 20px 20px max(24px, env(safe-area-inset-bottom));
       transform: translateY(100%);
       transition: transform 0.35s var(--ease-smooth);
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
+      box-shadow: var(--tg-glass-shadow), var(--tg-glass-highlight);
     }
 
-    .modal-overlay.active .gift-modal-card {
+    .modal-overlay.active .modal-glass-card {
       transform: translateY(0);
     }
 
@@ -741,154 +977,46 @@
       width: 40px;
       height: 4px;
       border-radius: 2px;
-      background: rgba(255, 255, 255, 0.2);
-      margin-bottom: 14px;
+      background: rgba(255, 255, 255, 0.25);
+      margin: 0 auto 16px;
+    }
+
+    .modal-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
     }
 
     .modal-title {
       font-size: 18px;
       font-weight: 800;
       color: var(--tg-text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-modal-close-icon {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--tg-glass-border);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      color: var(--tg-text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .modal-scroll-list {
+      max-height: 280px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       margin-bottom: 16px;
-    }
-
-    .gift-empty-box {
-      padding: 26px 14px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px dashed var(--tg-border);
-      border-radius: 20px;
-      margin-bottom: 20px;
-    }
-
-    .gift-empty-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 18px;
-      background: rgba(168, 85, 247, 0.12);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #c084fc;
-    }
-
-    .btn-close-modal {
-      width: 100%;
-      padding: 14px;
-      background: var(--tg-blue-accent);
-      border: none;
-      border-radius: 16px;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    /* ПРОФИЛЬ */
-    .glass-card {
-      background: var(--tg-bg-card);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--tg-border);
-      border-radius: var(--tg-radius);
-      padding: 14px;
-    }
-
-    .profile-hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .profile-avatar-wrapper {
-      width: 88px;
-      height: 88px;
-      border-radius: 50%;
-      padding: 2.5px;
-      background: linear-gradient(135deg, var(--tg-blue-accent), transparent);
-    }
-
-    .profile-avatar-img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      font-weight: 800;
-      background: #17212b;
-      color: #fff;
-    }
-
-    .profile-username {
-      margin-top: 8px;
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .balance-card-grid {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .balance-number {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--tg-text);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-action {
-      padding: 8px 14px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-    }
-
-    .btn-deposit { background: var(--tg-blue-accent); color: #fff; }
-    .btn-withdraw { background: rgba(255,255,255,0.06); color: #fff; }
-
-    .stats-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .empty-card {
-      padding: 45px 20px;
-      margin-top: 40px;
-      background: var(--tg-bg-card);
-      border: 1px dashed var(--tg-border);
-      border-radius: var(--tg-radius);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .empty-icon-wrap {
-      width: 60px;
-      height: 60px;
-      border-radius: 18px;
-      background: var(--tg-blue-subtle);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--tg-blue-accent);
-      margin-bottom: 14px;
     }
 
     /* НАВИГАЦИЯ */
@@ -908,10 +1036,12 @@
       align-items: center;
       justify-content: space-around;
       padding: 8px 6px;
-      background: var(--tg-bg-glass);
-      backdrop-filter: blur(28px);
-      border: 1px solid var(--tg-border);
-      border-radius: 24px;
+      background: var(--tg-glass-bg);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid var(--tg-glass-border);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), var(--tg-glass-highlight);
+      border-radius: 26px;
     }
 
     .nav-item {
@@ -920,37 +1050,47 @@
       align-items: center;
       gap: 4px;
       padding: 8px 12px;
-      border-radius: 16px;
+      border-radius: 18px;
       background: transparent;
       border: none;
       cursor: pointer;
       color: var(--tg-text-secondary);
       flex: 1;
+      transition: all 0.2s var(--ease-smooth);
     }
 
     .nav-item span {
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .nav-item.active {
       color: var(--tg-blue-accent);
       background: var(--tg-blue-subtle);
+      box-shadow: 0 2px 10px var(--tg-blue-glow);
+    }
+
+    .empty-card {
+      padding: 45px 20px;
+      margin-top: 40px;
+      text-align: center;
     }
   </style>
 
-  <!-- Векторный шаблон иконки кристалла со звездой из фото -->
+  <!-- Векторный шаблон валюты (1 в 1 с фото: Круглая форма, внутри белый кристалл, внутри него синяя звезда) -->
   <svg style="display:none;">
     <defs>
-      <linearGradient id="gemGradIcon" x1="120" y1="80" x2="420" y2="440" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#4ea3ff"/>
-        <stop offset="1" stop-color="#2a85e6"/>
+      <linearGradient id="gemRoundBlueGrad" x1="60" y1="30" x2="450" y2="480" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#38a5fe"/>
+        <stop offset="1" stop-color="#197fe8"/>
       </linearGradient>
       <g id="gemSymbol">
-        <!-- Огранённый кристалл -->
-        <path d="M156 76H356C368.5 76 380.2 82.5 387 93.3L469.5 211.5C478 223.5 476.5 239.5 466.2 250L275.5 440C264.8 450.7 247.2 450.7 236.5 440L45.8 250C35.5 239.5 34 223.5 42.5 211.5L125 93.3C131.8 82.5 143.5 76 156 76Z" fill="url(#gemGradIcon)"/>
-        <!-- 4-конечная белая сверкающая звезда внутри -->
-        <path d="M314 116C313 162 284 191 238 196C284 201 313 230 314 276C315 230 344 201 390 196C344 191 315 162 314 116Z" fill="#FFFFFF"/>
+        <!-- 1. Круглое синее основание (как на фото, но круглое) -->
+        <circle cx="256" cy="256" r="256" fill="url(#gemRoundBlueGrad)"/>
+        <!-- 2. Белый огранённый кристалл -->
+        <path d="M172 136H340C351 136 361.5 142 367.5 151.5L437 248C444.5 258.5 443 272.5 434 281.5L273 434C263.5 443.5 248.5 443.5 239 434L78 281.5C69 272.5 67.5 258.5 75 248L144.5 151.5C150.5 142 161 136 172 136Z" fill="#FFFFFF"/>
+        <!-- 3. Синяя 4-конечная сверкающая звезда внутри белого кристалла -->
+        <path d="M305 168C304 204 280 228 244 232C280 236 304 260 305 296C306 260 330 236 366 232C330 228 306 204 305 168Z" fill="url(#gemRoundBlueGrad)"/>
       </g>
     </defs>
   </svg>
@@ -988,41 +1128,63 @@
       <section class="page active" id="page-pvp">
         <div class="pvp-container">
 
-          <!-- Верхняя статистика: ПРЕД. ИГРА и ТОП ИГРА -->
+          <!-- Верхняя статистика: ПРЕД. ИГРА и ТОП ИГРА + Круглые кнопки История и Чат под ними -->
           <div class="pvp-header-stats">
-            <div class="pvp-stat-box" id="lastGameBox">
-              <div class="stat-top-row">
-                <span class="stat-title">Пред. игра</span>
-                <span class="stat-winrate-tag" id="lastGameWinrate">58%</span>
-              </div>
-              <div class="stat-player-info">
-                <img id="lastGameAvatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="Winner" class="stat-player-avatar">
-                <div class="stat-player-text">
-                  <span class="stat-player-user" id="lastGameUser">@crypto_king</span>
-                  <span class="stat-player-val">
-                    <span id="lastGameAmount">42.50</span>
-                    <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
-                  </span>
+            
+            <!-- Левая колонка: ПРЕД. ИГРА + круглая кнопка История игр -->
+            <div class="pvp-stat-column">
+              <div class="pvp-stat-box" id="lastGameBox">
+                <div class="stat-top-row">
+                  <span class="stat-title">Пред. игра</span>
+                  <span class="stat-winrate-tag" id="lastGameWinrate">58%</span>
                 </div>
+                <div class="stat-player-info">
+                  <img id="lastGameAvatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="Winner" class="stat-player-avatar">
+                  <div class="stat-player-text">
+                    <span class="stat-player-user" id="lastGameUser">@crypto_king</span>
+                    <span class="stat-player-val">
+                      <span id="lastGameAmount">42.50</span>
+                      <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- КРУГЛАЯ КНОПКА: ИСТОРИЯ ИГР -->
+              <div class="round-glass-btn-bar">
+                <button class="round-glass-btn" onclick="openHistoryModal()" title="История игр">
+                  <i data-lucide="history" style="width: 19px; height: 19px;"></i>
+                </button>
               </div>
             </div>
 
-            <div class="pvp-stat-box">
-              <div class="stat-top-row">
-                <span class="stat-title" style="color: #fbbf24;">Топ игра</span>
-                <i data-lucide="crown" style="width: 14px; height: 14px; color: #fbbf24;"></i>
-              </div>
-              <div class="stat-player-info">
-                <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=100&q=80" alt="Top Player" class="stat-player-avatar">
-                <div class="stat-player-text">
-                  <span class="stat-player-user">@ton_master</span>
-                  <span class="stat-player-val" style="color: #fbbf24;">
-                    <span>180.00</span>
-                    <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
-                  </span>
+            <!-- Правая колонка: ТОП ИГРА + круглая кнопка Чат -->
+            <div class="pvp-stat-column">
+              <div class="pvp-stat-box">
+                <div class="stat-top-row">
+                  <span class="stat-title" style="color: #fbbf24;">Топ игра</span>
+                  <i data-lucide="crown" style="width: 14px; height: 14px; color: #fbbf24;"></i>
+                </div>
+                <div class="stat-player-info">
+                  <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=100&q=80" alt="Top Player" class="stat-player-avatar">
+                  <div class="stat-player-text">
+                    <span class="stat-player-user">@ton_master</span>
+                    <span class="stat-player-val" style="color: #fbbf24;">
+                      <span>180.00</span>
+                      <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
+                    </span>
+                  </div>
                 </div>
               </div>
+
+              <!-- КРУГЛАЯ КНОПКА: ЧАТ ИГРОКОВ -->
+              <div class="round-glass-btn-bar">
+                <button class="round-glass-btn" onclick="openChatModal()" title="Чат">
+                  <i data-lucide="message-circle" style="width: 19px; height: 19px;"></i>
+                </button>
+              </div>
             </div>
+
           </div>
 
           <!-- Колесо рулетки по центру с кинематографичным приближением -->
@@ -1032,10 +1194,8 @@
             </svg>
 
             <div class="wheel-circle-outer">
-              <!-- Вращающийся ротор -->
               <div class="wheel-rotor" id="wheelRotor"></div>
               
-              <!-- Центр колеса -->
               <div class="wheel-center-content" id="wheelCenterBox">
                 <i data-lucide="hourglass" class="wheel-waiting-icon" id="wheelWaitIcon" style="width: 24px; height: 24px;"></i>
                 <span class="wheel-waiting-text" id="wheelWaitText">Ожидание<br>Игроков</span>
@@ -1076,7 +1236,7 @@
 
           <!-- Настроить, Автоплей и тестовая кнопка для соперника -->
           <div class="bet-actions-row">
-            <button class="btn-pvp-action" onclick="alert('Настройки игры:\nМин. ставка: 1\nМакс. ставка: 500')">
+            <button class="btn-pvp-action" onclick="alert('Настройки ставок:\nМин. ставка: 1\nМакс. ставка: 500')">
               <i data-lucide="sliders-horizontal" style="width: 16px; height: 16px;"></i>
               <span>Настроить</span>
             </button>
@@ -1116,23 +1276,24 @@
 
       <!-- ДРУГИЕ СТРАНИЦЫ -->
       <section class="page" id="page-games">
-        <div class="empty-card">
-          <div class="empty-icon-wrap"><i data-lucide="gamepad-2" style="width: 28px; height: 28px;"></i></div>
-          <h2 style="font-size: 18px; font-weight: 700;">Игры</h2>
-          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">Скоро появятся новые мини-игры!</p>
+        <div class="glass-card empty-card">
+          <div class="referral-icon-box" style="margin: 0 auto 14px; width: 56px; height: 56px;"><i data-lucide="gamepad-2" style="width: 28px; height: 28px;"></i></div>
+          <h2 style="font-size: 18px; font-weight: 800;">Игры</h2>
+          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">Скоро появятся новые игры!</p>
         </div>
       </section>
 
       <section class="page" id="page-market">
-        <div class="empty-card">
-          <div class="empty-icon-wrap"><i data-lucide="shopping-bag" style="width: 28px; height: 28px;"></i></div>
-          <h2 style="font-size: 18px; font-weight: 700;">Маркет</h2>
-          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">В магазине пока нет товаров.</p>
+        <div class="glass-card empty-card">
+          <div class="referral-icon-box" style="margin: 0 auto 14px; width: 56px; height: 56px;"><i data-lucide="shopping-bag" style="width: 28px; height: 28px;"></i></div>
+          <h2 style="font-size: 18px; font-weight: 800;">Маркет</h2>
+          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">Магазин пополнится уникальными товарами.</p>
         </div>
       </section>
 
-      <!-- СТРАНИЦА: ПРОФИЛЬ -->
+      <!-- СТРАНИЦА: ПРОФИЛЬ (СТРОГИЙ ПОРЯДОК: Баланс -> Игр сыграно/выиграно -> Промокод -> Рефералы) -->
       <section class="page" id="page-profile">
+        <!-- 1. Герой профиля -->
         <div class="profile-hero">
           <div class="profile-avatar-wrapper">
             <div id="myProfileAvatarBox" class="profile-avatar-img"></div>
@@ -1140,10 +1301,11 @@
           <div class="profile-username" id="userName">@alex_player</div>
         </div>
 
+        <!-- 2. Баланс -->
         <div class="glass-card">
           <div class="balance-card-grid">
             <div>
-              <span style="font-size: 11px; color: var(--tg-text-secondary); text-transform: uppercase;">Баланс</span>
+              <span style="font-size: 11px; color: var(--tg-text-secondary); text-transform: uppercase; font-weight: 700;">Баланс</span>
               <div class="balance-number">
                 <span id="profileBalance">100</span>
                 <svg class="gem-icon gem-icon-lg" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
@@ -1156,38 +1318,121 @@
           </div>
         </div>
 
+        <!-- 3. Игр сыграно и выиграно (ВЫШЕ ПРОМОКОДА) -->
         <div class="stats-row">
-          <div class="glass-card">
-            <span style="font-size: 11px; color: var(--tg-text-secondary);">Игр сыграно</span>
-            <div style="font-size: 18px; font-weight: 800; margin-top: 4px;" id="totalGamesStat">0</div>
+          <div class="glass-card stat-card-glass">
+            <span style="font-size: 11px; color: var(--tg-text-secondary); font-weight: 700;">Игр сыграно</span>
+            <div style="font-size: 20px; font-weight: 800; margin-top: 4px;" id="totalGamesStat">0</div>
           </div>
-          <div class="glass-card">
-            <span style="font-size: 11px; color: var(--tg-text-secondary);">Выиграно</span>
-            <div style="font-size: 18px; font-weight: 800; margin-top: 4px; color: #4ade80; display:flex; align-items:center; gap:4px;">
+          <div class="glass-card stat-card-glass">
+            <span style="font-size: 11px; color: var(--tg-text-secondary); font-weight: 700;">Всего выиграно</span>
+            <div style="font-size: 20px; font-weight: 800; margin-top: 4px; color: #4ade80; display:flex; align-items:center; gap:4px;">
               <span id="totalWonStat">0</span>
               <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
             </div>
           </div>
         </div>
+
+        <!-- 4. Промокод (НИЖЕ БАЛАНСА И СТАТИСТИКИ) -->
+        <div class="glass-card promo-card">
+          <div class="promo-input-wrapper">
+            <i data-lucide="ticket" style="width: 18px; height: 18px;"></i>
+            <input type="text" id="promoInput" class="promo-input" placeholder="Введите промокод..." spellcheck="false" autocomplete="off">
+          </div>
+          <button class="btn-promo" onclick="activatePromo()">Активировать</button>
+        </div>
+
+        <!-- 5. Реферальная система (НИЖЕ ПРОМОКОДА) -->
+        <div class="glass-card referral-card" onclick="openReferrals()">
+          <div class="referral-left">
+            <div class="referral-icon-box">
+              <i data-lucide="users" style="width: 20px; height: 20px;"></i>
+            </div>
+            <div>
+              <div style="font-size: 14px; font-weight: 800;">Реферальная система</div>
+              <div style="font-size: 12px; color: var(--tg-text-secondary); font-weight: 600;">Приглашайте друзей и получайте %</div>
+            </div>
+          </div>
+          <i data-lucide="chevron-right" style="width: 18px; height: 18px; color: var(--tg-text-muted);"></i>
+        </div>
       </section>
 
     </main>
 
-    <!-- МОДАЛ ВЫБОРА ПОДАРКОВ -->
-    <div class="modal-overlay" id="giftModal" onclick="closeGiftModal(event)">
-      <div class="gift-modal-card" onclick="event.stopPropagation()">
+    <!-- МОДАЛ: ИСТОРИЯ ИГР -->
+    <div class="modal-overlay" id="historyModal" onclick="closeModal('historyModal')">
+      <div class="modal-glass-card" onclick="event.stopPropagation()">
         <div class="modal-drag-pill"></div>
-        <h3 class="modal-title">Выбор Подарков</h3>
-        <div class="gift-empty-box">
-          <div class="gift-empty-icon">
-            <i data-lucide="gift" style="width: 28px; height: 28px;"></i>
+        <div class="modal-header-row">
+          <div class="modal-title">
+            <i data-lucide="history" style="color: var(--tg-blue-accent);"></i>
+            <span>История игр</span>
           </div>
-          <div style="font-size: 14px; font-weight: 700;">У вас нет подарков</div>
-          <div style="font-size: 12px; color: var(--tg-text-secondary); max-width: 260px; line-height: 1.4;">
+          <button class="btn-modal-close-icon" onclick="closeModal('historyModal')">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+        <div class="modal-scroll-list" id="historyListContainer">
+          <!-- Динамическая история игр -->
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДАЛ: ЧАТ ИГРОКОВ -->
+    <div class="modal-overlay" id="chatModal" onclick="closeModal('chatModal')">
+      <div class="modal-glass-card" onclick="event.stopPropagation()">
+        <div class="modal-drag-pill"></div>
+        <div class="modal-header-row">
+          <div class="modal-title">
+            <i data-lucide="message-circle" style="color: var(--tg-blue-accent);"></i>
+            <span>Чат комнаты</span>
+          </div>
+          <button class="btn-modal-close-icon" onclick="closeModal('chatModal')">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+        <div class="modal-scroll-list" id="chatMessagesContainer">
+          <div class="bet-item-row" style="padding: 8px 12px;">
+            <span style="font-size: 12px; font-weight: 700; color: var(--tg-blue-accent);">@ton_master:</span>
+            <span style="font-size: 12px; color: var(--tg-text); margin-left: 6px;">Удачи всем в новом раунде! 🚀</span>
+          </div>
+          <div class="bet-item-row" style="padding: 8px 12px;">
+            <span style="font-size: 12px; font-weight: 700; color: #4ade80;">@crypto_king:</span>
+            <span style="font-size: 12px; color: var(--tg-text); margin-left: 6px;">Залетаю на 10 кристаллов 🔥</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 4px;">
+          <input type="text" id="chatInput" class="promo-input" placeholder="Напишите сообщение..." style="background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 14px; border: 1px solid var(--tg-glass-border);">
+          <button class="btn-promo" onclick="sendChatMessage()">
+            <i data-lucide="send" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДАЛ: ВЫБОР ПОДАРКОВ -->
+    <div class="modal-overlay" id="giftModal" onclick="closeModal('giftModal')">
+      <div class="modal-glass-card" onclick="event.stopPropagation()">
+        <div class="modal-drag-pill"></div>
+        <div class="modal-header-row">
+          <div class="modal-title">
+            <i data-lucide="gift" style="color: #c084fc;"></i>
+            <span>Выбор Подарков</span>
+          </div>
+          <button class="btn-modal-close-icon" onclick="closeModal('giftModal')">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+        <div class="glass-card" style="padding: 26px 14px; text-align: center; margin-bottom: 16px; border: 1px dashed var(--tg-glass-border);">
+          <div class="referral-icon-box" style="margin: 0 auto 12px; background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.35); color: #c084fc;">
+            <i data-lucide="gift" style="width: 24px; height: 24px;"></i>
+          </div>
+          <div style="font-size: 14px; font-weight: 800;">У вас нет подарков</div>
+          <div style="font-size: 12px; color: var(--tg-text-secondary); max-width: 260px; margin: 4px auto 0; line-height: 1.4;">
             В вашем Telegram инвентаре пока нет доступных Gifts для ставок.
           </div>
         </div>
-        <button class="btn-close-modal" onclick="closeGiftModal()">Понятно</button>
+        <button class="btn-action btn-deposit" style="width: 100%; padding: 12px;" onclick="closeModal('giftModal')">Понятно</button>
       </div>
     </div>
 
@@ -1218,7 +1463,7 @@
   <script>
     lucide.createIcons();
 
-    // ================= ИНТЕГРАЦИЯ С TELEGRAM WEB APP =================
+    // ================= TELEGRAM WEB APP =================
     const tg = window.Telegram?.WebApp;
     let myUser = {
       username: '@alex_player',
@@ -1230,8 +1475,8 @@
       tg.ready();
       tg.expand();
       try {
-        tg.setHeaderColor('#0b141d');
-        tg.setBackgroundColor('#0b141d');
+        tg.setHeaderColor('#080f17');
+        tg.setBackgroundColor('#080f17');
 
         if (tg.initDataUnsafe?.user) {
           const u = tg.initDataUnsafe.user;
@@ -1244,18 +1489,17 @@
 
     document.getElementById('userName').innerText = myUser.username;
 
-    // Отрисовка реального аватара Telegram
-    function applyUserAvatar(containerId, isBig = false) {
+    function applyUserAvatar(containerId) {
       const container = document.getElementById(containerId);
       if (myUser.avatarUrl) {
         container.innerHTML = `<img src="${myUser.avatarUrl}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
       } else {
         container.innerText = myUser.initial;
-        container.style.background = 'linear-gradient(135deg, #4598f6, #1d4ed8)';
+        container.style.background = 'linear-gradient(135deg, #248bfa, #1254a1)';
       }
     }
     applyUserAvatar('myHeaderAvatarBox');
-    applyUserAvatar('myProfileAvatarBox', true);
+    applyUserAvatar('myProfileAvatarBox');
 
     function haptic(type = 'light') {
       if (tg?.HapticFeedback) {
@@ -1278,7 +1522,7 @@
       if (activeBtn) activeBtn.classList.add('active');
     }
 
-    // ================= БАЛАНС =================
+    // ================= БАЛАНС И СТАТИСТИКА =================
     let currentBalance = 100;
     let totalGames = 0;
     let totalWon = 0;
@@ -1304,33 +1548,100 @@
         currentBalance -= 50;
         updateBalanceDisplay();
       } else {
-        alert('Недостаточно средств');
+        alert('Недостаточно средств для вывода.');
       }
     }
 
-    // ================= МОДАЛКА ВЫБОРА GIFT =================
-    function openGiftModal() {
-      haptic('medium');
-      document.getElementById('giftModal').classList.add('active');
+    function activatePromo() {
+      const input = document.getElementById('promoInput');
+      const val = input.value.trim().toUpperCase();
+      if (!val) { input.focus(); return; }
+      haptic('success');
+      currentBalance += 50;
+      updateBalanceDisplay();
+      alert(`Промокод "${val}" активирован! Начислено +50 кристаллов!`);
+      input.value = '';
     }
 
-    function closeGiftModal() {
+    function openReferrals() {
       haptic('selection');
-      document.getElementById('giftModal').classList.remove('active');
+      navigator.clipboard?.writeText('https://t.me/your_bot?start=ref_001');
+      alert('Реферальная ссылка скопирована в буфер обмена!');
     }
+
+    // ================= МОДАЛКИ (ИСТОРИЯ, ЧАТ, ПОДАРКИ) =================
+    function openModal(id) {
+      haptic('medium');
+      document.getElementById(id).classList.add('active');
+    }
+
+    function closeModal(id) {
+      haptic('selection');
+      document.getElementById(id).classList.remove('active');
+    }
+
+    function openGiftModal() { openModal('giftModal'); }
+    function openHistoryModal() {
+      renderGameHistory();
+      openModal('historyModal');
+    }
+    function openChatModal() { openModal('chatModal'); }
 
     function setCurrency(cur) {
       haptic('selection');
       document.getElementById('btnCurGem').classList.add('active');
     }
 
-    // ================= ПВП И БЕЗУПРЕЧНАЯ РУЛЕТКА =================
-    let gameState = 'WAITING'; // 'WAITING', 'COUNTDOWN', 'SPINNING'
+    // История завершенных раундов
+    let gameHistory = [
+      { user: '@crypto_king', amount: 42.50, winRate: 58, avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80' },
+      { user: '@whale_tg', amount: 90.00, winRate: 74, avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=100&q=80' }
+    ];
+
+    function renderGameHistory() {
+      const list = document.getElementById('historyListContainer');
+      list.innerHTML = gameHistory.map(h => `
+        <div class="bet-item-row">
+          <div class="bet-item-left">
+            <img src="${h.avatar}" class="bet-item-avatar" alt="Ava">
+            <div class="bet-item-userinfo">
+              <span class="bet-item-username">${h.user}</span>
+              <span class="bet-item-amount">
+                <span>+${h.amount}</span>
+                <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
+              </span>
+            </div>
+          </div>
+          <span class="stat-winrate-tag">${h.winRate}% Шанс</span>
+        </div>
+      `).join('');
+    }
+
+    function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const val = input.value.trim();
+      if (!val) return;
+      haptic('selection');
+      const cont = document.getElementById('chatMessagesContainer');
+      const row = document.createElement('div');
+      row.className = 'bet-item-row';
+      row.style.padding = '8px 12px';
+      row.innerHTML = `
+        <span style="font-size: 12px; font-weight: 700; color: var(--tg-blue-accent);">${myUser.username}:</span>
+        <span style="font-size: 12px; color: var(--tg-text); margin-left: 6px;">${val}</span>
+      `;
+      cont.appendChild(row);
+      input.value = '';
+      cont.scrollTop = cont.scrollHeight;
+    }
+
+    // ================= ПВП И ИДЕАЛЬНАЯ РУЛЕТКА =================
+    let gameState = 'WAITING';
     let countdownSec = 15;
     let countdownInterval = null;
     let isAutoPlay = false;
 
-    // Плавное бесконечное вращение в режиме ожидания через requestAnimationFrame (без рывков)
+    // Безошибочное и ультра-плавное вращение колеса
     let currentRotorDeg = 0;
     let idleAnimFrame = null;
 
@@ -1350,14 +1661,13 @@
     const opponentColors = ['#ec4899', '#f59e0b', '#10b981', '#8b5cf6', '#ef4444', '#06b6d4'];
     let bets = [];
 
-    // Ставка игрока (суммируется в одну)
     function placeBet(amount) {
       if (gameState === 'SPINNING') return;
       haptic('medium');
 
       let val = amount === 'ALL' ? currentBalance : amount;
       if (val <= 0 || currentBalance < val) {
-        alert('Недостаточно баланса!');
+        alert('Недостаточно баланса для ставки!');
         return;
       }
 
@@ -1374,13 +1684,13 @@
           avatar: myUser.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80',
           amount: val,
           isMe: true,
-          color: '#4598f6'
+          color: '#248bfa'
         });
       }
 
       recalculateAndRender();
 
-      // Автоматическое подключение бота через 1.5 сек для проверки отсчета 15с
+      // Автоматическое подключение бота через 1.5 секунды для проверки таймера 15 сек
       if (bets.length === 1 && !countdownInterval) {
         setTimeout(() => {
           if (bets.length === 1) addBotOpponent();
@@ -1442,14 +1752,13 @@
       rotor.innerHTML = '';
 
       if (bets.length === 0) {
-        rotor.style.background = 'conic-gradient(from 0deg, #1e293b 0% 100%)';
+        rotor.style.background = 'conic-gradient(from 0deg, #182535 0% 100%)';
         return;
       }
 
       const gradientParts = bets.map(b => `${b.color} ${b.startDeg}deg ${b.endDeg}deg`);
       rotor.style.background = `conic-gradient(from 0deg, ${gradientParts.join(', ')})`;
 
-      // Размещение аватарок
       bets.forEach(b => {
         const midDeg = (b.startDeg + b.endDeg) / 2;
         const mark = document.createElement('img');
@@ -1508,7 +1817,7 @@
       }
     }
 
-    // ТАЙМЕР 15 СЕКУНД
+    // ТАЙМЕР 15 СЕКУНД ДО ВРАЩЕНИЯ
     function start15SecCountdown() {
       gameState = 'COUNTDOWN';
       countdownSec = 15;
@@ -1529,7 +1838,7 @@
       }, 1000);
     }
 
-    // ВРАЩЕНИЕ 11 СЕКУНД С ЗУМОМ ЭКРАНА В КОНЦЕ
+    // ВРАЩЕНИЕ 11 СЕКУНД С ЗУМОМ ЭКРАНА
     function start11SecSpin() {
       gameState = 'SPINNING';
       if (idleAnimFrame) cancelAnimationFrame(idleAnimFrame);
@@ -1540,12 +1849,11 @@
       const centerBox = document.getElementById('wheelCenterBox');
 
       centerBox.innerHTML = `
-        <i data-lucide="loader-2" class="wheel-waiting-icon" style="animation: spinSlow 1s linear infinite; width: 28px; height: 28px;"></i>
+        <i data-lucide="loader-2" class="wheel-waiting-icon" style="animation: pulseAnim 1s infinite; width: 28px; height: 28px;"></i>
         <div class="wheel-countdown-label" style="color: #4ade80;">Крутится...</div>
       `;
       lucide.createIcons();
 
-      // Выбор победителя по весам
       const totalBank = bets.reduce((sum, b) => sum + b.amount, 0);
       const randTicket = Math.random() * 360;
       let winner = bets.find(b => randTicket >= b.startDeg && randTicket < b.endDeg) || bets[0];
@@ -1554,25 +1862,23 @@
       const winningMiddle = (winner.startDeg + winner.endDeg) / 2;
       const targetSectorDeg = (360 - winningMiddle);
 
-      // Текущий угол без рывка
       const currentAngleNorm = currentRotorDeg % 360;
       let neededOffset = targetSectorDeg - currentAngleNorm;
       if (neededOffset <= 0) neededOffset += 360;
 
-      // 10 полных кругов + угол победителя
       const finalTargetDegree = currentRotorDeg + neededOffset + (360 * 10);
 
-      // Вращение ровно 11 секунд с плавным физическим торможением в конце
+      // 11 секунд плавного вращения с физическим торможением в конце
       rotor.style.transition = 'transform 11000ms cubic-bezier(0.1, 0.88, 0.18, 1)';
       rotor.style.transform = `rotate(${finalTargetDegree}deg)`;
       currentRotorDeg = finalTargetDegree;
 
-      // На 8-й секунде экран плавно приближается (ZOOM IN)
+      // На 8.2 секунде приближаем экран (ZOOM IN)
       setTimeout(() => {
         arenaWrapper.classList.add('zoomed');
       }, 8200);
 
-      // Окончание вращения через 11 секунд
+      // Окончание через 11 секунд
       setTimeout(() => {
         onSpinFinished(winner, totalBank);
       }, 11000);
@@ -1589,11 +1895,19 @@
         <span style="font-size: 10px; color: var(--tg-text-secondary); max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${winner.user}</span>
       `;
 
-      // Обновление карточки "ПРЕД. ИГРА"
+      // Обновляем "Пред. игра"
       document.getElementById('lastGameUser').innerText = winner.user;
       document.getElementById('lastGameAmount').innerText = totalBank;
       document.getElementById('lastGameWinrate').innerText = `${winner.winRate}%`;
       document.getElementById('lastGameAvatar').src = winner.avatar;
+
+      // Добавляем в историю
+      gameHistory.unshift({
+        user: winner.user,
+        amount: totalBank,
+        winRate: winner.winRate,
+        avatar: winner.avatar
+      });
 
       totalGames++;
       if (winner.isMe) {
@@ -1602,7 +1916,7 @@
         updateBalanceDisplay();
       }
 
-      // Возврат зума и сброс для новой игры через 3.5 секунды
+      // Сброс через 3.5 секунды
       setTimeout(() => {
         arenaWrapper.classList.remove('zoomed');
         resetPvPRound();
