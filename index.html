@@ -18,15 +18,13 @@
     :root {
       --tg-bg-base: #0b141d;
       --tg-bg-secondary: rgba(23, 33, 43, 0.65);
-      --tg-bg-glass: rgba(19, 28, 38, 0.75);
-      --tg-bg-card: rgba(23, 33, 43, 0.6);
-      --tg-bg-card-hover: rgba(30, 44, 57, 0.75);
+      --tg-bg-glass: rgba(19, 28, 38, 0.82);
+      --tg-bg-card: rgba(23, 33, 43, 0.62);
       --tg-border: rgba(255, 255, 255, 0.08);
-      --tg-border-blue: rgba(46, 166, 255, 0.25);
-      --tg-blue-accent: #2ea6ff;
-      --tg-blue-hover: #1e8fe1;
-      --tg-blue-subtle: rgba(46, 166, 255, 0.12);
-      --tg-gold: #f59e0b;
+      --tg-border-blue: rgba(69, 152, 246, 0.3);
+      --tg-blue-accent: #4598f6;
+      --tg-blue-hover: #3287e5;
+      --tg-blue-subtle: rgba(69, 152, 246, 0.12);
       --tg-text: #ffffff;
       --tg-text-secondary: #7f91a4;
       --tg-text-muted: #536577;
@@ -55,8 +53,8 @@
       align-items: center;
       overflow: hidden;
       background-image: 
-        radial-gradient(circle at 10% 10%, rgba(46, 166, 255, 0.09) 0%, transparent 45%),
-        radial-gradient(circle at 90% 85%, rgba(30, 143, 225, 0.07) 0%, transparent 45%);
+        radial-gradient(circle at 10% 10%, rgba(69, 152, 246, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 90% 85%, rgba(46, 166, 255, 0.08) 0%, transparent 45%);
     }
 
     .app-viewport {
@@ -67,7 +65,7 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      background: rgba(11, 20, 29, 0.85);
+      background: rgba(11, 20, 29, 0.88);
       overflow: hidden;
     }
 
@@ -76,8 +74,24 @@
         height: 850px;
         border-radius: 36px;
         border: 1px solid var(--tg-border);
-        box-shadow: 0 16px 60px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 16px 60px rgba(0, 0, 0, 0.65);
       }
+    }
+
+    /* ИКОНКА ВАЛЮТЫ (СИНИЙ КРИСТАЛЛ СО ЗВЕЗДОЙ) */
+    .gem-icon {
+      width: 17px;
+      height: 17px;
+      display: inline-block;
+      vertical-align: -2.5px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 2px 4px rgba(69, 152, 246, 0.35));
+    }
+
+    .gem-icon-lg {
+      width: 22px;
+      height: 22px;
+      vertical-align: -4px;
     }
 
     /* ШАПКА */
@@ -87,7 +101,7 @@
       left: 0;
       right: 0;
       z-index: 50;
-      padding: 14px 18px;
+      padding: max(14px, env(safe-area-inset-top)) 18px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -113,6 +127,12 @@
       border-radius: 50%;
       object-fit: cover;
       background: #17212b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
     }
 
     .online-badge {
@@ -144,21 +164,17 @@
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--tg-border-blue);
       border-radius: 20px;
-      padding: 4px 5px 4px 12px;
+      padding: 4px 6px 4px 12px;
+      gap: 6px;
     }
 
     .header-balance-val {
       font-size: 14px;
       font-weight: 700;
       color: var(--tg-text);
-      margin-right: 8px;
       display: flex;
       align-items: center;
-      gap: 4px;
-    }
-
-    .header-balance-val span {
-      color: var(--tg-blue-accent);
+      gap: 5px;
     }
 
     .header-add-btn {
@@ -178,7 +194,7 @@
     /* ОСНОВНОЙ КОНТЕНТ */
     .content-area {
       flex: 1;
-      padding: 78px 16px 110px;
+      padding: 82px 16px max(100px, calc(80px + env(safe-area-inset-bottom)));
       position: relative;
       overflow-y: auto;
       scrollbar-width: none;
@@ -205,10 +221,10 @@
     .pvp-container {
       display: flex;
       flex-direction: column;
-      gap: 13px;
+      gap: 12px;
     }
 
-    /* Верхние статы */
+    /* Верхняя панель: Пред. игра и Топ игра */
     .pvp-header-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -219,10 +235,10 @@
       background: var(--tg-bg-card);
       border: 1px solid var(--tg-border);
       border-radius: 18px;
-      padding: 11px 12px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
       backdrop-filter: blur(16px);
     }
 
@@ -245,7 +261,7 @@
       font-weight: 800;
       color: #4ade80;
       background: rgba(34, 197, 94, 0.14);
-      padding: 2px 7px;
+      padding: 2px 6px;
       border-radius: 8px;
       border: 1px solid rgba(34, 197, 94, 0.25);
     }
@@ -285,9 +301,12 @@
       font-size: 11px;
       font-weight: 700;
       color: var(--tg-blue-accent);
+      display: flex;
+      align-items: center;
+      gap: 3px;
     }
 
-    /* АРЕНА КОЛЕСА С ПРИБЛИЖЕНИЕМ */
+    /* АРЕНА РУЛЕТКИ С ПРИБЛИЖЕНИЕМ */
     .wheel-arena-wrapper {
       position: relative;
       width: 100%;
@@ -295,8 +314,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 18px 0 10px;
-      transition: transform 2.8s cubic-bezier(0.12, 0.85, 0.2, 1);
+      padding: 16px 0 8px;
+      transition: transform 2.8s cubic-bezier(0.12, 0.88, 0.2, 1);
       transform-origin: center center;
     }
 
@@ -306,11 +325,11 @@
 
     .wheel-pointer {
       position: absolute;
-      top: 6px;
-      z-index: 25;
+      top: 5px;
+      z-index: 30;
       width: 22px;
       height: 24px;
-      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.7));
+      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.8));
     }
 
     .wheel-pointer polygon {
@@ -327,69 +346,58 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 35px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.85);
     }
 
-    /* Вращающаяся часть колеса */
+    /* Вращающееся колесо */
     .wheel-rotor {
       position: absolute;
       inset: 0;
       border-radius: 50%;
       padding: 6px;
       box-shadow: 
-        0 0 25px rgba(46, 166, 255, 0.2),
+        0 0 25px rgba(69, 152, 246, 0.22),
         inset 0 0 16px rgba(0, 0, 0, 0.8);
       background: conic-gradient(from 0deg, #1e293b 0% 100%);
-      transition: none;
+      will-change: transform;
     }
 
-    .wheel-rotor.slow-idle {
-      animation: rotateSlow 20s linear infinite;
-    }
-
-    @keyframes rotateSlow {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    /* Сектора и метки игроков на колесе */
     .wheel-avatar-mark {
       position: absolute;
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       border: 2px solid #ffffff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.8);
-      transform-origin: center center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.8);
       pointer-events: none;
+      object-fit: cover;
     }
 
     .wheel-avatar-mark.is-me {
-      border: 2.5px solid var(--tg-blue-accent);
-      box-shadow: 0 0 12px var(--tg-blue-accent), 0 0 5px #fff;
+      border: 2.5px solid #4598f6;
+      box-shadow: 0 0 14px #4598f6, 0 0 6px #fff;
     }
 
     .wheel-avatar-mark.is-me::after {
       content: 'ТЫ';
       position: absolute;
-      bottom: -6px;
+      bottom: -7px;
       left: 50%;
       transform: translateX(-50%);
-      background: var(--tg-blue-accent);
+      background: #4598f6;
       color: #fff;
-      font-size: 7px;
+      font-size: 7.5px;
       font-weight: 800;
       padding: 1px 4px;
       border-radius: 6px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
     }
 
     /* Центр колеса */
     .wheel-center-content {
       position: relative;
       z-index: 10;
-      width: 136px;
-      height: 136px;
+      width: 134px;
+      height: 134px;
       border-radius: 50%;
       background: radial-gradient(circle at center, #182736 0%, #0c141d 100%);
       border: 3px solid rgba(255, 255, 255, 0.12);
@@ -398,7 +406,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 10px;
+      padding: 8px;
       text-align: center;
     }
 
@@ -418,12 +426,11 @@
     }
 
     .wheel-countdown-num {
-      font-size: 32px;
+      font-size: 34px;
       font-weight: 800;
       color: #4ade80;
       line-height: 1;
       text-shadow: 0 0 16px rgba(74, 222, 128, 0.4);
-      animation: pulseTimer 1s infinite alternate;
     }
 
     .wheel-countdown-label {
@@ -434,23 +441,18 @@
       margin-top: 2px;
     }
 
-    @keyframes pulseTimer {
-      0% { transform: scale(0.95); opacity: 0.85; }
-      100% { transform: scale(1.08); opacity: 1; }
-    }
-
     @keyframes pulseAnim {
       0%, 100% { transform: scale(1); opacity: 0.8; }
       50% { transform: scale(1.15); opacity: 1; }
     }
 
-    /* ВЫБОР ВАЛЮТЫ */
+    /* ПЕРЕКЛЮЧАТЕЛЬ СТАВКИ ВАЛЮТЫ И ПОДАРКОВ */
     .currency-selector-card {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      padding: 6px;
+      padding: 5px;
       background: var(--tg-bg-card);
       border-radius: 18px;
       border: 1px solid var(--tg-border);
@@ -462,7 +464,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 10px 14px;
+      padding: 9px 12px;
       border-radius: 14px;
       border: 1px solid transparent;
       background: transparent;
@@ -479,7 +481,7 @@
       color: var(--tg-blue-accent);
     }
 
-    /* СТАВКИ КНОПКИ */
+    /* БЫСТРЫЕ СТАВКИ */
     .bet-grid-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -490,16 +492,15 @@
       background: var(--tg-bg-card);
       border: 1px solid var(--tg-border);
       border-radius: 14px;
-      padding: 11px 4px;
+      padding: 10px 4px;
       font-size: 12px;
       font-weight: 700;
       color: var(--tg-text);
       cursor: pointer;
-      text-align: center;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 4px;
       transition: all 0.2s var(--ease-smooth);
     }
 
@@ -515,7 +516,7 @@
       color: #fbbf24;
     }
 
-    /* НАСТРОИТЬ И АВТОПЛЕЙ */
+    /* ДЕЙСТВИЯ */
     .bet-actions-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -526,7 +527,7 @@
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--tg-border);
       border-radius: 16px;
-      padding: 12px 14px;
+      padding: 11px 14px;
       color: var(--tg-text);
       font-size: 13px;
       font-weight: 700;
@@ -547,12 +548,11 @@
       color: var(--tg-blue-accent);
     }
 
-    /* ТЕСТОВАЯ КНОПКА ДОБАВИТЬ БОТА ДЛЯ ПРОВЕРКИ 2-Х ИГРОКОВ */
     .btn-add-bot-helper {
-      background: rgba(34, 197, 94, 0.12);
-      border: 1px dashed rgba(34, 197, 94, 0.4);
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px dashed rgba(34, 197, 94, 0.35);
       color: #4ade80;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       border-radius: 12px;
       padding: 7px;
@@ -567,14 +567,14 @@
     .players-list-panel {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .players-count-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 14px;
+      padding: 9px 14px;
       background: var(--tg-bg-card);
       border: 1px solid var(--tg-border);
       border-radius: 16px;
@@ -596,6 +596,9 @@
       background: rgba(255, 255, 255, 0.05);
       padding: 3px 8px;
       border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .bets-list {
@@ -612,12 +615,11 @@
       background: rgba(23, 33, 43, 0.45);
       border: 1px solid var(--tg-border);
       border-radius: 16px;
-      position: relative;
     }
 
     .bet-item-row.is-me {
       border-color: var(--tg-border-blue);
-      background: rgba(46, 166, 255, 0.07);
+      background: rgba(69, 152, 246, 0.08);
     }
 
     .bet-item-left {
@@ -632,6 +634,7 @@
       border-radius: 50%;
       object-fit: cover;
       border: 1px solid var(--tg-border);
+      background: #17212b;
     }
 
     .bet-item-userinfo {
@@ -662,6 +665,9 @@
       font-size: 12px;
       font-weight: 700;
       color: var(--tg-blue-accent);
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .bet-item-right {
@@ -693,11 +699,11 @@
       border-radius: 16px;
     }
 
-    /* МОДАЛЬНОЕ ОКНО: ВЫБОР ПОДАРКОВ (GIFT) */
+    /* МОДАЛЬНОЕ ОКНО ВЫБОРА GIFT */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(0, 0, 0, 0.78);
       backdrop-filter: blur(8px);
       z-index: 100;
       display: none;
@@ -718,7 +724,7 @@
       background: #111d29;
       border: 1px solid var(--tg-border);
       border-radius: 28px 28px 0 0;
-      padding: 20px 20px 34px;
+      padding: 20px 20px max(24px, env(safe-area-inset-bottom));
       transform: translateY(100%);
       transition: transform 0.35s var(--ease-smooth);
       display: flex;
@@ -771,19 +777,6 @@
       color: #c084fc;
     }
 
-    .gift-empty-text {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--tg-text);
-    }
-
-    .gift-empty-desc {
-      font-size: 12px;
-      color: var(--tg-text-secondary);
-      max-width: 260px;
-      line-height: 1.4;
-    }
-
     .btn-close-modal {
       width: 100%;
       padding: 14px;
@@ -796,7 +789,7 @@
       cursor: pointer;
     }
 
-    /* ПРОФИЛЬ КАРТОЧКИ */
+    /* ПРОФИЛЬ */
     .glass-card {
       background: var(--tg-bg-card);
       backdrop-filter: blur(20px);
@@ -825,11 +818,18 @@
       height: 100%;
       border-radius: 50%;
       object-fit: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 800;
+      background: #17212b;
+      color: #fff;
     }
 
     .profile-username {
       margin-top: 8px;
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 700;
     }
 
@@ -840,12 +840,12 @@
     }
 
     .balance-number {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 800;
       color: var(--tg-text);
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
     }
 
     .btn-action {
@@ -867,7 +867,6 @@
       margin-top: 10px;
     }
 
-    /* ПУСТЫЕ СТРАНИЦЫ */
     .empty-card {
       padding: 45px 20px;
       margin-top: 40px;
@@ -898,7 +897,7 @@
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 0 16px 18px;
+      padding: 0 16px max(14px, env(safe-area-inset-bottom));
       z-index: 50;
       pointer-events: none;
     }
@@ -939,6 +938,22 @@
       background: var(--tg-blue-subtle);
     }
   </style>
+
+  <!-- Векторный шаблон иконки кристалла со звездой из фото -->
+  <svg style="display:none;">
+    <defs>
+      <linearGradient id="gemGradIcon" x1="120" y1="80" x2="420" y2="440" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#4ea3ff"/>
+        <stop offset="1" stop-color="#2a85e6"/>
+      </linearGradient>
+      <g id="gemSymbol">
+        <!-- Огранённый кристалл -->
+        <path d="M156 76H356C368.5 76 380.2 82.5 387 93.3L469.5 211.5C478 223.5 476.5 239.5 466.2 250L275.5 440C264.8 450.7 247.2 450.7 236.5 440L45.8 250C35.5 239.5 34 223.5 42.5 211.5L125 93.3C131.8 82.5 143.5 76 156 76Z" fill="url(#gemGradIcon)"/>
+        <!-- 4-конечная белая сверкающая звезда внутри -->
+        <path d="M314 116C313 162 284 191 238 196C284 201 313 230 314 276C315 230 344 201 390 196C344 191 315 162 314 116Z" fill="#FFFFFF"/>
+      </g>
+    </defs>
+  </svg>
 </head>
 <body>
 
@@ -947,7 +962,7 @@
     <!-- ШАПКА -->
     <header class="header">
       <div class="top-avatar-box" onclick="switchTab('profile')">
-        <img id="myHeaderAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80" alt="Avatar" class="top-avatar-img">
+        <div id="myHeaderAvatarBox" class="top-avatar-img"></div>
       </div>
 
       <div class="online-badge">
@@ -958,7 +973,7 @@
       <div class="header-balance-box">
         <div class="header-balance-val">
           <span id="headerBalance">100</span>
-          <span>✦</span>
+          <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
         </div>
         <button class="header-add-btn" onclick="actionDeposit()" title="Пополнить">
           <i data-lucide="plus" style="width: 16px; height: 16px; stroke-width: 2.6;"></i>
@@ -966,7 +981,7 @@
       </div>
     </header>
 
-    <!-- КОНТЕНТ -->
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
     <main class="content-area">
       
       <!-- СТРАНИЦА: ПВП -->
@@ -984,7 +999,10 @@
                 <img id="lastGameAvatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="Winner" class="stat-player-avatar">
                 <div class="stat-player-text">
                   <span class="stat-player-user" id="lastGameUser">@crypto_king</span>
-                  <span class="stat-player-val" id="lastGameAmount">42.50 Gram</span>
+                  <span class="stat-player-val">
+                    <span id="lastGameAmount">42.50</span>
+                    <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
+                  </span>
                 </div>
               </div>
             </div>
@@ -998,13 +1016,16 @@
                 <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=100&q=80" alt="Top Player" class="stat-player-avatar">
                 <div class="stat-player-text">
                   <span class="stat-player-user">@ton_master</span>
-                  <span class="stat-player-val" style="color: #fbbf24;">180.00 Gram</span>
+                  <span class="stat-player-val" style="color: #fbbf24;">
+                    <span>180.00</span>
+                    <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Колесо рулетки по центру -->
+          <!-- Колесо рулетки по центру с кинематографичным приближением -->
           <div class="wheel-arena-wrapper" id="wheelArenaWrapper">
             <svg class="wheel-pointer" viewBox="0 0 24 24">
               <polygon points="12,24 2,2 22,2"/>
@@ -1012,7 +1033,7 @@
 
             <div class="wheel-circle-outer">
               <!-- Вращающийся ротор -->
-              <div class="wheel-rotor slow-idle" id="wheelRotor"></div>
+              <div class="wheel-rotor" id="wheelRotor"></div>
               
               <!-- Центр колеса -->
               <div class="wheel-center-content" id="wheelCenterBox">
@@ -1022,11 +1043,11 @@
             </div>
           </div>
 
-          <!-- Выбор ставки Gram / Gift -->
+          <!-- Переключатель валюты со значком из фото и Gift -->
           <div class="currency-selector-card">
-            <button class="curr-btn active" id="btnCurGram" onclick="setCurrency('Gram')">
-              <i data-lucide="gem" style="width: 16px; height: 16px;"></i>
-              <span>Gram</span>
+            <button class="curr-btn active" id="btnCurGem" onclick="setCurrency('Gem')">
+              <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
+              <span>Кристаллы</span>
             </button>
             <button class="curr-btn" id="btnCurGift" onclick="openGiftModal()">
               <i data-lucide="gift" style="width: 16px; height: 16px;"></i>
@@ -1034,16 +1055,19 @@
             </button>
           </div>
 
-          <!-- Кнопки быстрых ставок -->
+          <!-- Кнопки быстрых ставок с иконкой валюты -->
           <div class="bet-grid-row">
             <button class="btn-bet-preset" onclick="placeBet(1)">
-              <span id="preset1Text">1 Gram</span>
+              <span>1</span>
+              <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
             </button>
             <button class="btn-bet-preset" onclick="placeBet(5)">
-              <span id="preset5Text">5 Gram</span>
+              <span>5</span>
+              <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
             </button>
             <button class="btn-bet-preset" onclick="placeBet(10)">
-              <span id="preset10Text">10 Gram</span>
+              <span>10</span>
+              <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
             </button>
             <button class="btn-bet-preset btn-all-in" onclick="placeBet('ALL')">
               <span>ALL IN</span>
@@ -1052,7 +1076,7 @@
 
           <!-- Настроить, Автоплей и тестовая кнопка для соперника -->
           <div class="bet-actions-row">
-            <button class="btn-pvp-action" onclick="alert('Настройки игры:\nМин. ставка: 1 Gram\nМакс. ставка: 500 Gram')">
+            <button class="btn-pvp-action" onclick="alert('Настройки игры:\nМин. ставка: 1\nМакс. ставка: 500')">
               <i data-lucide="sliders-horizontal" style="width: 16px; height: 16px;"></i>
               <span>Настроить</span>
             </button>
@@ -1062,7 +1086,6 @@
             </button>
           </div>
 
-          <!-- Быстрый вызов соперника для проверки таймера и вращения -->
           <button class="btn-add-bot-helper" onclick="addBotOpponent()">
             <i data-lucide="user-plus" style="width: 14px; height: 14px;"></i>
             <span>Добавить ставку соперника (Бот)</span>
@@ -1075,7 +1098,10 @@
                 <i data-lucide="users-round" style="width: 16px; height: 16px; color: var(--tg-blue-accent);"></i>
                 <span id="playersCountText">0 Игроков</span>
               </div>
-              <span class="players-count-badge" id="bankSummary">Банк: 0 Gram</span>
+              <span class="players-count-badge" id="bankSummary">
+                <span>Банк: 0</span>
+                <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
+              </span>
             </div>
 
             <div class="bets-list" id="betsListContainer">
@@ -1101,7 +1127,7 @@
         <div class="empty-card">
           <div class="empty-icon-wrap"><i data-lucide="shopping-bag" style="width: 28px; height: 28px;"></i></div>
           <h2 style="font-size: 18px; font-weight: 700;">Маркет</h2>
-          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">В магазине пока нет доступных подарков.</p>
+          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">В магазине пока нет товаров.</p>
         </div>
       </section>
 
@@ -1109,7 +1135,7 @@
       <section class="page" id="page-profile">
         <div class="profile-hero">
           <div class="profile-avatar-wrapper">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Avatar" class="profile-avatar-img">
+            <div id="myProfileAvatarBox" class="profile-avatar-img"></div>
           </div>
           <div class="profile-username" id="userName">@alex_player</div>
         </div>
@@ -1120,7 +1146,7 @@
               <span style="font-size: 11px; color: var(--tg-text-secondary); text-transform: uppercase;">Баланс</span>
               <div class="balance-number">
                 <span id="profileBalance">100</span>
-                <span style="color: var(--tg-blue-accent);">✦</span>
+                <svg class="gem-icon gem-icon-lg" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
               </div>
             </div>
             <div style="display: flex; gap: 8px;">
@@ -1137,14 +1163,17 @@
           </div>
           <div class="glass-card">
             <span style="font-size: 11px; color: var(--tg-text-secondary);">Выиграно</span>
-            <div style="font-size: 18px; font-weight: 800; margin-top: 4px; color: #4ade80;" id="totalWonStat">0 ✦</div>
+            <div style="font-size: 18px; font-weight: 800; margin-top: 4px; color: #4ade80; display:flex; align-items:center; gap:4px;">
+              <span id="totalWonStat">0</span>
+              <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
+            </div>
           </div>
         </div>
       </section>
 
     </main>
 
-    <!-- ВСПЛЫВАЮЩИЙ МОДАЛ: ВЫБОР ПОДАРКОВ (GIFT) -->
+    <!-- МОДАЛ ВЫБОРА ПОДАРКОВ -->
     <div class="modal-overlay" id="giftModal" onclick="closeGiftModal(event)">
       <div class="gift-modal-card" onclick="event.stopPropagation()">
         <div class="modal-drag-pill"></div>
@@ -1153,8 +1182,10 @@
           <div class="gift-empty-icon">
             <i data-lucide="gift" style="width: 28px; height: 28px;"></i>
           </div>
-          <div class="gift-empty-text">У вас нет подарков</div>
-          <div class="gift-empty-desc">В вашем инвентаре пока нет доступных Telegram Gifts для ставки в PvP.</div>
+          <div style="font-size: 14px; font-weight: 700;">У вас нет подарков</div>
+          <div style="font-size: 12px; color: var(--tg-text-secondary); max-width: 260px; line-height: 1.4;">
+            В вашем Telegram инвентаре пока нет доступных Gifts для ставок.
+          </div>
         </div>
         <button class="btn-close-modal" onclick="closeGiftModal()">Понятно</button>
       </div>
@@ -1187,10 +1218,13 @@
   <script>
     lucide.createIcons();
 
-    // Интеграция с Telegram WebApp
+    // ================= ИНТЕГРАЦИЯ С TELEGRAM WEB APP =================
     const tg = window.Telegram?.WebApp;
-    let myUsername = '@alex_player';
-    let myAvatar = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80';
+    let myUser = {
+      username: '@alex_player',
+      avatarUrl: '',
+      initial: 'A'
+    };
 
     if (tg) {
       tg.ready();
@@ -1198,16 +1232,30 @@
       try {
         tg.setHeaderColor('#0b141d');
         tg.setBackgroundColor('#0b141d');
-        if (tg.initDataUnsafe?.user?.username) {
-          myUsername = '@' + tg.initDataUnsafe.user.username;
-          document.getElementById('userName').innerText = myUsername;
-        }
-        if (tg.initDataUnsafe?.user?.photo_url) {
-          myAvatar = tg.initDataUnsafe.user.photo_url;
-          document.getElementById('myHeaderAvatar').src = myAvatar;
+
+        if (tg.initDataUnsafe?.user) {
+          const u = tg.initDataUnsafe.user;
+          myUser.username = u.username ? '@' + u.username : (u.first_name || 'Игрок');
+          myUser.avatarUrl = u.photo_url || '';
+          myUser.initial = (u.first_name ? u.first_name[0] : 'U').toUpperCase();
         }
       } catch (e) {}
     }
+
+    document.getElementById('userName').innerText = myUser.username;
+
+    // Отрисовка реального аватара Telegram
+    function applyUserAvatar(containerId, isBig = false) {
+      const container = document.getElementById(containerId);
+      if (myUser.avatarUrl) {
+        container.innerHTML = `<img src="${myUser.avatarUrl}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+      } else {
+        container.innerText = myUser.initial;
+        container.style.background = 'linear-gradient(135deg, #4598f6, #1d4ed8)';
+      }
+    }
+    applyUserAvatar('myHeaderAvatarBox');
+    applyUserAvatar('myProfileAvatarBox', true);
 
     function haptic(type = 'light') {
       if (tg?.HapticFeedback) {
@@ -1230,7 +1278,7 @@
       if (activeBtn) activeBtn.classList.add('active');
     }
 
-    // Баланс
+    // ================= БАЛАНС =================
     let currentBalance = 100;
     let totalGames = 0;
     let totalWon = 0;
@@ -1240,7 +1288,7 @@
       document.getElementById('headerBalance').innerText = formatted;
       document.getElementById('profileBalance').innerText = formatted;
       document.getElementById('totalGamesStat').innerText = totalGames;
-      document.getElementById('totalWonStat').innerText = `${totalWon} ✦`;
+      document.getElementById('totalWonStat').innerText = totalWon.toLocaleString('ru-RU');
     }
     updateBalanceDisplay();
 
@@ -1260,7 +1308,7 @@
       }
     }
 
-    // ================= МОДАЛКА ВЫБОРА ПОДАРКОВ (GIFT) =================
+    // ================= МОДАЛКА ВЫБОРА GIFT =================
     function openGiftModal() {
       haptic('medium');
       document.getElementById('giftModal').classList.add('active');
@@ -1273,52 +1321,66 @@
 
     function setCurrency(cur) {
       haptic('selection');
-      const btnGram = document.getElementById('btnCurGram');
-      btnGram.classList.add('active');
+      document.getElementById('btnCurGem').classList.add('active');
     }
 
-    // ================= ПВП ИГРОВАЯ ЛОГИКА =================
+    // ================= ПВП И БЕЗУПРЕЧНАЯ РУЛЕТКА =================
     let gameState = 'WAITING'; // 'WAITING', 'COUNTDOWN', 'SPINNING'
     let countdownSec = 15;
     let countdownInterval = null;
     let isAutoPlay = false;
 
-    // Массив цветов для секторов оппонентов
-    const opponentColors = ['#ec4899', '#f59e0b', '#10b981', '#8b5cf6', '#ef4444', '#06b6d4'];
-    let bets = []; // { id, user, avatar, amount, isMe, color, winRate, startDeg, endDeg }
+    // Плавное бесконечное вращение в режиме ожидания через requestAnimationFrame (без рывков)
+    let currentRotorDeg = 0;
+    let idleAnimFrame = null;
 
-    // Размещение ставки игроком (СУММИРОВАНИЕ В ОДНУ)
+    function startIdleAnimation() {
+      if (idleAnimFrame) cancelAnimationFrame(idleAnimFrame);
+      function step() {
+        if (gameState !== 'SPINNING') {
+          currentRotorDeg = (currentRotorDeg + 0.3) % 360;
+          document.getElementById('wheelRotor').style.transform = `rotate(${currentRotorDeg}deg)`;
+          idleAnimFrame = requestAnimationFrame(step);
+        }
+      }
+      idleAnimFrame = requestAnimationFrame(step);
+    }
+    startIdleAnimation();
+
+    const opponentColors = ['#ec4899', '#f59e0b', '#10b981', '#8b5cf6', '#ef4444', '#06b6d4'];
+    let bets = [];
+
+    // Ставка игрока (суммируется в одну)
     function placeBet(amount) {
       if (gameState === 'SPINNING') return;
       haptic('medium');
 
       let val = amount === 'ALL' ? currentBalance : amount;
       if (val <= 0 || currentBalance < val) {
-        alert('Недостаточно Gram для ставки!');
+        alert('Недостаточно баланса!');
         return;
       }
 
       currentBalance -= val;
       updateBalanceDisplay();
 
-      // Проверяем: есть ли уже ставка от нас? Если есть — СУММИРУЕМ!
       const myExistingBet = bets.find(b => b.isMe);
       if (myExistingBet) {
         myExistingBet.amount += val;
       } else {
         bets.push({
           id: 'me',
-          user: myUsername,
-          avatar: myAvatar,
+          user: myUser.username,
+          avatar: myUser.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80',
           amount: val,
           isMe: true,
-          color: '#2ea6ff' // Неоново-голубой для игрока
+          color: '#4598f6'
         });
       }
 
       recalculateAndRender();
 
-      // Автоматическое добавление бота-соперника через 1.5с (для удобного теста 2-х игроков)
+      // Автоматическое подключение бота через 1.5 сек для проверки отсчета 15с
       if (bets.length === 1 && !countdownInterval) {
         setTimeout(() => {
           if (bets.length === 1) addBotOpponent();
@@ -1326,12 +1388,11 @@
       }
     }
 
-    // Добавление бота для спарринга
     function addBotOpponent() {
       if (gameState === 'SPINNING') return;
       haptic('medium');
 
-      const botNames = ['@ton_shark', '@crypto_ninja', '@gram_whale', '@sol_king'];
+      const botNames = ['@ton_shark', '@crypto_ninja', '@whale_tg', '@sol_king'];
       const botAvatars = [
         'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80',
         'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=100&q=80',
@@ -1339,18 +1400,16 @@
       ];
       
       const randomIdx = Math.floor(Math.random() * botNames.length);
-      const randomBotUser = botNames[randomIdx];
-      
-      // Если бот уже есть — суммируем, иначе добавляем
-      const existingBot = bets.find(b => b.user === randomBotUser);
+      const botUser = botNames[randomIdx];
       const botAmount = (Math.floor(Math.random() * 3) + 1) * 5;
 
+      const existingBot = bets.find(b => b.user === botUser);
       if (existingBot) {
         existingBot.amount += botAmount;
       } else {
         bets.push({
           id: 'bot_' + Date.now(),
-          user: randomBotUser,
+          user: botUser,
           avatar: botAvatars[randomIdx % botAvatars.length],
           amount: botAmount,
           isMe: false,
@@ -1361,11 +1420,9 @@
       recalculateAndRender();
     }
 
-    // Пересчет процентов победы, отрисовка секторов колеса и списка
     function recalculateAndRender() {
       const totalBank = bets.reduce((sum, b) => sum + b.amount, 0);
 
-      // Рассчитываем углы секторов
       let currentAngle = 0;
       bets.forEach(b => {
         const rate = (b.amount / totalBank);
@@ -1380,7 +1437,6 @@
       checkGameTimerCondition();
     }
 
-    // Отрисовка секторов на колесе и аватарок
     function renderWheelVisuals(totalBank) {
       const rotor = document.getElementById('wheelRotor');
       rotor.innerHTML = '';
@@ -1390,22 +1446,20 @@
         return;
       }
 
-      // Генерация градиента conic-gradient
       const gradientParts = bets.map(b => `${b.color} ${b.startDeg}deg ${b.endDeg}deg`);
       rotor.style.background = `conic-gradient(from 0deg, ${gradientParts.join(', ')})`;
 
-      // Размещение аватарок на секторах колеса
+      // Размещение аватарок
       bets.forEach(b => {
         const midDeg = (b.startDeg + b.endDeg) / 2;
         const mark = document.createElement('img');
         mark.src = b.avatar;
         mark.className = `wheel-avatar-mark ${b.isMe ? 'is-me' : ''}`;
         
-        // Размещение по радиусу (80px от центра)
-        const radius = 80;
+        const radius = 78;
         const rad = (midDeg - 90) * (Math.PI / 180);
-        const x = 110 + radius * Math.cos(rad) - 15;
-        const y = 110 + radius * Math.sin(rad) - 15;
+        const x = 110 + radius * Math.cos(rad) - 16;
+        const y = 110 + radius * Math.sin(rad) - 16;
 
         mark.style.left = `${x}px`;
         mark.style.top = `${y}px`;
@@ -1413,14 +1467,13 @@
       });
     }
 
-    // Отрисовка списка ставок игроков
     function renderBetsList(totalBank) {
       const countHeader = document.getElementById('playersCountText');
       const bankSummary = document.getElementById('bankSummary');
       const list = document.getElementById('betsListContainer');
 
       countHeader.innerText = `${bets.length} Игроков`;
-      bankSummary.innerText = `Банк: ${totalBank} Gram`;
+      bankSummary.innerHTML = `<span>Банк: ${totalBank}</span> <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>`;
 
       if (bets.length === 0) {
         list.innerHTML = `<div class="empty-bets-placeholder">Ставок пока нет. Будьте первым!</div>`;
@@ -1435,7 +1488,10 @@
               <span class="bet-item-username">
                 ${b.user} ${b.isMe ? '<span class="bet-tag-you">ВЫ</span>' : ''}
               </span>
-              <span class="bet-item-amount" style="color: ${b.color};">${b.amount} Gram</span>
+              <span class="bet-item-amount" style="color: ${b.color};">
+                <span>${b.amount}</span>
+                <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
+              </span>
             </div>
           </div>
           <div class="bet-item-right">
@@ -1446,18 +1502,16 @@
       `).join('');
     }
 
-    // Проверка условия 2-х игроков и запуск таймера 15 сек
     function checkGameTimerCondition() {
       if (bets.length >= 2 && gameState === 'WAITING') {
         start15SecCountdown();
       }
     }
 
-    // ТАЙМЕР 15 СЕКУНД ДО СТАРТА
+    // ТАЙМЕР 15 СЕКУНД
     function start15SecCountdown() {
       gameState = 'COUNTDOWN';
       countdownSec = 15;
-
       const centerBox = document.getElementById('wheelCenterBox');
 
       countdownInterval = setInterval(() => {
@@ -1475,71 +1529,72 @@
       }, 1000);
     }
 
-    // ВРАЩЕНИЕ 11 СЕКУНД С ПЛАВНЫМ ТОРМОЖЕНИЕМ И ЗУМОМ
+    // ВРАЩЕНИЕ 11 СЕКУНД С ЗУМОМ ЭКРАНА В КОНЦЕ
     function start11SecSpin() {
       gameState = 'SPINNING';
+      if (idleAnimFrame) cancelAnimationFrame(idleAnimFrame);
       haptic('medium');
 
       const rotor = document.getElementById('wheelRotor');
       const arenaWrapper = document.getElementById('wheelArenaWrapper');
       const centerBox = document.getElementById('wheelCenterBox');
 
-      rotor.classList.remove('slow-idle');
-
       centerBox.innerHTML = `
-        <i data-lucide="loader-2" class="wheel-waiting-icon" style="animation: rotateSlow 1s linear infinite; width: 28px; height: 28px;"></i>
+        <i data-lucide="loader-2" class="wheel-waiting-icon" style="animation: spinSlow 1s linear infinite; width: 28px; height: 28px;"></i>
         <div class="wheel-countdown-label" style="color: #4ade80;">Крутится...</div>
       `;
       lucide.createIcons();
 
-      // Выбираем победителя по шансам
+      // Выбор победителя по весам
       const totalBank = bets.reduce((sum, b) => sum + b.amount, 0);
       const randTicket = Math.random() * 360;
       let winner = bets.find(b => randTicket >= b.startDeg && randTicket < b.endDeg) || bets[0];
 
-      // Стрелка сверху на 12 часов (0 deg)
-      // Целевой угол поворота колеса
+      // Точный расчет угла остановки стрелки (стрелка на 12 часов = 0deg)
       const winningMiddle = (winner.startDeg + winner.endDeg) / 2;
-      const targetDegree = (360 - winningMiddle); 
+      const targetSectorDeg = (360 - winningMiddle);
 
-      // 10 полных оборотов + точная остановка на победителе
-      const totalSpinDegree = (360 * 10) + targetDegree;
+      // Текущий угол без рывка
+      const currentAngleNorm = currentRotorDeg % 360;
+      let neededOffset = targetSectorDeg - currentAngleNorm;
+      if (neededOffset <= 0) neededOffset += 360;
 
-      // 11 секунд плавной анимации с кинематографичным торможением
-      rotor.style.transition = 'transform 11s cubic-bezier(0.12, 0.88, 0.2, 1)';
-      rotor.style.transform = `rotate(${totalSpinDegree}deg)`;
+      // 10 полных кругов + угол победителя
+      const finalTargetDegree = currentRotorDeg + neededOffset + (360 * 10);
 
-      // НА 8-й СЕКУНДЕ ПЛАВНО ПРИБЛИЖАЕМ ЭКРАН (ZOOM IN)
+      // Вращение ровно 11 секунд с плавным физическим торможением в конце
+      rotor.style.transition = 'transform 11000ms cubic-bezier(0.1, 0.88, 0.18, 1)';
+      rotor.style.transform = `rotate(${finalTargetDegree}deg)`;
+      currentRotorDeg = finalTargetDegree;
+
+      // На 8-й секунде экран плавно приближается (ZOOM IN)
       setTimeout(() => {
         arenaWrapper.classList.add('zoomed');
-      }, 7800);
+      }, 8200);
 
-      // ОКОНЧАНИЕ ВРАЩЕНИЯ ЧЕРЕЗ 11 СЕКУНД
+      // Окончание вращения через 11 секунд
       setTimeout(() => {
         onSpinFinished(winner, totalBank);
       }, 11000);
     }
 
-    // ПОБЕДИТЕЛЬ И СБРОС К НОВОЙ ИГРЕ
     function onSpinFinished(winner, totalBank) {
       haptic('success');
       const centerBox = document.getElementById('wheelCenterBox');
       const arenaWrapper = document.getElementById('wheelArenaWrapper');
 
-      // Показываем победителя в центре
       centerBox.innerHTML = `
-        <img src="${winner.avatar}" style="width: 38px; height: 38px; border-radius: 50%; border: 2px solid ${winner.color}; margin-bottom: 2px;">
+        <img src="${winner.avatar}" style="width: 38px; height: 38px; border-radius: 50%; border: 2.5px solid ${winner.color}; margin-bottom: 2px; object-fit: cover;">
         <span style="font-size: 11px; font-weight: 800; color: #4ade80;">ПОБЕДА!</span>
-        <span style="font-size: 10px; color: var(--tg-text-secondary);">${winner.user}</span>
+        <span style="font-size: 10px; color: var(--tg-text-secondary); max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${winner.user}</span>
       `;
 
-      // Обновляем верхнюю карточку "ПРЕД. ИГРА"
+      // Обновление карточки "ПРЕД. ИГРА"
       document.getElementById('lastGameUser').innerText = winner.user;
-      document.getElementById('lastGameAmount').innerText = `${totalBank} Gram`;
+      document.getElementById('lastGameAmount').innerText = totalBank;
       document.getElementById('lastGameWinrate').innerText = `${winner.winRate}%`;
       document.getElementById('lastGameAvatar').src = winner.avatar;
 
-      // Начисление приза, если выиграли вы
       totalGames++;
       if (winner.isMe) {
         currentBalance += totalBank;
@@ -1547,7 +1602,7 @@
         updateBalanceDisplay();
       }
 
-      // Через 3.5 секунды плавно отдаляем зум и сбрасываем для нового раунда
+      // Возврат зума и сброс для новой игры через 3.5 секунды
       setTimeout(() => {
         arenaWrapper.classList.remove('zoomed');
         resetPvPRound();
@@ -1559,8 +1614,8 @@
       const centerBox = document.getElementById('wheelCenterBox');
 
       rotor.style.transition = 'none';
-      rotor.style.transform = 'rotate(0deg)';
-      rotor.classList.add('slow-idle');
+      currentRotorDeg = currentRotorDeg % 360;
+      rotor.style.transform = `rotate(${currentRotorDeg}deg)`;
 
       centerBox.innerHTML = `
         <i data-lucide="hourglass" class="wheel-waiting-icon" style="width: 24px; height: 24px;"></i>
@@ -1570,9 +1625,9 @@
 
       bets = [];
       gameState = 'WAITING';
+      startIdleAnimation();
       recalculateAndRender();
 
-      // Если включен автоплей, автоматически повторяем ставку 5 Gram
       if (isAutoPlay) {
         setTimeout(() => placeBet(5), 1000);
       }
