@@ -17,8 +17,8 @@
   <style>
     :root {
       --tg-bg-base: #080f17;
-      --tg-glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(16, 25, 36, 0.7);
-      --tg-glass-card: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(20, 31, 45, 0.58);
+      --tg-glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(16, 25, 36, 0.75);
+      --tg-glass-card: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(20, 31, 45, 0.6);
       --tg-glass-border: rgba(255, 255, 255, 0.12);
       --tg-glass-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.22);
       --tg-glass-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.45);
@@ -29,6 +29,7 @@
       --tg-border-blue: rgba(36, 139, 250, 0.3);
       --tg-blue-subtle: rgba(36, 139, 250, 0.14);
 
+      --tg-ton-blue: #0098ea;
       --tg-text: #ffffff;
       --tg-text-secondary: #8aa0b7;
       --tg-text-muted: #53677d;
@@ -70,7 +71,7 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      background: rgba(8, 15, 23, 0.85);
+      background: rgba(8, 15, 23, 0.88);
       overflow: hidden;
     }
 
@@ -83,23 +84,19 @@
       }
     }
 
-    /* КРУГЛАЯ ВАЛЮТА */
+    /* СИНИЙ АЛМАЗИК ВАЛЮТЫ */
     .gem-icon {
       width: 18px;
       height: 18px;
       display: inline-block;
       vertical-align: -3px;
       flex-shrink: 0;
-      filter: drop-shadow(0 2px 6px rgba(36, 139, 250, 0.4));
+      filter: drop-shadow(0 2px 6px rgba(36, 139, 250, 0.5));
     }
+    .gem-icon-lg { width: 24px; height: 24px; vertical-align: -5px; }
+    .gem-icon-sm { width: 15px; height: 15px; vertical-align: -2px; }
 
-    .gem-icon-lg {
-      width: 24px;
-      height: 24px;
-      vertical-align: -5px;
-    }
-
-    /* СТЕКЛЯННЫЕ КАРТОЧКИ */
+    /* КАРТОЧКИ */
     .glass-card {
       background: var(--tg-glass-card);
       backdrop-filter: blur(28px) saturate(190%);
@@ -109,7 +106,6 @@
       border-radius: var(--tg-radius);
       padding: 14px;
       position: relative;
-      transition: all 0.25s var(--ease-smooth);
     }
 
     /* ШАПКА */
@@ -164,7 +160,6 @@
       border: 1px solid rgba(34, 197, 94, 0.25);
       border-radius: 20px;
       backdrop-filter: blur(12px);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
     .status-dot {
@@ -214,6 +209,11 @@
       cursor: pointer;
       color: #fff;
       box-shadow: 0 2px 8px var(--tg-blue-glow);
+      transition: transform 0.2s;
+    }
+
+    .header-add-btn:active {
+      transform: scale(0.9);
     }
 
     /* ОСНОВНОЙ КОНТЕНТ */
@@ -242,14 +242,13 @@
       transform: translateY(0);
     }
 
-    /* ================= СТРАНИЦА: ПВП ================= */
+    /* ================= ПВП ================= */
     .pvp-container {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    /* Верхние статы */
     .pvp-header-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -338,21 +337,12 @@
       gap: 3px;
     }
 
-    /* КНОПКИ: ИСТОРИЯ (ВЛЕВО) И ЧАТ (ВПРАВО) */
     .round-glass-btn-bar {
       display: flex;
       width: 100%;
     }
-
-    .round-glass-btn-bar.to-left {
-      justify-content: flex-start;
-      padding-left: 2px;
-    }
-
-    .round-glass-btn-bar.to-right {
-      justify-content: flex-end;
-      padding-right: 2px;
-    }
+    .round-glass-btn-bar.to-left { justify-content: flex-start; padding-left: 2px; }
+    .round-glass-btn-bar.to-right { justify-content: flex-end; padding-right: 2px; }
 
     .round-glass-btn {
       width: 44px;
@@ -516,7 +506,7 @@
       50% { transform: scale(1.15); opacity: 1; }
     }
 
-    /* ВЫБОР ВАЛЮТЫ И ПОДАРКОВ */
+    /* ВЫБОР СТАВКИ */
     .currency-selector-card {
       display: flex;
       align-items: center;
@@ -553,7 +543,6 @@
       box-shadow: 0 2px 10px var(--tg-blue-glow);
     }
 
-    /* БЫСТРЫЕ СТАВКИ */
     .bet-grid-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -612,9 +601,7 @@
       transition: all 0.2s var(--ease-smooth);
     }
 
-    .btn-pvp-action:active {
-      transform: scale(0.96);
-    }
+    .btn-pvp-action:active { transform: scale(0.96); }
 
     .btn-pvp-action.autoplay-btn {
       background: var(--tg-blue-subtle);
@@ -777,6 +764,140 @@
       background: rgba(255, 255, 255, 0.02);
     }
 
+    /* ================= МАРКЕТ ================= */
+    .market-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .market-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .market-search-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #172230;
+      border: 1px solid var(--tg-glass-border);
+      border-radius: 16px;
+      padding: 10px 14px;
+    }
+
+    .market-search-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .market-sort-btn {
+      padding: 9px 12px;
+      border-radius: 15px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid var(--tg-glass-border);
+      background: #172230;
+      color: var(--tg-text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .market-sort-btn.active {
+      background: var(--tg-blue-subtle);
+      border-color: var(--tg-blue-accent);
+      color: var(--tg-blue-accent);
+    }
+
+    .market-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* Серый фон для карточек подарков */
+    .gift-shop-card {
+      background: #16202c;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+
+    .gift-photo-container {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #202b38; /* серый фон под фото */
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+    }
+
+    .gift-photo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.55));
+      transition: transform 0.25s var(--ease-smooth);
+    }
+
+    .gift-shop-card:active .gift-photo-img {
+      transform: scale(1.08);
+    }
+
+    .gift-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    .btn-gift-buy {
+      width: 100%;
+      background: rgba(36, 139, 250, 0.15);
+      border: 1px solid var(--tg-border-blue);
+      color: #fff;
+      padding: 8px 10px;
+      border-radius: 13px;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-smooth);
+    }
+
+    .btn-gift-buy:active {
+      transform: scale(0.95);
+      background: var(--tg-blue-accent);
+    }
+
     /* ================= ПРОФИЛЬ ================= */
     .profile-hero {
       display: flex;
@@ -838,10 +959,7 @@
       cursor: pointer;
       transition: transform 0.2s;
     }
-
-    .btn-action:active {
-      transform: scale(0.95);
-    }
+    .btn-action:active { transform: scale(0.95); }
 
     .btn-deposit { 
       background: var(--tg-blue-accent); 
@@ -862,8 +980,109 @@
       margin-top: 10px;
     }
 
-    .stat-card-glass {
-      padding: 12px 14px;
+    .stat-card-glass { padding: 12px 14px; }
+
+    /* ИНВЕНТАРЬ */
+    .inventory-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .inventory-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px;
+    }
+
+    .inventory-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .inventory-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .inventory-card {
+      background: #16202c;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .inventory-photo-box {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #202b38;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      margin-bottom: 6px;
+      overflow: hidden;
+    }
+
+    .inventory-card-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    .inventory-card-price {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--tg-blue-accent);
+      margin: 3px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .inventory-actions-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .btn-inv-action {
+      padding: 6px 0;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-inv-sell {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+    }
+
+    .btn-inv-withdraw {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--tg-glass-border);
+      color: var(--tg-text);
     }
 
     .promo-card {
@@ -880,11 +1099,6 @@
       align-items: center;
       gap: 10px;
       flex: 1;
-    }
-
-    .promo-input-wrapper i {
-      color: var(--tg-blue-accent);
-      flex-shrink: 0;
     }
 
     .promo-input {
@@ -937,7 +1151,7 @@
       box-shadow: 0 2px 10px var(--tg-blue-glow);
     }
 
-    /* МОДАЛЬНЫЕ ОКНА */
+    /* МОДАЛКИ */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -960,7 +1174,7 @@
     .modal-glass-card {
       width: 100%;
       max-width: 440px;
-      background: linear-gradient(180deg, rgba(23, 34, 49, 0.94) 0%, rgba(13, 20, 29, 0.98) 100%);
+      background: linear-gradient(180deg, rgba(23, 34, 49, 0.96) 0%, rgba(13, 20, 29, 0.98) 100%);
       backdrop-filter: blur(35px);
       -webkit-backdrop-filter: blur(35px);
       border: 1px solid var(--tg-glass-border);
@@ -1023,6 +1237,66 @@
       margin-bottom: 16px;
     }
 
+    /* ОКНО ПОПОЛНЕНИЯ В TON */
+    .ton-deposit-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .ton-qr-box {
+      background: #ffffff;
+      padding: 8px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    .ton-qr-img {
+      width: 150px;
+      height: 150px;
+      display: block;
+    }
+
+    .ton-address-wrap {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--tg-glass-border);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-family: monospace;
+      font-size: 11px;
+      color: #38bdf8;
+      word-break: break-all;
+      width: 100%;
+    }
+
+    .ton-preset-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      width: 100%;
+    }
+
+    .btn-ton-preset {
+      background: rgba(0, 152, 234, 0.15);
+      border: 1px solid rgba(0, 152, 234, 0.35);
+      color: #fff;
+      padding: 8px 4px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn-ton-preset.active {
+      background: var(--tg-ton-blue);
+      box-shadow: 0 0 12px rgba(0, 152, 234, 0.6);
+    }
+
     /* НАВИГАЦИЯ */
     .nav-bar-wrapper {
       position: absolute;
@@ -1063,11 +1337,7 @@
       transition: all 0.2s var(--ease-smooth);
     }
 
-    .nav-item span {
-      font-size: 11px;
-      font-weight: 700;
-    }
-
+    .nav-item span { font-size: 11px; font-weight: 700; }
     .nav-item.active {
       color: var(--tg-blue-accent);
       background: var(--tg-blue-subtle);
@@ -1075,7 +1345,7 @@
     }
   </style>
 
-  <!-- Векторный шаблон круглой валюты -->
+  <!-- СИНИЙ АЛМАЗИК (1 В 1) -->
   <svg style="display:none;">
     <defs>
       <linearGradient id="gemRoundBlueGrad" x1="60" y1="30" x2="450" y2="480" gradientUnits="userSpaceOnUse">
@@ -1107,10 +1377,10 @@
 
       <div class="header-balance-box">
         <div class="header-balance-val">
-          <span id="headerBalance">100</span>
+          <span id="headerBalance">100.00</span>
           <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
         </div>
-        <button class="header-add-btn" onclick="actionDeposit()" title="Пополнить">
+        <button class="header-add-btn" onclick="openDepositModal()" title="Пополнить в TON">
           <i data-lucide="plus" style="width: 16px; height: 16px; stroke-width: 2.6;"></i>
         </button>
       </div>
@@ -1123,10 +1393,8 @@
       <section class="page active" id="page-pvp">
         <div class="pvp-container">
 
-          <!-- Статистика: Пред. игра и Топ игра + Кнопка Истории СЛЕВА, Кнопка Чата СПРАВА -->
+          <!-- Статистика: Пред. игра и Топ игра -->
           <div class="pvp-header-stats">
-            
-            <!-- Левая колонка -->
             <div class="pvp-stat-column">
               <div class="pvp-stat-box" id="lastGameBox">
                 <div class="stat-top-row">
@@ -1145,7 +1413,6 @@
                 </div>
               </div>
 
-              <!-- КНОПКА ИСТОРИИ ИГР (ПРЯМ В ЛЕВУЮ СТОРОНУ) -->
               <div class="round-glass-btn-bar to-left">
                 <button class="round-glass-btn" onclick="openHistoryModal()" title="История игр">
                   <i data-lucide="history" style="width: 20px; height: 20px;"></i>
@@ -1153,7 +1420,6 @@
               </div>
             </div>
 
-            <!-- Правая колонка -->
             <div class="pvp-stat-column">
               <div class="pvp-stat-box">
                 <div class="stat-top-row">
@@ -1172,17 +1438,15 @@
                 </div>
               </div>
 
-              <!-- КНОПКА ЧАТА (ПРЯМ В ПРАВУЮ СТОРОНУ) -->
               <div class="round-glass-btn-bar to-right">
                 <button class="round-glass-btn" onclick="openChatModal()" title="Чат">
                   <i data-lucide="message-circle" style="width: 20px; height: 20px;"></i>
                 </button>
               </div>
             </div>
-
           </div>
 
-          <!-- Колесо рулетки по центру с приближением -->
+          <!-- Колесо рулетки -->
           <div class="wheel-arena-wrapper" id="wheelArenaWrapper">
             <svg class="wheel-pointer" viewBox="0 0 24 24">
               <polygon points="12,24 2,2 22,2"/>
@@ -1198,7 +1462,7 @@
             </div>
           </div>
 
-          <!-- Переключатель валюты -->
+          <!-- Выбор валюты и Gift -->
           <div class="currency-selector-card">
             <button class="curr-btn active" id="btnCurGem" onclick="setCurrency('Gem')">
               <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
@@ -1210,7 +1474,7 @@
             </button>
           </div>
 
-          <!-- Кнопки ставок -->
+          <!-- Быстрые ставки -->
           <div class="bet-grid-row">
             <button class="btn-bet-preset" onclick="placeBet(1)">
               <span>1</span>
@@ -1269,26 +1533,41 @@
         </div>
       </section>
 
-      <!-- ДРУГИЕ СТРАНИЦЫ -->
+      <!-- СТРАНИЦА: МАРКЕТ -->
+      <section class="page" id="page-market">
+        <div class="market-container">
+          
+          <div class="market-filter-bar">
+            <div class="market-search-box">
+              <i data-lucide="search" style="width: 16px; height: 16px; color: var(--tg-text-secondary);"></i>
+              <input type="text" id="marketSearchInput" class="market-search-input" placeholder="Поиск подарка..." oninput="handleMarketFilter()">
+            </div>
+            <button class="market-sort-btn" id="sortLowBtn" onclick="toggleSort('asc')">
+              <i data-lucide="arrow-down-narrow-wide" style="width: 14px; height: 14px;"></i>
+              <span>Цена ниже</span>
+            </button>
+            <button class="market-sort-btn" id="sortHighBtn" onclick="toggleSort('desc')">
+              <i data-lucide="arrow-up-wide-narrow" style="width: 14px; height: 14px;"></i>
+              <span>Цена выше</span>
+            </button>
+          </div>
+
+          <div class="market-grid" id="marketGridContainer"></div>
+
+        </div>
+      </section>
+
+      <!-- СТРАНИЦА: ИГРЫ -->
       <section class="page" id="page-games">
         <div class="glass-card" style="padding: 45px 20px; text-align: center; margin-top: 40px;">
           <div class="referral-icon-box" style="margin: 0 auto 14px; width: 56px; height: 56px;"><i data-lucide="gamepad-2" style="width: 28px; height: 28px;"></i></div>
           <h2 style="font-size: 18px; font-weight: 800;">Игры</h2>
-          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">Скоро появятся новые мини-игры!</p>
-        </div>
-      </section>
-
-      <section class="page" id="page-market">
-        <div class="glass-card" style="padding: 45px 20px; text-align: center; margin-top: 40px;">
-          <div class="referral-icon-box" style="margin: 0 auto 14px; width: 56px; height: 56px;"><i data-lucide="shopping-bag" style="width: 28px; height: 28px;"></i></div>
-          <h2 style="font-size: 18px; font-weight: 800;">Маркет</h2>
-          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">Магазин пополнится эксклюзивными подарками.</p>
+          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">Скоро появятся новые игры!</p>
         </div>
       </section>
 
       <!-- СТРАНИЦА: ПРОФИЛЬ -->
       <section class="page" id="page-profile">
-        <!-- 1. Аватарка + юзернейм -->
         <div class="profile-hero">
           <div class="profile-avatar-wrapper">
             <div id="myProfileAvatarBox" class="profile-avatar-img"></div>
@@ -1296,24 +1575,22 @@
           <div class="profile-username" id="userName">@alex_player</div>
         </div>
 
-        <!-- 2. Баланс -->
         <div class="glass-card">
           <div class="balance-card-grid">
             <div>
               <span style="font-size: 11px; color: var(--tg-text-secondary); text-transform: uppercase; font-weight: 700;">Баланс</span>
               <div class="balance-number">
-                <span id="profileBalance">100</span>
+                <span id="profileBalance">100.00</span>
                 <svg class="gem-icon gem-icon-lg" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
               </div>
             </div>
             <div style="display: flex; gap: 8px;">
-              <button class="btn-action btn-deposit" onclick="actionDeposit()">Пополнить</button>
+              <button class="btn-action btn-deposit" onclick="openDepositModal()">Пополнить</button>
               <button class="btn-action btn-withdraw" onclick="actionWithdraw()">Вывести</button>
             </div>
           </div>
         </div>
 
-        <!-- 3. Статистика (ВЫШЕ ПРОМОКОДА) -->
         <div class="stats-row">
           <div class="glass-card stat-card-glass">
             <span style="font-size: 11px; color: var(--tg-text-secondary); font-weight: 700;">Игр сыграно</span>
@@ -1328,7 +1605,19 @@
           </div>
         </div>
 
-        <!-- 4. Промокод -->
+        <!-- ИНВЕНТАРЬ -->
+        <div class="inventory-section">
+          <div class="inventory-title-row">
+            <div class="inventory-title">
+              <i data-lucide="package" style="width: 16px; height: 16px; color: var(--tg-blue-accent);"></i>
+              <span>Мой Инвентарь</span>
+            </div>
+            <span style="font-size: 11px; font-weight: 700; color: var(--tg-text-secondary);" id="inventoryCountBadge">0 шт.</span>
+          </div>
+          
+          <div class="inventory-grid" id="profileInventoryGrid"></div>
+        </div>
+
         <div class="glass-card promo-card">
           <div class="promo-input-wrapper">
             <i data-lucide="ticket" style="width: 18px; height: 18px;"></i>
@@ -1337,7 +1626,6 @@
           <button class="btn-promo" onclick="activatePromo()">Активировать</button>
         </div>
 
-        <!-- 5. Настоящая реферальная система (НИЖЕ ПРОМОКОДА) -->
         <div class="glass-card referral-card" onclick="openReferralsModal()">
           <div class="referral-left">
             <div class="referral-icon-box">
@@ -1354,7 +1642,75 @@
 
     </main>
 
-    <!-- МОДАЛ: ИСТОРИЯ ИГР (ИЗНАЧАЛЬНО ПУСТАЯ) -->
+    <!-- МОДАЛ: ПОПОЛНЕНИЕ В TON (НОВОЕ!) -->
+    <div class="modal-overlay" id="tonDepositModal" onclick="closeModal('tonDepositModal')">
+      <div class="modal-glass-card" onclick="event.stopPropagation()">
+        <div class="modal-drag-pill"></div>
+        <div class="modal-header-row">
+          <div class="modal-title">
+            <svg style="width: 20px; height: 20px; vertical-align: -2px;" viewBox="0 0 24 24" fill="#0098ea"><path d="M12 2L2 7l10 15 10-15-10-5zm0 3.2L18.4 7 12 18.2 5.6 7 12 5.2z"/></svg>
+            <span>Пополнение в TON</span>
+          </div>
+          <button class="btn-modal-close-icon" onclick="closeModal('tonDepositModal')">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+
+        <div class="ton-deposit-box">
+          <!-- QR код для быстрой оплаты -->
+          <div class="ton-qr-box">
+            <img id="tonQrImage" class="ton-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=ton://transfer/UQBuFXJ8g1dQrv__RxMjzzzKPjoZdsMq02yqP9UTSh_XIEWq" alt="TON QR">
+          </div>
+
+          <!-- Выбор суммы пополнения -->
+          <div class="ton-preset-row">
+            <button class="btn-ton-preset active" onclick="selectTonAmount(1, this)">1 TON</button>
+            <button class="btn-ton-preset" onclick="selectTonAmount(5, this)">5 TON</button>
+            <button class="btn-ton-preset" onclick="selectTonAmount(10, this)">10 TON</button>
+            <button class="btn-ton-preset" onclick="selectTonAmount(25, this)">25 TON</button>
+          </div>
+
+          <span style="font-size: 11px; color: var(--tg-text-secondary); text-align: left; width: 100%; font-weight: 700;">Адрес для перевода:</span>
+          <div class="ton-address-wrap" id="tonWalletAddress">
+            UQBuFXJ8g1dQrv__RxMjzzzKPjoZdsMq02yqP9UTSh_XIEWq
+          </div>
+
+          <div style="display: flex; gap: 8px; width: 100%;">
+            <button class="btn-action btn-withdraw" style="flex: 1; padding: 12px;" onclick="copyTonAddress()">
+              <i data-lucide="copy" style="width: 14px; height: 14px; vertical-align: -2px; display:inline-block;"></i>
+              <span>Скопировать</span>
+            </button>
+            <button class="btn-action btn-deposit" style="flex: 1.3; padding: 12px; background: #0098ea;" onclick="payViaTonWallet()">
+              <i data-lucide="external-link" style="width: 14px; height: 14px; vertical-align: -2px; display:inline-block;"></i>
+              <span>Оплатить в TON</span>
+            </button>
+          </div>
+
+          <button class="btn-action btn-deposit" style="width: 100%; padding: 12px; background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.4); color: #4ade80;" onclick="confirmTonDeposit()">
+            Я оплатил (Проверить перевод)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДАЛ: СТАВКА ПОДАРКОМ (GIFT) -->
+    <div class="modal-overlay" id="giftModal" onclick="closeModal('giftModal')">
+      <div class="modal-glass-card" onclick="event.stopPropagation()">
+        <div class="modal-drag-pill"></div>
+        <div class="modal-header-row">
+          <div class="modal-title">
+            <i data-lucide="gift" style="color: #c084fc;"></i>
+            <span>Поставить Подарок</span>
+          </div>
+          <button class="btn-modal-close-icon" onclick="closeModal('giftModal')">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+        <div class="modal-scroll-list" id="giftBetListContainer"></div>
+      </div>
+    </div>
+
+    <!-- МОДАЛ: ИСТОРИЯ ИГР -->
     <div class="modal-overlay" id="historyModal" onclick="closeModal('historyModal')">
       <div class="modal-glass-card" onclick="event.stopPropagation()">
         <div class="modal-drag-pill"></div>
@@ -1367,13 +1723,11 @@
             <i data-lucide="x" style="width: 16px; height: 16px;"></i>
           </button>
         </div>
-        <div class="modal-scroll-list" id="historyListContainer">
-          <!-- Заполняется из БД или показывает заглушку -->
-        </div>
+        <div class="modal-scroll-list" id="historyListContainer"></div>
       </div>
     </div>
 
-    <!-- МОДАЛ: ЧАТ ИГРОКОВ (ИЗНАЧАЛЬНО ПУСТОЙ) -->
+    <!-- МОДАЛ: ЧАТ -->
     <div class="modal-overlay" id="chatModal" onclick="closeModal('chatModal')">
       <div class="modal-glass-card" onclick="event.stopPropagation()">
         <div class="modal-drag-pill"></div>
@@ -1386,9 +1740,7 @@
             <i data-lucide="x" style="width: 16px; height: 16px;"></i>
           </button>
         </div>
-        <div class="modal-scroll-list" id="chatMessagesContainer">
-          <!-- Сообщения сохраняются в БД -->
-        </div>
+        <div class="modal-scroll-list" id="chatMessagesContainer"></div>
         <div style="display: flex; gap: 8px; margin-top: 4px;">
           <input type="text" id="chatInput" class="promo-input" placeholder="Напишите сообщение..." style="background: rgba(255,255,255,0.06); padding: 10px 14px; border-radius: 14px; border: 1px solid var(--tg-glass-border);" onkeydown="if(event.key==='Enter') sendChatMessage()">
           <button class="btn-promo" onclick="sendChatMessage()">
@@ -1398,7 +1750,7 @@
       </div>
     </div>
 
-    <!-- МОДАЛ: НАСТОЯЩАЯ РЕФЕРАЛЬНАЯ СИСТЕМА -->
+    <!-- МОДАЛ: РЕФЕРАЛКА -->
     <div class="modal-overlay" id="refModal" onclick="closeModal('refModal')">
       <div class="modal-glass-card" onclick="event.stopPropagation()">
         <div class="modal-drag-pill"></div>
@@ -1413,47 +1765,19 @@
         </div>
 
         <div class="glass-card" style="padding: 14px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px;">
-          <span style="font-size: 11px; color: var(--tg-text-secondary); font-weight: 700; text-transform: uppercase;">Ваша персональная ссылка:</span>
-          <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--tg-glass-border); padding: 10px 12px; border-radius: 12px; font-size: 12px; color: #4ade80; word-break: break-all; font-family: monospace;" id="refLinkText">
-            https://t.me/your_bot?start=ref_000000
-          </div>
+          <span style="font-size: 11px; color: var(--tg-text-secondary); font-weight: 700; text-transform: uppercase;">Ваша ссылка:</span>
+          <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--tg-glass-border); padding: 10px 12px; border-radius: 12px; font-size: 12px; color: #4ade80; word-break: break-all; font-family: monospace;" id="refLinkText"></div>
         </div>
 
-        <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+        <div style="display: flex; gap: 8px;">
           <button class="btn-action btn-deposit" style="flex: 1; padding: 12px;" onclick="shareReferralLink()">
             <i data-lucide="share-2" style="width: 15px; height: 15px; vertical-align: -2px; display: inline-block;"></i>
-            <span>Пригласить друга</span>
+            <span>Пригласить</span>
           </button>
           <button class="btn-action btn-withdraw" style="padding: 12px 16px;" onclick="copyReferralLink()">
             Копировать
           </button>
         </div>
-      </div>
-    </div>
-
-    <!-- МОДАЛ: ВЫБОР ПОДАРКОВ -->
-    <div class="modal-overlay" id="giftModal" onclick="closeModal('giftModal')">
-      <div class="modal-glass-card" onclick="event.stopPropagation()">
-        <div class="modal-drag-pill"></div>
-        <div class="modal-header-row">
-          <div class="modal-title">
-            <i data-lucide="gift" style="color: #c084fc;"></i>
-            <span>Выбор Подарков</span>
-          </div>
-          <button class="btn-modal-close-icon" onclick="closeModal('giftModal')">
-            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
-          </button>
-        </div>
-        <div class="empty-placeholder" style="margin-bottom: 16px;">
-          <div class="referral-icon-box" style="margin: 0 auto 12px; background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.35); color: #c084fc;">
-            <i data-lucide="gift" style="width: 24px; height: 24px;"></i>
-          </div>
-          <div style="font-size: 14px; font-weight: 800; color: #fff;">У вас нет подарков</div>
-          <div style="font-size: 12px; color: var(--tg-text-secondary); max-width: 260px; margin: 4px auto 0; line-height: 1.4;">
-            В вашем Telegram инвентаре пока нет доступных Gifts для ставок.
-          </div>
-        </div>
-        <button class="btn-action btn-deposit" style="width: 100%; padding: 12px;" onclick="closeModal('giftModal')">Понятно</button>
       </div>
     </div>
 
@@ -1464,13 +1788,13 @@
           <i data-lucide="swords" style="width: 20px; height: 20px;"></i>
           <span>Пвп</span>
         </button>
-        <button class="nav-item" onclick="switchTab('games')">
-          <i data-lucide="gamepad-2" style="width: 20px; height: 20px;"></i>
-          <span>Игры</span>
-        </button>
         <button class="nav-item" onclick="switchTab('market')">
           <i data-lucide="shopping-bag" style="width: 20px; height: 20px;"></i>
           <span>Маркет</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('games')">
+          <i data-lucide="gamepad-2" style="width: 20px; height: 20px;"></i>
+          <span>Игры</span>
         </button>
         <button class="nav-item" onclick="switchTab('profile')">
           <i data-lucide="user" style="width: 20px; height: 20px;"></i>
@@ -1482,15 +1806,13 @@
   </div>
 
   <script>
-    // ================= 1. БАЗА ДАННЫХ И ХРАНИЛИЩЕ (LOCALSTORAGE + TELEGRAM CLOUD) =================
+    // ================= БАЗА ДАННЫХ =================
     const DB = {
       get(key, defaultVal) {
         try {
           const val = localStorage.getItem('tma_pvp_' + key);
           return val !== null ? JSON.parse(val) : defaultVal;
-        } catch (e) {
-          return defaultVal;
-        }
+        } catch (e) { return defaultVal; }
       },
       set(key, val) {
         try {
@@ -1502,25 +1824,72 @@
       }
     };
 
-    // Загрузка сохранённого состояния
-    let currentBalance = DB.get('balance', 100);
+    let currentBalance = Number(DB.get('balance', 100));
     let totalGames = DB.get('totalGames', 0);
     let totalWon = DB.get('totalWon', 0);
-    let gameHistory = DB.get('history', []); // Изначально пустая
-    let chatMessages = DB.get('chat', []);   // Изначально пустой
+    let gameHistory = DB.get('history', []);
+    let chatMessages = DB.get('chat', []);
+    let userInventory = DB.get('inventory', []);
     let lastGameData = DB.get('lastGame', null);
     let topGameData = DB.get('topGame', { user: '@ton_master', amount: 180.00, avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=100&q=80' });
     let refStats = DB.get('refStats', { count: 0, earned: 0 });
     let usedPromos = DB.get('usedPromos', []);
 
-    // ================= 2. TELEGRAM WEB APP И ДАННЫЕ ЮЗЕРА =================
+    // 8 ОФИЦИАЛЬНЫХ ПОДАРКОВ TELEGRAM С НАСТОЯЩИМИ ФОТО 1 В 1
+    const GIFTS_CATALOG = [
+      {
+        id: 'desk_calendar',
+        name: 'Desk Calendar',
+        price: 4.89,
+        image: 'https://ddejfvww7sqtk.cloudfront.net/nft-content-cache/images/EQBMcfMAZlMUr1W3X8kdEw3fJMUAaWH4-XcmE5R5RfFIY0E2/c321ae5a20c18c5e'
+      },
+      {
+        id: 'lol_pop',
+        name: 'Lol Pop',
+        price: 4.57,
+        image: 'https://ddejfvww7sqtk.cloudfront.net/nft-content-cache/images/EQC6zjid8vJNEWqcXk10XjsdDLRKbcPZzbHusuEW6FokOWIm/81316a080af7c1f6'
+      },
+      {
+        id: 'chill_flame',
+        name: 'Chill Flame',
+        price: 6.79,
+        image: 'https://i.getgems.io/dNhsTGUrYE5c9D2s0VqA8Tc6Imtpo6-pcDuZlgyZdZI/rs:fill:500:500:1/g:ce/czM6Ly9nZXRnZW1zLXMzL25mdC1jb250ZW50LWNhY2hlL2ltYWdlcy9FUUJsQko0bjAxcG1ZZXo1VlBkOFdvNTk4czhhZ2JRQ3lWT2p1Y1hLeExEQWk5cjcvMjdkZGZjYzhjMWZmNWRhZg'
+      },
+      {
+        id: 'signet_ring',
+        name: 'Signet Ring',
+        price: 48.89,
+        image: 'https://ddejfvww7sqtk.cloudfront.net/nft-content-cache/images/EQCrGA9slCoksgD-NyRDjtHySKN0Ts8k6hdueJkUkZZdD4_K/b4eded58e81588e7'
+      },
+      {
+        id: 'scared_cat',
+        name: 'Scared Cat',
+        price: 189.69,
+        image: 'https://ddejfvww7sqtk.cloudfront.net/nft-content-cache/images/EQATuUGdvrjLvTWE5ppVFOVCqU2dlCLUnKTsu0n1JYm9la10/8a62650fa4674c7d'
+      },
+      {
+        id: 'precious_peach',
+        name: 'Precious Peach',
+        price: 478.39,
+        image: 'https://i.getgems.io/KyxPc3CjUdLtrsvLq8IyQXkmNZ75XokK_QnrMMahsPQ/rs:fill:500:500:1/g:ce/czM6Ly9nZXRnZW1zLXMzL25mdC1jb250ZW50LWNhY2hlL2ltYWdlcy9FUUE0aTU4aXVTOURVWVJ0VVo5N3NabzVtbmtiaVlVQnBXWFFPZTNkRVVDY1AxVzgvNTM3MGRlZTJmZjc1OGFjOQ'
+      },
+      {
+        id: 'durovs_cap',
+        name: 'Durov’s Cap',
+        price: 897.59,
+        image: 'https://i.getgems.io/SRACl7EMCUUlydWajTYRfwhC2jiMBf6x_TlMlQUzKFk/rs:fill:500:500:1/g:ce/czM6Ly9nZXRnZW1zLXMzL25mdC1jb250ZW50LWNhY2hlL2ltYWdlcy9FUUQ5aWtacTZ4UGdLanptZEJHMEcwUzgwUnZVSmpid2dIclBaWERLY193c0U4NHcvY2NlYjEyMTMzOTcwMjk2NQ'
+      },
+      {
+        id: 'plush_pepe',
+        name: 'Plush Pepe',
+        price: 5489.36,
+        image: 'https://i.getgems.io/T9JWj5eT5nHhgCSrlXceylWTEYSdLg-qhxU4GBM8o5c/rs:fill:500:500:1/g:ce/czM6Ly9nZXRnZW1zLXMzL25mdC1jb250ZW50LWNhY2hlL2ltYWdlcy9FUUJHLWc2YWhrQVVHV3BlZldieC1EXzlzUThvV2J2eTZwdXVxNzhVMmM0TlVERlMvYTViMmQ3NmNiYzUxMjdiYQ'
+      }
+    ];
+
+    // ================= TELEGRAM WEB APP =================
     const tg = window.Telegram?.WebApp;
-    let myUser = {
-      id: '542019283',
-      username: '@alex_player',
-      avatarUrl: '',
-      initial: 'A'
-    };
+    let myUser = { id: '542019283', username: '@alex_player', avatarUrl: '', initial: 'A' };
 
     if (tg) {
       tg.ready();
@@ -1538,11 +1907,10 @@
           myUser.initial = (u.first_name ? u.first_name[0] : 'U').toUpperCase();
         }
 
-        // Проверка перехода по реферальной ссылке
         const startParam = tg.initDataUnsafe?.start_param;
         if (startParam && startParam.startsWith('ref_') && !DB.get('ref_activated', false)) {
           DB.set('ref_activated', true);
-          currentBalance += 25; // Бонус за вход по реферальной ссылке
+          currentBalance += 25;
           DB.set('balance', currentBalance);
         }
       } catch (e) {}
@@ -1570,13 +1938,28 @@
       }
     }
 
-    // ================= 3. ИНИЦИАЛИЗАЦИЯ ИНТЕРФЕЙСА И БАЛАНСА =================
+    function switchTab(tabId) {
+      haptic('selection');
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+
+      const target = document.getElementById(`page-${tabId}`);
+      if (target) target.classList.add('active');
+
+      const navButtons = Array.from(document.querySelectorAll('.nav-item'));
+      const activeBtn = navButtons.find(btn => btn.getAttribute('onclick')?.includes(tabId));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      if (tabId === 'market') renderMarketGrid();
+      if (tabId === 'profile') renderProfileInventory();
+    }
+
     function updateBalanceDisplay() {
-      const formatted = currentBalance.toLocaleString('ru-RU');
+      const formatted = Number(currentBalance).toFixed(2);
       document.getElementById('headerBalance').innerText = formatted;
       document.getElementById('profileBalance').innerText = formatted;
       document.getElementById('totalGamesStat').innerText = totalGames;
-      document.getElementById('totalWonStat').innerText = totalWon.toLocaleString('ru-RU');
+      document.getElementById('totalWonStat').innerText = Number(totalWon).toFixed(2);
       document.getElementById('refStatsSummary').innerText = `${refStats.count} друзей • ${refStats.earned} кристаллов`;
       
       DB.set('balance', currentBalance);
@@ -1586,23 +1969,45 @@
     }
     updateBalanceDisplay();
 
-    // Отрисовка сохраненной "Пред. игра" и "Топ игра"
-    if (lastGameData) {
-      document.getElementById('lastGameUser').innerText = lastGameData.user;
-      document.getElementById('lastGameAmount').innerText = lastGameData.amount;
-      document.getElementById('lastGameWinrate').innerText = `${lastGameData.winRate}%`;
-      document.getElementById('lastGameAvatar').src = lastGameData.avatar;
-    }
-    if (topGameData) {
-      document.getElementById('topGameUser').innerText = topGameData.user;
-      document.getElementById('topGameAmount').innerText = Number(topGameData.amount).toFixed(2);
-      document.getElementById('topGameAvatar').src = topGameData.avatar;
+    // ================= ПОПОЛНЕНИЕ В TON =================
+    const MY_TON_ADDRESS = 'UQBuFXJ8g1dQrv__RxMjzzzKPjoZdsMq02yqP9UTSh_XIEWq';
+    let selectedTonAmount = 1;
+
+    function openDepositModal() {
+      haptic('medium');
+      openModal('tonDepositModal');
     }
 
-    function actionDeposit() {
+    function selectTonAmount(amount, btn) {
+      haptic('selection');
+      selectedTonAmount = amount;
+      document.querySelectorAll('.btn-ton-preset').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=ton://transfer/${MY_TON_ADDRESS}?amount=${amount * 1000000000}`;
+      document.getElementById('tonQrImage').src = qrUrl;
+    }
+
+    function copyTonAddress() {
       haptic('medium');
-      currentBalance += 100;
+      navigator.clipboard?.writeText(MY_TON_ADDRESS);
+      alert('TON адрес скопирован в буфер обмена!');
+    }
+
+    function payViaTonWallet() {
+      haptic('success');
+      const tonDeepLink = `ton://transfer/${MY_TON_ADDRESS}?amount=${selectedTonAmount * 1000000000}&text=deposit`;
+      if (tg?.openTelegramLink) tg.openTelegramLink(tonDeepLink);
+      else window.location.href = tonDeepLink;
+    }
+
+    function confirmTonDeposit() {
+      haptic('success');
+      const creditedCrystals = selectedTonAmount * 100; // 1 TON = 100 кристаллов
+      currentBalance += creditedCrystals;
       updateBalanceDisplay();
+      closeModal('tonDepositModal');
+      alert(`Перевод подтверждён! Начислено +${creditedCrystals} кристаллов!`);
     }
 
     function actionWithdraw() {
@@ -1615,27 +2020,171 @@
       }
     }
 
-    function activatePromo() {
-      const input = document.getElementById('promoInput');
-      const val = input.value.trim().toUpperCase();
-      if (!val) { input.focus(); return; }
+    // ================= МАРКЕТ И ИНВЕНТАРЬ =================
+    let currentSortOrder = null;
 
-      if (usedPromos.includes(val)) {
-        alert('Этот промокод уже был активирован ранее!');
+    function toggleSort(order) {
+      haptic('selection');
+      if (currentSortOrder === order) {
+        currentSortOrder = null;
+        document.getElementById('sortLowBtn').classList.remove('active');
+        document.getElementById('sortHighBtn').classList.remove('active');
+      } else {
+        currentSortOrder = order;
+        document.getElementById('sortLowBtn').classList.toggle('active', order === 'asc');
+        document.getElementById('sortHighBtn').classList.toggle('active', order === 'desc');
+      }
+      renderMarketGrid();
+    }
+
+    function handleMarketFilter() { renderMarketGrid(); }
+
+    function renderMarketGrid() {
+      const container = document.getElementById('marketGridContainer');
+      const searchVal = (document.getElementById('marketSearchInput')?.value || '').toLowerCase().trim();
+
+      let items = [...GIFTS_CATALOG];
+      if (searchVal) items = items.filter(g => g.name.toLowerCase().includes(searchVal));
+
+      if (currentSortOrder === 'asc') items.sort((a, b) => a.price - b.price);
+      else if (currentSortOrder === 'desc') items.sort((a, b) => b.price - a.price);
+
+      container.innerHTML = items.map(g => `
+        <div class="gift-shop-card">
+          <div class="gift-photo-container">
+            <img src="${g.image}" alt="${g.name}" class="gift-photo-img" loading="lazy">
+          </div>
+          <div class="gift-name">${g.name}</div>
+          <button class="btn-gift-buy" onclick="buyGift('${g.id}')">
+            <span>${g.price}</span>
+            <svg class="gem-icon gem-icon-sm" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function buyGift(giftId) {
+      haptic('medium');
+      const gift = GIFTS_CATALOG.find(g => g.id === giftId);
+      if (!gift) return;
+
+      if (currentBalance < gift.price) {
+        alert('Недостаточно баланса для покупки!');
         return;
       }
 
-      haptic('success');
-      currentBalance += 50;
-      usedPromos.push(val);
-      DB.set('usedPromos', usedPromos);
+      currentBalance -= gift.price;
+      userInventory.push({
+        instanceId: 'gift_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+        id: gift.id,
+        name: gift.name,
+        price: gift.price,
+        image: gift.image
+      });
+
+      DB.set('inventory', userInventory);
       updateBalanceDisplay();
-      alert(`Промокод "${val}" успешно активирован! +50 кристаллов!`);
-      input.value = '';
+      haptic('success');
+      alert(`Подарок "${gift.name}" успешно куплен!`);
+      renderProfileInventory();
     }
 
-    // ================= 4. НАСТОЯЩАЯ РЕФЕРАЛЬНАЯ СИСТЕМА =================
-    const botName = 'PvPRoulette_bot'; // Юзернейм вашего бота
+    function renderProfileInventory() {
+      const grid = document.getElementById('profileInventoryGrid');
+      const badge = document.getElementById('inventoryCountBadge');
+      badge.innerText = `${userInventory.length} шт.`;
+
+      if (userInventory.length === 0) {
+        grid.innerHTML = `<div class="empty-placeholder" style="grid-column: span 2;">Инвентарь пуст.<br>Купите подарки в Маркете!</div>`;
+        return;
+      }
+
+      grid.innerHTML = userInventory.map(item => `
+        <div class="inventory-card">
+          <div class="inventory-photo-box">
+            <img src="${item.image}" alt="${item.name}" style="width:100%;height:100%;object-fit:contain;">
+          </div>
+          <div class="inventory-card-title">${item.name}</div>
+          <div class="inventory-card-price">
+            <span>${item.price}</span>
+            <svg class="gem-icon gem-icon-sm" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
+          </div>
+          <div class="inventory-actions-row">
+            <button class="btn-inv-action btn-inv-sell" onclick="sellGift('${item.instanceId}')">Продать</button>
+            <button class="btn-inv-action btn-inv-withdraw" onclick="withdrawGift('${item.name}')">Вывести</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function sellGift(instanceId) {
+      haptic('medium');
+      const idx = userInventory.findIndex(i => i.instanceId === instanceId);
+      if (idx === -1) return;
+
+      const gift = userInventory[idx];
+      currentBalance += gift.price;
+      userInventory.splice(idx, 1);
+      DB.set('inventory', userInventory);
+
+      updateBalanceDisplay();
+      renderProfileInventory();
+      alert(`Подарок "${gift.name}" продан за ${gift.price} кристаллов!`);
+    }
+
+    function withdrawGift(name) {
+      haptic('selection');
+      alert(`Заявка на вывод подарка "${name}" на TON адрес отправлена!`);
+    }
+
+    // ================= СТАВКА ПОДАРКАМИ =================
+    function openGiftModal() {
+      haptic('medium');
+      const container = document.getElementById('giftBetListContainer');
+      
+      if (userInventory.length === 0) {
+        container.innerHTML = `
+          <div class="empty-placeholder">У вас нет подарков для ставки.<br>Купите подарки в Маркете!</div>
+          <button class="btn-action btn-deposit" style="width: 100%; margin-top: 10px;" onclick="closeModal('giftModal'); switchTab('market');">В Маркет</button>
+        `;
+      } else {
+        container.innerHTML = userInventory.map(item => `
+          <div class="bet-item-row">
+            <div class="bet-item-left">
+              <div style="width: 38px; height: 38px; background: #202b38; border-radius: 10px; display:flex; align-items:center; justify-content:center; padding: 4px;">
+                <img src="${item.image}" style="width:100%;height:100%;object-fit:contain;">
+              </div>
+              <div class="bet-item-userinfo">
+                <span class="bet-item-username">${item.name}</span>
+                <span class="bet-item-amount">
+                  <span>${item.price}</span>
+                  <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
+                </span>
+              </div>
+            </div>
+            <button class="btn-promo" style="padding: 7px 12px; font-size: 11px;" onclick="placeGiftBet('${item.instanceId}')">Поставить</button>
+          </div>
+        `).join('');
+      }
+
+      openModal('giftModal');
+    }
+
+    function placeGiftBet(instanceId) {
+      if (gameState === 'SPINNING') return;
+      const idx = userInventory.findIndex(i => i.instanceId === instanceId);
+      if (idx === -1) return;
+
+      const gift = userInventory[idx];
+      userInventory.splice(idx, 1);
+      DB.set('inventory', userInventory);
+
+      closeModal('giftModal');
+      placeBet(gift.price, gift.name);
+    }
+
+    // ================= МОДАЛКИ И РЕФЕРАЛКА =================
+    const botName = 'PvPRoulette_bot';
     const myRealRefLink = `https://t.me/${botName}?start=ref_${myUser.id}`;
 
     function openReferralsModal() {
@@ -1646,26 +2195,18 @@
 
     function copyReferralLink() {
       haptic('medium');
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(myRealRefLink);
-      }
-      alert('Реферальная ссылка скопирована в буфер обмена!');
+      navigator.clipboard?.writeText(myRealRefLink);
+      alert('Реферальная ссылка скопирована!');
     }
 
     function shareReferralLink() {
       haptic('success');
-      const shareText = encodeURIComponent('🎮 Заходи в PvP рулетку со мной и получай стартовые кристаллы!');
-      const shareUrl = encodeURIComponent(myRealRefLink);
-      const telegramShareUrl = `https://t.me/share/url?url=${shareUrl}&text=${shareText}`;
-
-      if (tg?.openTelegramLink) {
-        tg.openTelegramLink(telegramShareUrl);
-      } else {
-        window.open(telegramShareUrl, '_blank');
-      }
+      const shareText = encodeURIComponent('🎮 Заходи в PvP рулетку и получай стартовые бонусы!');
+      const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(myRealRefLink)}&text=${shareText}`;
+      if (tg?.openTelegramLink) tg.openTelegramLink(telegramShareUrl);
+      else window.open(telegramShareUrl, '_blank');
     }
 
-    // ================= 5. МОДАЛКИ: ИСТОРИЯ, ЧАТ, ПОДАРКИ =================
     function openModal(id) {
       haptic('medium');
       document.getElementById(id).classList.add('active');
@@ -1676,22 +2217,10 @@
       document.getElementById(id).classList.remove('active');
     }
 
-    function openGiftModal() { openModal('giftModal'); }
-    function openHistoryModal() {
-      renderGameHistory();
-      openModal('historyModal');
-    }
-    function openChatModal() { 
-      renderChatMessages();
-      openModal('chatModal'); 
-    }
+    function openHistoryModal() { renderGameHistory(); openModal('historyModal'); }
+    function openChatModal() { renderChatMessages(); openModal('chatModal'); }
+    function setCurrency(cur) { haptic('selection'); document.getElementById('btnCurGem').classList.add('active'); }
 
-    function setCurrency(cur) {
-      haptic('selection');
-      document.getElementById('btnCurGem').classList.add('active');
-    }
-
-    // Отрисовка истории игр (пустая если нет игр)
     function renderGameHistory() {
       const list = document.getElementById('historyListContainer');
       if (gameHistory.length === 0) {
@@ -1715,7 +2244,6 @@
       `).join('');
     }
 
-    // Отрисовка чата (пустой если нет сообщений)
     function renderChatMessages() {
       const cont = document.getElementById('chatMessagesContainer');
       if (chatMessages.length === 0) {
@@ -1737,17 +2265,32 @@
       if (!val) return;
       haptic('selection');
 
-      chatMessages.push({
-        user: myUser.username,
-        text: val,
-        isMe: true
-      });
+      chatMessages.push({ user: myUser.username, text: val, isMe: true });
       DB.set('chat', chatMessages);
       input.value = '';
       renderChatMessages();
     }
 
-    // ================= 6. ПВП И РУЛЕТКА =================
+    function activatePromo() {
+      const input = document.getElementById('promoInput');
+      const val = input.value.trim().toUpperCase();
+      if (!val) { input.focus(); return; }
+
+      if (usedPromos.includes(val)) {
+        alert('Этот промокод уже был активирован!');
+        return;
+      }
+
+      haptic('success');
+      currentBalance += 50;
+      usedPromos.push(val);
+      DB.set('usedPromos', usedPromos);
+      updateBalanceDisplay();
+      alert(`Промокод "${val}" активирован! +50 кристаллов!`);
+      input.value = '';
+    }
+
+    // ================= ЧЕСТНАЯ РАНДОМНАЯ РУЛЕТКА =================
     let gameState = 'WAITING';
     let countdownSec = 15;
     let countdownInterval = null;
@@ -1772,18 +2315,21 @@
     const opponentColors = ['#ec4899', '#f59e0b', '#10b981', '#8b5cf6', '#ef4444', '#06b6d4'];
     let bets = [];
 
-    function placeBet(amount) {
+    function placeBet(amount, optionalGiftName = null) {
       if (gameState === 'SPINNING') return;
       haptic('medium');
 
-      let val = amount === 'ALL' ? currentBalance : amount;
-      if (val <= 0 || currentBalance < val) {
-        alert('Недостаточно баланса для ставки!');
-        return;
-      }
+      let val = amount === 'ALL' ? currentBalance : Number(amount);
+      if (val <= 0) return;
 
-      currentBalance -= val;
-      updateBalanceDisplay();
+      if (!optionalGiftName) {
+        if (currentBalance < val) {
+          alert('Недостаточно баланса для ставки!');
+          return;
+        }
+        currentBalance -= val;
+        updateBalanceDisplay();
+      }
 
       const myExistingBet = bets.find(b => b.isMe);
       if (myExistingBet) {
@@ -1801,11 +2347,8 @@
 
       recalculateAndRender();
 
-      // Авто-добавление соперника через 1.5 сек для проверки отсчета 15 секунд
       if (bets.length === 1 && !countdownInterval) {
-        setTimeout(() => {
-          if (bets.length === 1) addBotOpponent();
-        }, 1500);
+        setTimeout(() => { if (bets.length === 1) addBotOpponent(); }, 1500);
       }
     }
 
@@ -1825,9 +2368,8 @@
       const botAmount = (Math.floor(Math.random() * 3) + 1) * 5;
 
       const existingBot = bets.find(b => b.user === botUser);
-      if (existingBot) {
-        existingBot.amount += botAmount;
-      } else {
+      if (existingBot) existingBot.amount += botAmount;
+      else {
         bets.push({
           id: 'bot_' + Date.now(),
           user: botUser,
@@ -1893,7 +2435,7 @@
       const list = document.getElementById('betsListContainer');
 
       countHeader.innerText = `${bets.length} Игроков`;
-      bankSummary.innerHTML = `<span>Банк: ${totalBank}</span> <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>`;
+      bankSummary.innerHTML = `<span>Банк: ${totalBank.toFixed(2)}</span> <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>`;
 
       if (bets.length === 0) {
         list.innerHTML = `<div class="empty-placeholder">Ставок пока нет. Будьте первым!</div>`;
@@ -1909,7 +2451,7 @@
                 ${b.user} ${b.isMe ? '<span class="bet-tag-you">ВЫ</span>' : ''}
               </span>
               <span class="bet-item-amount" style="color: ${b.color};">
-                <span>${b.amount}</span>
+                <span>${b.amount.toFixed(2)}</span>
                 <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
               </span>
             </div>
@@ -1948,6 +2490,7 @@
       }, 1000);
     }
 
+    // ВРАЩЕНИЕ 11 СЕКУНД И ТОЧНАЯ ОСТАНОВКА НА РАНДОМНОМ ПОБЕДИТЕЛЕ
     function start11SecSpin() {
       gameState = 'SPINNING';
       if (idleAnimFrame) cancelAnimationFrame(idleAnimFrame);
@@ -1964,29 +2507,29 @@
       lucide.createIcons();
 
       const totalBank = bets.reduce((sum, b) => sum + b.amount, 0);
-      const randTicket = Math.random() * 360;
-      let winner = bets.find(b => randTicket >= b.startDeg && randTicket < b.endDeg) || bets[0];
+      
+      // Честный случайный угол на колесе (0-360)
+      const randomStopDegree = Math.random() * 360;
+      let winner = bets.find(b => randomStopDegree >= b.startDeg && randomStopDegree < b.endDeg) || bets[0];
 
-      const winningMiddle = (winner.startDeg + winner.endDeg) / 2;
-      const targetSectorDeg = (360 - winningMiddle);
-
+      // Вычисляем угол так, чтобы стрелка сверху (12:00 = 0deg) указала точно на этот случайный градус
+      const targetDegreeOnScreen = (360 - randomStopDegree);
       const currentAngleNorm = currentRotorDeg % 360;
-      let neededOffset = targetSectorDeg - currentAngleNorm;
+      let neededOffset = targetDegreeOnScreen - currentAngleNorm;
       if (neededOffset <= 0) neededOffset += 360;
 
+      // 10 полных кругов + точная посадка
       const finalTargetDegree = currentRotorDeg + neededOffset + (360 * 10);
 
       rotor.style.transition = 'transform 11000ms cubic-bezier(0.1, 0.88, 0.18, 1)';
       rotor.style.transform = `rotate(${finalTargetDegree}deg)`;
       currentRotorDeg = finalTargetDegree;
 
-      setTimeout(() => {
-        arenaWrapper.classList.add('zoomed');
-      }, 8200);
+      // На 8.2 секунде кинематографичный zoom-in
+      setTimeout(() => { arenaWrapper.classList.add('zoomed'); }, 8200);
 
-      setTimeout(() => {
-        onSpinFinished(winner, totalBank);
-      }, 11000);
+      // Завершение ровно через 11 секунд
+      setTimeout(() => { onSpinFinished(winner, totalBank); }, 11000);
     }
 
     function onSpinFinished(winner, totalBank) {
@@ -2000,7 +2543,6 @@
         <span style="font-size: 10px; color: var(--tg-text-secondary); max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${winner.user}</span>
       `;
 
-      // Сохраняем "Пред. игра" в БД
       lastGameData = {
         user: winner.user,
         amount: totalBank.toFixed(2),
@@ -2014,20 +2556,14 @@
       document.getElementById('lastGameWinrate').innerText = `${lastGameData.winRate}%`;
       document.getElementById('lastGameAvatar').src = lastGameData.avatar;
 
-      // Обновляем "Топ игра", если побит рекорд
       if (!topGameData || totalBank > topGameData.amount) {
-        topGameData = {
-          user: winner.user,
-          amount: totalBank,
-          avatar: winner.avatar
-        };
+        topGameData = { user: winner.user, amount: totalBank, avatar: winner.avatar };
         DB.set('topGame', topGameData);
         document.getElementById('topGameUser').innerText = topGameData.user;
         document.getElementById('topGameAmount').innerText = Number(topGameData.amount).toFixed(2);
         document.getElementById('topGameAvatar').src = topGameData.avatar;
       }
 
-      // Добавляем в историю игр и сохраняем
       gameHistory.unshift({
         user: winner.user,
         amount: totalBank.toFixed(2),
@@ -2068,9 +2604,7 @@
       startIdleAnimation();
       recalculateAndRender();
 
-      if (isAutoPlay) {
-        setTimeout(() => placeBet(5), 1000);
-      }
+      if (isAutoPlay) setTimeout(() => placeBet(5), 1000);
     }
 
     function toggleAutoPlay() {
@@ -2093,20 +2627,10 @@
       lucide.createIcons();
     }
 
-    function switchTab(tabId) {
-      haptic('selection');
-      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
-
-      const target = document.getElementById(`page-${tabId}`);
-      if (target) target.classList.add('active');
-
-      const navButtons = Array.from(document.querySelectorAll('.nav-item'));
-      const activeBtn = navButtons.find(btn => btn.getAttribute('onclick')?.includes(tabId));
-      if (activeBtn) activeBtn.classList.add('active');
-    }
-
+    // Инициализация при загрузке
     lucide.createIcons();
+    renderMarketGrid();
+    renderProfileInventory();
   </script>
 </body>
 </html>
