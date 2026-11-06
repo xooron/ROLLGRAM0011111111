@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Telegram Mini App</title>
+
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- Шрифты и иконки Lucide -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --bg-dark: #07040d;
+      --bg-glass: rgba(18, 10, 30, 0.65);
+      --bg-card: rgba(26, 14, 46, 0.45);
+      --bg-card-border: rgba(168, 85, 247, 0.18);
+      --border-glass: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(168, 85, 247, 0.35);
+      --accent-purple: #9333ea;
+      --accent-violet: #a855f7;
+      --accent-bright: #c084fc;
+      --accent-glow: rgba(168, 85, 247, 0.3);
+      --text-main: #f3f4f6;
+      --text-muted: #948aa5;
+      --green-online: #10b981;
+      --green-glow: rgba(16, 185, 129, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(147, 51, 234, 0.22) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(126, 34, 206, 0.22) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(192, 132, 252, 0.06) 0%, transparent 60%);
+    }
+
+    /* Мобильный фрейм */
+    .app-viewport {
+      width: 100%;
+      max-width: 440px;
+      height: 100vh;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: rgba(10, 6, 18, 0.7);
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(147, 51, 234, 0.15);
+      overflow: hidden;
+    }
+
+    @media (min-width: 480px) {
+      .app-viewport {
+        height: 860px;
+        border-radius: 40px;
+        border: 1px solid var(--border-glass);
+      }
+    }
+
+    /* ================= ВЕРХНЯЯ ПАНЕЛЬ ================= */
+    .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      background: var(--bg-glass);
+      border-bottom: 1px solid var(--border-glass);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Слева: Аватарка */
+    .avatar-wrapper {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      padding: 2px;
+      background: linear-gradient(135deg, var(--accent-violet), transparent 70%);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .avatar-wrapper:active {
+      transform: scale(0.92);
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #1e1333;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Центр: Онлайн */
+    .online-badge {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--green-online);
+      box-shadow: 0 0 8px var(--green-glow);
+      position: relative;
+    }
+
+    .status-dot::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 1px solid var(--green-online);
+      animation: pulse 2s infinite ease-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.9); opacity: 1; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+
+    .online-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: #34d399;
+      letter-spacing: 0.2px;
+    }
+
+    /* Справа: Баланс с плюсиком */
+    .balance-box {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-glow);
+      border-radius: 20px;
+      padding: 4px 5px 4px 12px;
+      box-shadow: 0 0 16px rgba(168, 85, 247, 0.12);
+      transition: border-color 0.2s ease;
+    }
+
+    .balance-amount {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-right: 8px;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .balance-currency {
+      color: var(--accent-bright);
+    }
+
+    .balance-add-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-violet), var(--accent-purple));
+      border: none;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #fff;
+      box-shadow: 0 2px 10px var(--accent-glow);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    .balance-add-btn:active {
+      transform: scale(0.9);
+      filter: brightness(1.2);
+    }
+
+    /* ================= КОНТЕНТНЫЕ СТРАНИЦЫ ================= */
+    .content-area {
+      flex: 1;
+      padding: 85px 20px 95px;
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    /* Стилизация пустой страницы */
+    .page {
+      display: none;
+      height: 100%;
+      min-height: 480px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .page.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .empty-card {
+      width: 100%;
+      padding: 40px 24px;
+      background: var(--bg-card);
+      border: 1px dashed var(--bg-card-border);
+      border-radius: 28px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: inset 0 0 30px rgba(168, 85, 247, 0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .empty-icon-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 22px;
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-bright);
+      margin-bottom: 18px;
+      box-shadow: 0 0 24px rgba(168, 85, 247, 0.15);
+    }
+
+    .page-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .page-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      max-width: 220px;
+    }
+
+    /* ================= НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ ================= */
+    .nav-bar-wrapper {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0 16px 18px;
+      z-index: 50;
+      pointer-events: none;
+    }
+
+    .nav-bar {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 10px 8px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border-glass);
+      border-radius: 26px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(147, 51, 234, 0.1);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 8px 14px;
+      border-radius: 18px;
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      flex: 1;
+      position: relative;
+    }
+
+    .nav-item i {
+      transition: transform 0.2s ease, stroke 0.2s ease;
+    }
+
+    .nav-item span {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      transition: color 0.2s ease;
+    }
+
+    .nav-item:active {
+      transform: scale(0.92);
+    }
+
+    /* Активный пункт меню */
+    .nav-item.active {
+      color: var(--accent-bright);
+      background: rgba(168, 85, 247, 0.15);
+      box-shadow: inset 0 0 12px rgba(168, 85, 247, 0.2), 0 0 16px rgba(168, 85, 247, 0.1);
+    }
+
+    .nav-item.active i {
+      transform: translateY(-2px);
+      stroke: var(--accent-bright);
+      filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.6));
+    }
+
+    .nav-item.active span {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-viewport">
+    
+    <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+    <header class="header">
+      <!-- Слева: Аватарка -->
+      <div class="avatar-wrapper" onclick="switchTab('profile')">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Avatar" class="avatar-img">
+      </div>
+
+      <!-- По центру: Онлайн -->
+      <div class="online-badge">
+        <div class="status-dot"></div>
+        <span class="online-text">Онлайн: 1,429</span>
+      </div>
+
+      <!-- Справа: Баланс с кнопкой плюс -->
+      <div class="balance-box">
+        <div class="balance-amount">
+          <span id="userBalance">1 250</span>
+          <span class="balance-currency">✦</span>
+        </div>
+        <button class="balance-add-btn" id="addBalanceBtn" title="Пополнить">
+          <i data-lucide="plus" style="width: 16px; height: 16px; stroke-width: 2.6;"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ (ПУСТЫЕ СТРАНИЦЫ) -->
+    <main class="content-area">
+      
+      <!-- Страница 1: Пвп -->
+      <section class="page active" id="page-pvp">
+        <div class="empty-card">
+          <div class="empty-icon-wrap">
+            <i data-lucide="swords" style="width: 32px; height: 32px;"></i>
+          </div>
+          <h2 class="page-title">Арена Пвп</h2>
+          <p class="page-desc">Здесь пока пусто. Создайте первую дуэль или примите вызов.</p>
+        </div>
+      </section>
+
+      <!-- Страница 2: Игры -->
+      <section class="page" id="page-games">
+        <div class="empty-card">
+          <div class="empty-icon-wrap">
+            <i data-lucide="gamepad-2" style="width: 32px; height: 32px;"></i>
+          </div>
+          <h2 class="page-title">Игры</h2>
+          <p class="page-desc">Каталог игр пуст. Новые мини-игры появятся в ближайшем обновлении.</p>
+        </div>
+      </section>
+
+      <!-- Страница 3: Маркет -->
+      <section class="page" id="page-market">
+        <div class="empty-card">
+          <div class="empty-icon-wrap">
+            <i data-lucide="shopping-bag" style="width: 32px; height: 32px;"></i>
+          </div>
+          <h2 class="page-title">Маркет</h2>
+          <p class="page-desc">В магазине пока нет товаров. Загляните позже за эксклюзивами.</p>
+        </div>
+      </section>
+
+      <!-- Страница 4: Профиль -->
+      <section class="page" id="page-profile">
+        <div class="empty-card">
+          <div class="empty-icon-wrap">
+            <i data-lucide="user" style="width: 32px; height: 32px;"></i>
+          </div>
+          <h2 class="page-title">Профиль</h2>
+          <p class="page-desc">Данные аккаунта пусты. Начните играть, чтобы собирать трофеи.</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
+    <div class="nav-bar-wrapper">
+      <nav class="nav-bar">
+        <button class="nav-item active" onclick="switchTab('pvp')">
+          <i data-lucide="swords" style="width: 20px; height: 20px;"></i>
+          <span>Пвп</span>
+        </button>
+
+        <button class="nav-item" onclick="switchTab('games')">
+          <i data-lucide="gamepad-2" style="width: 20px; height: 20px;"></i>
+          <span>Игры</span>
+        </button>
+
+        <button class="nav-item" onclick="switchTab('market')">
+          <i data-lucide="shopping-bag" style="width: 20px; height: 20px;"></i>
+          <span>Маркет</span>
+        </button>
+
+        <button class="nav-item" onclick="switchTab('profile')">
+          <i data-lucide="user" style="width: 20px; height: 20px;"></i>
+          <span>Профиль</span>
+        </button>
+      </nav>
+    </div>
+
+  </div>
+
+  <script>
+    // Инициализация Lucide иконок
+    lucide.createIcons();
+
+    // Интеграция с Telegram WebApp (если открыто внутри Telegram)
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+      try {
+        tg.setHeaderColor('#07040d');
+        tg.setBackgroundColor('#07040d');
+      } catch (e) {}
+    }
+
+    // Переключение страниц
+    function switchTab(tabId) {
+      // Тактильная виброотдача для Telegram Mini App
+      if (tg?.HapticFeedback) {
+        tg.HapticFeedback.selectionChanged();
+      }
+
+      // Скрываем все страницы
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+
+      // Снимаем активность со всех кнопок навигации
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // Показываем нужную страницу
+      const targetPage = document.getElementById(`page-${tabId}`);
+      if (targetPage) {
+        targetPage.classList.add('active');
+      }
+
+      // Активируем кнопку в меню
+      const navButtons = Array.from(document.querySelectorAll('.nav-item'));
+      const activeBtn = navButtons.find(btn => btn.getAttribute('onclick').includes(tabId));
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+      }
+    }
+
+    // Интерактив для кнопки пополнения баланса (+)
+    document.getElementById('addBalanceBtn').addEventListener('click', () => {
+      if (tg?.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred('medium');
+      }
+      
+      const balanceEl = document.getElementById('userBalance');
+      let currentVal = parseInt(balanceEl.innerText.replace(/\s+/g, ''), 10) || 0;
+      balanceEl.innerText = (currentVal + 100).toLocaleString('ru-RU');
+    });
+  </script>
+</body>
+</html>
