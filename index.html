@@ -8,7 +8,7 @@
   <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-  <!-- Шрифты и Lucide иконки -->
+  <!-- Google Fonts & Lucide Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -16,22 +16,23 @@
 
   <style>
     :root {
-      --bg-dark: #06030b;
-      --bg-glass-card: rgba(23, 13, 38, 0.55);
-      --bg-glass-card-hover: rgba(33, 18, 55, 0.65);
-      --bg-glass-nav: rgba(18, 9, 31, 0.75);
-      --border-glass: rgba(255, 255, 255, 0.08);
-      --border-glow: rgba(168, 85, 247, 0.28);
-      --border-glow-subtle: rgba(168, 85, 247, 0.16);
-      --accent-purple: #7e22ce;
-      --accent-violet: #9333ea;
-      --accent-bright: #c084fc;
-      --accent-glow: rgba(168, 85, 247, 0.35);
-      --text-main: #f8fafc;
-      --text-muted: #9f96b2;
-      --text-dim: #6b6180;
-      --green-online: #10b981;
-      --green-glow: rgba(16, 185, 129, 0.4);
+      /* Цвета ночной темы Telegram */
+      --tg-bg-base: #0b141d;
+      --tg-bg-secondary: rgba(23, 33, 43, 0.65);
+      --tg-bg-glass: rgba(19, 28, 38, 0.72);
+      --tg-bg-card: rgba(23, 33, 43, 0.6);
+      --tg-bg-card-hover: rgba(30, 44, 57, 0.75);
+      --tg-border: rgba(255, 255, 255, 0.08);
+      --tg-border-blue: rgba(46, 166, 255, 0.22);
+      --tg-blue-accent: #2ea6ff;
+      --tg-blue-hover: #1e8fe1;
+      --tg-blue-subtle: rgba(46, 166, 255, 0.12);
+      --tg-text: #ffffff;
+      --tg-text-secondary: #7f91a4;
+      --tg-text-muted: #536577;
+      --tg-green-online: #22c55e;
+      --tg-radius: 20px;
+      --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * {
@@ -41,12 +42,12 @@
       user-select: none;
       -webkit-user-select: none;
       -webkit-tap-highlight-color: transparent;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
+      background-color: var(--tg-bg-base);
+      color: var(--tg-text);
       min-height: 100vh;
       min-height: 100dvh;
       display: flex;
@@ -54,12 +55,11 @@
       align-items: center;
       overflow: hidden;
       background-image: 
-        radial-gradient(circle at 10% 10%, rgba(147, 51, 234, 0.28) 0%, transparent 45%),
-        radial-gradient(circle at 90% 80%, rgba(126, 34, 206, 0.25) 0%, transparent 45%),
-        radial-gradient(circle at 50% 40%, rgba(192, 132, 252, 0.08) 0%, transparent 55%);
+        radial-gradient(circle at 10% 10%, rgba(46, 166, 255, 0.09) 0%, transparent 45%),
+        radial-gradient(circle at 90% 85%, rgba(30, 143, 225, 0.07) 0%, transparent 45%);
     }
 
-    /* Мобильный контейнер */
+    /* Мобильный экран */
     .app-viewport {
       width: 100%;
       max-width: 440px;
@@ -68,16 +68,16 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      background: rgba(9, 4, 16, 0.72);
-      box-shadow: 0 0 60px rgba(0, 0, 0, 0.85), 0 0 45px rgba(147, 51, 234, 0.18);
+      background: rgba(11, 20, 29, 0.85);
       overflow: hidden;
     }
 
     @media (min-width: 480px) {
       .app-viewport {
-        height: 860px;
-        border-radius: 40px;
-        border: 1px solid var(--border-glass);
+        height: 850px;
+        border-radius: 36px;
+        border: 1px solid var(--tg-border);
+        box-shadow: 0 16px 60px rgba(0, 0, 0, 0.6);
       }
     }
 
@@ -92,27 +92,26 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
-      background: var(--bg-glass-nav);
-      border-bottom: 1px solid var(--border-glass);
-      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      background: var(--tg-bg-glass);
+      border-bottom: 1px solid var(--tg-border);
     }
 
-    /* Аватарка в шапке слева */
+    /* Аватарка слева */
     .top-avatar-box {
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      padding: 2px;
-      background: linear-gradient(135deg, var(--accent-violet), transparent 70%);
+      padding: 1.5px;
+      background: linear-gradient(135deg, var(--tg-blue-accent), transparent 75%);
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.25s var(--ease-smooth);
       flex-shrink: 0;
     }
 
     .top-avatar-box:active {
-      transform: scale(0.92);
+      transform: scale(0.93);
     }
 
     .top-avatar-img {
@@ -120,67 +119,51 @@
       height: 100%;
       border-radius: 50%;
       object-fit: cover;
-      background: #190f2b;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #17212b;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* Центр: Онлайн */
+    /* Центр: Онлайн 0 */
     .online-badge {
       display: flex;
       align-items: center;
       gap: 7px;
       padding: 6px 14px;
-      background: rgba(16, 185, 129, 0.08);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      border-radius: 20px;
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      border-radius: 18px;
       backdrop-filter: blur(8px);
     }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      background-color: var(--green-online);
-      box-shadow: 0 0 8px var(--green-glow);
-      position: relative;
-    }
-
-    .status-dot::after {
-      content: '';
-      position: absolute;
-      inset: -3px;
-      border-radius: 50%;
-      border: 1px solid var(--green-online);
-      animation: pulse 2.2s infinite ease-out;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(0.9); opacity: 1; }
-      100% { transform: scale(2.3); opacity: 0; }
+      background-color: var(--tg-green-online);
     }
 
     .online-text {
       font-size: 13px;
       font-weight: 600;
-      color: #34d399;
+      color: #4ade80;
       letter-spacing: 0.2px;
     }
 
-    /* Справа: Баланс с плюсиком */
+    /* Правее: Баланс 0 с плюсиком */
     .header-balance-box {
       display: flex;
       align-items: center;
       background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-glow);
+      border: 1px solid var(--tg-border-blue);
       border-radius: 20px;
       padding: 4px 5px 4px 12px;
-      box-shadow: 0 0 16px rgba(168, 85, 247, 0.12);
+      transition: border-color 0.25s var(--ease-smooth);
     }
 
     .header-balance-val {
       font-size: 14px;
       font-weight: 700;
-      color: var(--text-main);
+      color: var(--tg-text);
       margin-right: 8px;
       display: flex;
       align-items: center;
@@ -188,14 +171,14 @@
     }
 
     .header-balance-val span {
-      color: var(--accent-bright);
+      color: var(--tg-blue-accent);
     }
 
     .header-add-btn {
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent-violet), var(--accent-purple));
+      background: var(--tg-blue-accent);
       border: none;
       outline: none;
       display: flex;
@@ -203,19 +186,18 @@
       justify-content: center;
       cursor: pointer;
       color: #fff;
-      box-shadow: 0 2px 10px var(--accent-glow);
-      transition: transform 0.15s ease, filter 0.15s ease;
+      transition: transform 0.2s var(--ease-smooth), background-color 0.2s ease;
     }
 
     .header-add-btn:active {
       transform: scale(0.9);
-      filter: brightness(1.2);
+      background: var(--tg-blue-hover);
     }
 
-    /* ================= КОНТЕНТНАЯ ОБЛАСТЬ ================= */
+    /* ================= КОНТЕНТ ================= */
     .content-area {
       flex: 1;
-      padding: 82px 16px 105px;
+      padding: 82px 18px 105px;
       position: relative;
       overflow-y: auto;
       overflow-x: hidden;
@@ -229,9 +211,8 @@
     .page {
       display: none;
       opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      min-height: 100%;
+      transform: translateY(8px);
+      transition: opacity 0.35s var(--ease-smooth), transform 0.35s var(--ease-smooth);
     }
 
     .page.active {
@@ -240,15 +221,15 @@
       transform: translateY(0);
     }
 
-    /* Пустые заглушки для других вкладок */
+    /* Пустые заглушки для других страниц */
     .empty-card {
-      padding: 50px 24px;
-      margin-top: 50px;
-      background: var(--bg-glass-card);
-      border: 1px dashed var(--border-glow-subtle);
-      border-radius: 28px;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      padding: 45px 20px;
+      margin-top: 40px;
+      background: var(--tg-bg-card);
+      border: 1px dashed var(--tg-border);
+      border-radius: var(--tg-radius);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -256,36 +237,37 @@
     }
 
     .empty-icon-wrap {
-      width: 70px;
-      height: 70px;
-      border-radius: 22px;
-      background: rgba(168, 85, 247, 0.12);
-      border: 1px solid var(--border-glow);
+      width: 64px;
+      height: 64px;
+      border-radius: 20px;
+      background: var(--tg-blue-subtle);
+      border: 1px solid var(--tg-border-blue);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--accent-bright);
+      color: var(--tg-blue-accent);
       margin-bottom: 16px;
-      box-shadow: 0 0 24px var(--accent-glow);
     }
 
     .empty-title {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 700;
       margin-bottom: 6px;
     }
 
     .empty-desc {
       font-size: 13px;
-      color: var(--text-muted);
+      color: var(--tg-text-secondary);
+      max-width: 240px;
+      line-height: 1.4;
     }
 
     /* ================= СТРАНИЦА: ПРОФИЛЬ ================= */
     .profile-container {
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      padding-top: 10px;
+      gap: 13px;
+      padding-top: 6px;
     }
 
     /* Аватарка по центру + Username */
@@ -294,19 +276,18 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .profile-avatar-wrapper {
       position: relative;
-      width: 98px;
-      height: 98px;
+      width: 92px;
+      height: 92px;
       border-radius: 50%;
-      padding: 3px;
-      background: linear-gradient(135deg, #c084fc, #7e22ce 60%, rgba(255, 255, 255, 0.1));
-      box-shadow: 0 0 32px rgba(168, 85, 247, 0.35);
+      padding: 2.5px;
+      background: linear-gradient(135deg, var(--tg-blue-accent), rgba(255, 255, 255, 0.1));
       cursor: pointer;
-      transition: transform 0.25s ease;
+      transition: transform 0.25s var(--ease-smooth);
     }
 
     .profile-avatar-wrapper:active {
@@ -318,67 +299,34 @@
       height: 100%;
       border-radius: 50%;
       object-fit: cover;
-      background: #170d28;
-      border: 2px solid rgba(10, 4, 20, 0.8);
-    }
-
-    .profile-vip-badge {
-      position: absolute;
-      bottom: 2px;
-      right: 2px;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #a855f7, #6d28d9);
-      border: 2px solid #090412;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      background: #17212b;
+      border: 2px solid var(--tg-bg-base);
     }
 
     .profile-username {
       margin-top: 10px;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 700;
-      color: var(--text-main);
+      color: var(--tg-text);
       display: flex;
       align-items: center;
       gap: 6px;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.2px;
     }
 
-    .profile-username span {
-      background: linear-gradient(135deg, #ffffff, #d8b4fe);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* Общий стиль стеклянных карточек */
+    /* Стеклянные панели карточек */
     .glass-card {
-      background: var(--bg-glass-card);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--border-glass);
-      border-radius: 24px;
+      background: var(--tg-bg-card);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid var(--tg-border);
+      border-radius: var(--tg-radius);
       padding: 16px;
       position: relative;
-      overflow: hidden;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      transition: background 0.25s var(--ease-smooth), border-color 0.25s var(--ease-smooth);
     }
 
-    .glass-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
-    }
-
-    /* Карточка Баланса с кнопками Пополнить / Вывести */
+    /* Панель: Баланс слева + Кнопки справа */
     .balance-card-grid {
       display: flex;
       align-items: center;
@@ -389,30 +337,30 @@
     .balance-left {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
     }
 
     .balance-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--tg-text-secondary);
       text-transform: uppercase;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.6px;
     }
 
     .balance-number {
       font-size: 24px;
       font-weight: 800;
-      color: #fff;
+      color: var(--tg-text);
       display: flex;
       align-items: center;
-      gap: 4px;
-      letter-spacing: 0.3px;
+      gap: 5px;
+      letter-spacing: 0.2px;
     }
 
     .balance-number .symbol {
-      color: var(--accent-bright);
-      filter: drop-shadow(0 0 6px var(--accent-glow));
+      color: var(--tg-blue-accent);
+      font-size: 18px;
     }
 
     .balance-actions-right {
@@ -422,8 +370,8 @@
     }
 
     .btn-action {
-      padding: 10px 14px;
-      border-radius: 16px;
+      padding: 9px 13px;
+      border-radius: 14px;
       font-size: 13px;
       font-weight: 600;
       border: none;
@@ -431,37 +379,34 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      gap: 5px;
+      transition: transform 0.2s var(--ease-smooth), opacity 0.2s ease, background 0.2s ease;
     }
 
     .btn-action:active {
-      transform: scale(0.94);
+      transform: scale(0.95);
     }
 
-    /* Кнопка Пополнить */
     .btn-deposit {
-      background: linear-gradient(135deg, var(--accent-violet), var(--accent-purple));
+      background: var(--tg-blue-accent);
       color: #ffffff;
-      box-shadow: 0 4px 16px var(--accent-glow);
     }
 
     .btn-deposit:active {
-      filter: brightness(1.15);
+      background: var(--tg-blue-hover);
     }
 
-    /* Кнопка Вывести */
     .btn-withdraw {
       background: rgba(255, 255, 255, 0.06);
-      color: var(--text-main);
-      border: 1px solid var(--border-glow);
+      color: var(--tg-text);
+      border: 1px solid var(--tg-border);
     }
 
     .btn-withdraw:active {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.1);
     }
 
-    /* Статистика: Всего игр и Всего выиграно (2 колонки) */
+    /* Карточки: Всего игр и Всего выиграно */
     .stats-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -473,40 +418,40 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
-      border-color: var(--border-glow-subtle);
     }
 
     .stat-label-wrap {
       display: flex;
       align-items: center;
       gap: 7px;
-      color: var(--text-muted);
+      color: var(--tg-text-secondary);
       font-size: 12px;
       font-weight: 600;
     }
 
     .stat-label-wrap i {
-      color: var(--accent-bright);
+      color: var(--tg-blue-accent);
       stroke-width: 2.2;
     }
 
     .stat-value {
       font-size: 20px;
       font-weight: 800;
-      color: #fff;
+      color: var(--tg-text);
       margin-top: 4px;
-    }
-
-    .stat-value.win {
-      color: #38bdf8;
       display: flex;
       align-items: center;
       gap: 4px;
     }
 
+    .stat-value .cur {
+      color: var(--tg-blue-accent);
+      font-size: 16px;
+    }
+
     /* Панель Промокода */
     .promo-card {
-      padding: 8px 8px 8px 14px;
+      padding: 7px 7px 7px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -521,7 +466,7 @@
     }
 
     .promo-input-wrapper i {
-      color: var(--accent-bright);
+      color: var(--tg-blue-accent);
       flex-shrink: 0;
     }
 
@@ -530,35 +475,33 @@
       background: transparent;
       border: none;
       outline: none;
-      color: #fff;
+      color: var(--tg-text);
       font-size: 14px;
-      font-weight: 600;
-    }
-
-    .promo-input::placeholder {
-      color: var(--text-dim);
       font-weight: 500;
     }
 
+    .promo-input::placeholder {
+      color: var(--tg-text-muted);
+    }
+
     .btn-promo {
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(126, 34, 206, 0.35));
-      border: 1px solid var(--border-glow);
-      color: #e9d5ff;
-      padding: 10px 16px;
-      border-radius: 16px;
+      background: var(--tg-blue-subtle);
+      border: 1px solid var(--tg-border-blue);
+      color: var(--tg-blue-accent);
+      padding: 9px 15px;
+      border-radius: 14px;
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 600;
       cursor: pointer;
       outline: none;
-      transition: all 0.2s ease;
+      transition: transform 0.2s var(--ease-smooth), background 0.2s ease, color 0.2s ease;
       flex-shrink: 0;
     }
 
     .btn-promo:active {
-      transform: scale(0.94);
-      background: linear-gradient(135deg, var(--accent-violet), var(--accent-purple));
+      transform: scale(0.95);
+      background: var(--tg-blue-accent);
       color: #fff;
-      box-shadow: 0 0 16px var(--accent-glow);
     }
 
     /* Панель Рефералов */
@@ -567,31 +510,28 @@
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
-      transition: background 0.2s ease, border-color 0.2s ease;
     }
 
     .referral-card:active {
-      background: var(--bg-glass-card-hover);
-      border-color: var(--border-glow);
+      background: var(--tg-bg-card-hover);
     }
 
     .referral-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 13px;
     }
 
     .referral-icon-box {
-      width: 44px;
-      height: 44px;
-      border-radius: 16px;
-      background: rgba(168, 85, 247, 0.15);
-      border: 1px solid var(--border-glow);
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--tg-blue-subtle);
+      border: 1px solid var(--tg-border-blue);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--accent-bright);
-      box-shadow: 0 0 14px rgba(168, 85, 247, 0.18);
+      color: var(--tg-blue-accent);
     }
 
     .referral-info {
@@ -601,33 +541,27 @@
     }
 
     .referral-title {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
-      color: #fff;
+      color: var(--tg-text);
     }
 
     .referral-subtitle {
       font-size: 12px;
       font-weight: 500;
-      color: var(--text-muted);
+      color: var(--tg-text-secondary);
     }
 
-    .referral-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-glass);
-      color: var(--text-main);
+    .referral-arrow {
+      color: var(--tg-text-muted);
       display: flex;
       align-items: center;
-      justify-content: center;
-      transition: transform 0.15s ease;
+      transition: transform 0.2s var(--ease-smooth), color 0.2s ease;
     }
 
-    .referral-card:active .referral-btn {
+    .referral-card:active .referral-arrow {
       transform: translateX(2px);
-      color: var(--accent-bright);
+      color: var(--tg-blue-accent);
     }
 
     /* ================= НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ ================= */
@@ -646,13 +580,12 @@
       display: flex;
       align-items: center;
       justify-content: space-around;
-      padding: 10px 8px;
-      background: var(--bg-glass-nav);
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
-      border: 1px solid var(--border-glass);
-      border-radius: 26px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(147, 51, 234, 0.12);
+      padding: 8px 6px;
+      background: var(--tg-bg-glass);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border: 1px solid var(--tg-border);
+      border-radius: 24px;
     }
 
     .nav-item {
@@ -660,47 +593,36 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 5px;
-      padding: 8px 14px;
-      border-radius: 18px;
+      gap: 4px;
+      padding: 8px 12px;
+      border-radius: 16px;
       background: transparent;
       border: none;
       outline: none;
       cursor: pointer;
-      color: var(--text-muted);
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      color: var(--tg-text-secondary);
+      transition: color 0.25s var(--ease-smooth), background 0.25s var(--ease-smooth), transform 0.2s var(--ease-smooth);
       flex: 1;
-    }
-
-    .nav-item i {
-      transition: transform 0.2s ease, stroke 0.2s ease;
     }
 
     .nav-item span {
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.2px;
+      letter-spacing: 0.1px;
     }
 
     .nav-item:active {
-      transform: scale(0.92);
+      transform: scale(0.94);
     }
 
     /* Активная вкладка */
     .nav-item.active {
-      color: var(--accent-bright);
-      background: rgba(168, 85, 247, 0.16);
-      box-shadow: inset 0 0 12px rgba(168, 85, 247, 0.25), 0 0 16px rgba(168, 85, 247, 0.15);
-    }
-
-    .nav-item.active i {
-      transform: translateY(-2px);
-      stroke: var(--accent-bright);
-      filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.7));
+      color: var(--tg-blue-accent);
+      background: var(--tg-blue-subtle);
     }
 
     .nav-item.active span {
-      color: #fff;
+      color: var(--tg-text);
     }
   </style>
 </head>
@@ -715,20 +637,20 @@
         <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80" alt="Avatar" class="top-avatar-img">
       </div>
 
-      <!-- По центру: Онлайн -->
+      <!-- По центру: Онлайн 0 -->
       <div class="online-badge">
         <div class="status-dot"></div>
-        <span class="online-text">Онлайн: 1,429</span>
+        <span class="online-text">Онлайн: 0</span>
       </div>
 
-      <!-- Правее: Баланс с плюсиком -->
+      <!-- Правее: Баланс 0 с плюсиком -->
       <div class="header-balance-box">
         <div class="header-balance-val">
-          <span id="headerBalance">1 250</span>
+          <span id="headerBalance">0</span>
           <span>✦</span>
         </div>
         <button class="header-add-btn" id="headerAddBtn" title="Пополнить">
-          <i data-lucide="plus" style="width: 16px; height: 16px; stroke-width: 2.8;"></i>
+          <i data-lucide="plus" style="width: 16px; height: 16px; stroke-width: 2.6;"></i>
         </button>
       </div>
     </header>
@@ -736,14 +658,14 @@
     <!-- ОСНОВНОЙ КОНТЕНТ -->
     <main class="content-area">
       
-      <!-- СТРАНИЦА: ПВБ (ПУСТАЯ) -->
+      <!-- СТРАНИЦА: ПВП (ПУСТАЯ) -->
       <section class="page" id="page-pvp">
         <div class="empty-card">
           <div class="empty-icon-wrap">
-            <i data-lucide="swords" style="width: 32px; height: 32px;"></i>
+            <i data-lucide="swords" style="width: 28px; height: 28px;"></i>
           </div>
           <h2 class="empty-title">Арена Пвп</h2>
-          <p class="empty-desc">Здесь пока пусто. Создайте первую дуэль или вызовите оппонента.</p>
+          <p class="empty-desc">Здесь пока пусто. Создайте первую дуэль или примите вызов.</p>
         </div>
       </section>
 
@@ -751,10 +673,10 @@
       <section class="page" id="page-games">
         <div class="empty-card">
           <div class="empty-icon-wrap">
-            <i data-lucide="gamepad-2" style="width: 32px; height: 32px;"></i>
+            <i data-lucide="gamepad-2" style="width: 28px; height: 28px;"></i>
           </div>
           <h2 class="empty-title">Игры</h2>
-          <p class="empty-desc">Каталог игр пуст. Скоро здесь появятся новинки и турниры.</p>
+          <p class="empty-desc">Каталог пуст. В ближайшем обновлении появятся новые игры.</p>
         </div>
       </section>
 
@@ -762,10 +684,10 @@
       <section class="page" id="page-market">
         <div class="empty-card">
           <div class="empty-icon-wrap">
-            <i data-lucide="shopping-bag" style="width: 32px; height: 32px;"></i>
+            <i data-lucide="shopping-bag" style="width: 28px; height: 28px;"></i>
           </div>
           <h2 class="empty-title">Маркет</h2>
-          <p class="empty-desc">Товаров нет. Загляните позже за покупкой эксклюзивных предметов.</p>
+          <p class="empty-desc">В магазине пока нет товаров. Загляните позже за новинками.</p>
         </div>
       </section>
 
@@ -773,87 +695,84 @@
       <section class="page active" id="page-profile">
         <div class="profile-container">
 
-          <!-- Центр: Аватарка и @username -->
+          <!-- Центр: круглая аватарка и @username -->
           <div class="profile-hero">
             <div class="profile-avatar-wrapper">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Profile" class="profile-avatar-img">
-              <div class="profile-vip-badge">
-                <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i>
-              </div>
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Avatar" class="profile-avatar-img">
             </div>
             <div class="profile-username">
               <span id="userName">@alex_player</span>
-              <i data-lucide="badge-check" style="width: 18px; height: 18px; color: #a855f7; fill: rgba(168, 85, 247, 0.2);"></i>
+              <i data-lucide="badge-check" style="width: 17px; height: 17px; color: var(--tg-blue-accent);"></i>
             </div>
           </div>
 
-          <!-- Панель Баланс (слева) + Кнопки Пополнить / Вывести (справа) -->
-          <div class="glass-card balance-card">
+          <!-- Слева: Баланс 0, справа: Пополнить и Вывести -->
+          <div class="glass-card">
             <div class="balance-card-grid">
               <div class="balance-left">
                 <span class="balance-label">Баланс</span>
                 <div class="balance-number">
-                  <span id="profileBalance">1 250</span>
+                  <span id="profileBalance">0</span>
                   <span class="symbol">✦</span>
                 </div>
               </div>
               <div class="balance-actions-right">
                 <button class="btn-action btn-deposit" onclick="actionDeposit()">
-                  <i data-lucide="plus" style="width: 15px; height: 15px; stroke-width: 2.6;"></i>
+                  <i data-lucide="plus" style="width: 14px; height: 14px; stroke-width: 2.6;"></i>
                   <span>Пополнить</span>
                 </button>
                 <button class="btn-action btn-withdraw" onclick="actionWithdraw()">
-                  <i data-lucide="arrow-up-right" style="width: 15px; height: 15px; stroke-width: 2.4;"></i>
+                  <i data-lucide="arrow-up-right" style="width: 14px; height: 14px; stroke-width: 2.4;"></i>
                   <span>Вывести</span>
                 </button>
               </div>
             </div>
           </div>
 
-          <!-- Всего игр + Всего выиграно -->
+          <!-- Ниже: Всего игр (0) и Всего выиграно (0) -->
           <div class="stats-row">
             <div class="glass-card stat-card">
               <div class="stat-label-wrap">
-                <i data-lucide="dices" style="width: 16px; height: 16px;"></i>
+                <i data-lucide="dices" style="width: 15px; height: 15px;"></i>
                 <span>Всего игр</span>
               </div>
-              <div class="stat-value">148</div>
+              <div class="stat-value">0</div>
             </div>
 
             <div class="glass-card stat-card">
               <div class="stat-label-wrap">
-                <i data-lucide="trophy" style="width: 16px; height: 16px;"></i>
+                <i data-lucide="trophy" style="width: 15px; height: 15px;"></i>
                 <span>Всего выиграно</span>
               </div>
-              <div class="stat-value win">
-                <span>34 800</span>
-                <span style="font-size: 15px;">✦</span>
+              <div class="stat-value">
+                <span>0</span>
+                <span class="cur">✦</span>
               </div>
             </div>
           </div>
 
-          <!-- Панель Промокод + Активировать -->
+          <!-- Ниже: Панель Промокод и справа Активировать -->
           <div class="glass-card promo-card">
             <div class="promo-input-wrapper">
-              <i data-lucide="ticket" style="width: 18px; height: 18px;"></i>
+              <i data-lucide="ticket" style="width: 17px; height: 17px;"></i>
               <input type="text" id="promoInput" class="promo-input" placeholder="Введите промокод..." spellcheck="false" autocomplete="off">
             </div>
             <button class="btn-promo" onclick="activatePromo()">Активировать</button>
           </div>
 
-          <!-- Панель Рефералы -->
+          <!-- Ниже: Панель Рефералы (0) -->
           <div class="glass-card referral-card" onclick="openReferrals()">
             <div class="referral-left">
               <div class="referral-icon-box">
-                <i data-lucide="users" style="width: 22px; height: 22px;"></i>
+                <i data-lucide="users" style="width: 20px; height: 20px;"></i>
               </div>
               <div class="referral-info">
                 <span class="referral-title">Рефералы</span>
-                <span class="referral-subtitle">14 участников • Доход 15%</span>
+                <span class="referral-subtitle">0 приглашено • 0 ✦</span>
               </div>
             </div>
-            <div class="referral-btn">
-              <i data-lucide="chevron-right" style="width: 20px; height: 20px;"></i>
+            <div class="referral-arrow">
+              <i data-lucide="chevron-right" style="width: 19px; height: 19px;"></i>
             </div>
           </div>
 
@@ -890,26 +809,25 @@
   </div>
 
   <script>
-    // Инициализация Lucide icons
+    // Рендер иконок
     lucide.createIcons();
 
-    // Telegram Mini App интеграция
+    // Интеграция с Telegram WebApp
     const tg = window.Telegram?.WebApp;
     if (tg) {
       tg.ready();
       tg.expand();
       try {
-        tg.setHeaderColor('#06030b');
-        tg.setBackgroundColor('#06030b');
-        
-        // Подставляем реальный юзернейм из Telegram, если доступен
+        tg.setHeaderColor('#0b141d');
+        tg.setBackgroundColor('#0b141d');
+
         if (tg.initDataUnsafe?.user?.username) {
           document.getElementById('userName').innerText = '@' + tg.initDataUnsafe.user.username;
         }
       } catch (e) {}
     }
 
-    // Тактильная отдача для мобильных устройств
+    // Тактильный отклик
     function haptic(type = 'light') {
       if (tg?.HapticFeedback) {
         if (type === 'selection') tg.HapticFeedback.selectionChanged();
@@ -918,60 +836,54 @@
       }
     }
 
-    // Переключение вкладок
+    // Плавное переключение страниц
     function switchTab(tabId) {
       haptic('selection');
 
-      // Скрываем все страницы
       document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-
-      // Снимаем активность со всех кнопок в nav-bar
       document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
 
-      // Активируем нужную страницу
       const targetPage = document.getElementById(`page-${tabId}`);
       if (targetPage) targetPage.classList.add('active');
 
-      // Подсвечиваем соответствующую кнопку
       const navButtons = Array.from(document.querySelectorAll('.nav-item'));
       const activeBtn = navButtons.find(btn => btn.getAttribute('onclick').includes(tabId));
       if (activeBtn) activeBtn.classList.add('active');
     }
 
-    // Функция обновления баланса на всех панелях
-    let currentBalance = 1250;
+    // Баланс везде 0
+    let currentBalance = 0;
+
     function updateBalanceDisplay() {
       const formatted = currentBalance.toLocaleString('ru-RU');
       document.getElementById('headerBalance').innerText = formatted;
       document.getElementById('profileBalance').innerText = formatted;
     }
 
-    // Пополнение баланса (+)
     document.getElementById('headerAddBtn').addEventListener('click', () => {
       actionDeposit();
     });
 
     function actionDeposit() {
       haptic('medium');
-      currentBalance += 250;
+      currentBalance += 100;
       updateBalanceDisplay();
     }
 
     function actionWithdraw() {
       haptic('medium');
-      if (currentBalance >= 200) {
-        currentBalance -= 200;
+      if (currentBalance >= 50) {
+        currentBalance -= 50;
         updateBalanceDisplay();
       } else {
-        alert('Недостаточно средств для вывода!');
+        alert('Баланс 0. Недостаточно средств для вывода.');
       }
     }
 
-    // Активация промокода
     function activatePromo() {
       const input = document.getElementById('promoInput');
       const val = input.value.trim().toUpperCase();
-      
+
       if (!val) {
         haptic('medium');
         input.focus();
@@ -979,20 +891,19 @@
       }
 
       haptic('success');
-      currentBalance += 500;
+      currentBalance += 100;
       updateBalanceDisplay();
-      alert(`Промокод "${val}" успешно активирован! Начислено +500 ✦`);
+      alert(`Промокод "${val}" активирован! Начислено +100 ✦`);
       input.value = '';
     }
 
-    // Нажатие на панель рефералов
     function openReferrals() {
       haptic('selection');
       if (navigator.clipboard) {
-        navigator.clipboard.writeText('https://t.me/your_bot?start=ref_12345');
-        alert('Реферальная ссылка скопирована в буфер обмена!');
+        navigator.clipboard.writeText('https://t.me/your_bot?start=ref_00000');
+        alert('Реферальная ссылка скопирована!');
       } else {
-        alert('Реферальная программа: https://t.me/your_bot?start=ref_12345');
+        alert('Ваша ссылка: https://t.me/your_bot?start=ref_00000');
       }
     }
   </script>
