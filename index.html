@@ -16,20 +16,17 @@
 
   <style>
     :root {
-      /* Цвета ночной темы Telegram */
       --tg-bg-base: #0b141d;
       --tg-bg-secondary: rgba(23, 33, 43, 0.65);
       --tg-bg-glass: rgba(19, 28, 38, 0.75);
       --tg-bg-card: rgba(23, 33, 43, 0.6);
       --tg-bg-card-hover: rgba(30, 44, 57, 0.75);
       --tg-border: rgba(255, 255, 255, 0.08);
-      --tg-border-blue: rgba(46, 166, 255, 0.22);
+      --tg-border-blue: rgba(46, 166, 255, 0.25);
       --tg-blue-accent: #2ea6ff;
       --tg-blue-hover: #1e8fe1;
       --tg-blue-subtle: rgba(46, 166, 255, 0.12);
       --tg-gold: #f59e0b;
-      --tg-gold-subtle: rgba(245, 158, 11, 0.15);
-      --tg-purple: #a855f7;
       --tg-text: #ffffff;
       --tg-text-secondary: #7f91a4;
       --tg-text-muted: #536577;
@@ -62,7 +59,6 @@
         radial-gradient(circle at 90% 85%, rgba(30, 143, 225, 0.07) 0%, transparent 45%);
     }
 
-    /* Мобильный экран */
     .app-viewport {
       width: 100%;
       max-width: 440px;
@@ -84,7 +80,7 @@
       }
     }
 
-    /* ================= ВЕРХНЯЯ ПАНЕЛЬ ШАПКИ ================= */
+    /* ШАПКА */
     .header {
       position: absolute;
       top: 0;
@@ -108,12 +104,7 @@
       padding: 1.5px;
       background: linear-gradient(135deg, var(--tg-blue-accent), transparent 75%);
       cursor: pointer;
-      transition: transform 0.25s var(--ease-smooth);
       flex-shrink: 0;
-    }
-
-    .top-avatar-box:active {
-      transform: scale(0.93);
     }
 
     .top-avatar-img {
@@ -122,7 +113,6 @@
       border-radius: 50%;
       object-fit: cover;
       background: #17212b;
-      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .online-badge {
@@ -133,7 +123,6 @@
       background: rgba(34, 197, 94, 0.08);
       border: 1px solid rgba(34, 197, 94, 0.2);
       border-radius: 18px;
-      backdrop-filter: blur(8px);
     }
 
     .status-dot {
@@ -147,7 +136,6 @@
       font-size: 13px;
       font-weight: 600;
       color: #4ade80;
-      letter-spacing: 0.2px;
     }
 
     .header-balance-box {
@@ -157,7 +145,6 @@
       border: 1px solid var(--tg-border-blue);
       border-radius: 20px;
       padding: 4px 5px 4px 12px;
-      transition: border-color 0.25s var(--ease-smooth);
     }
 
     .header-balance-val {
@@ -186,21 +173,14 @@
       justify-content: center;
       cursor: pointer;
       color: #fff;
-      transition: transform 0.2s var(--ease-smooth), background-color 0.2s ease;
     }
 
-    .header-add-btn:active {
-      transform: scale(0.9);
-      background: var(--tg-blue-hover);
-    }
-
-    /* ================= КОНТЕНТ ================= */
+    /* ОСНОВНОЙ КОНТЕНТ */
     .content-area {
       flex: 1;
-      padding: 80px 16px 105px;
+      padding: 78px 16px 110px;
       position: relative;
       overflow-y: auto;
-      overflow-x: hidden;
       scrollbar-width: none;
     }
 
@@ -221,25 +201,14 @@
       transform: translateY(0);
     }
 
-    /* Общие стили карточек */
-    .glass-card {
-      background: var(--tg-bg-card);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
-      border: 1px solid var(--tg-border);
-      border-radius: var(--tg-radius);
-      padding: 14px;
-      position: relative;
-    }
-
-    /* ================= СТРАНИЦА: ПВП ================= */
+    /* ================= СТРАНИЦА ПВП ================= */
     .pvp-container {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 13px;
     }
 
-    /* 1. Верхняя панель: ПРЕД. ИГРА слева и ТОП ИГРА справа */
+    /* Верхние статы */
     .pvp-header-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -316,12 +285,9 @@
       font-size: 11px;
       font-weight: 700;
       color: var(--tg-blue-accent);
-      display: flex;
-      align-items: center;
-      gap: 3px;
     }
 
-    /* 2. Колесо рулетки */
+    /* АРЕНА КОЛЕСА С ПРИБЛИЖЕНИЕМ */
     .wheel-arena-wrapper {
       position: relative;
       width: 100%;
@@ -330,16 +296,21 @@
       align-items: center;
       justify-content: center;
       padding: 18px 0 10px;
+      transition: transform 2.8s cubic-bezier(0.12, 0.85, 0.2, 1);
+      transform-origin: center center;
     }
 
-    /* Стрелка-указатель сверху колеса */
+    .wheel-arena-wrapper.zoomed {
+      transform: scale(1.22);
+    }
+
     .wheel-pointer {
       position: absolute;
       top: 6px;
-      z-index: 10;
-      width: 20px;
-      height: 22px;
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+      z-index: 25;
+      width: 22px;
+      height: 24px;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.7));
     }
 
     .wheel-pointer polygon {
@@ -352,77 +323,120 @@
       position: relative;
       width: 220px;
       height: 220px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 0 35px rgba(0, 0, 0, 0.8);
     }
 
-    /* Колесо, которое медленно вращается */
+    /* Вращающаяся часть колеса */
     .wheel-rotor {
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      background: conic-gradient(
-        from 0deg,
-        #2ea6ff 0% 12%,
-        #3b82f6 12% 25%,
-        #6366f1 25% 37%,
-        #a855f7 37% 50%,
-        #ec4899 50% 63%,
-        #f59e0b 63% 75%,
-        #10b981 75% 88%,
-        #06b6d4 88% 100%
-      );
-      padding: 8px;
+      padding: 6px;
       box-shadow: 
-        0 0 28px rgba(46, 166, 255, 0.25),
-        inset 0 0 16px rgba(0, 0, 0, 0.7);
-      animation: rotateWheel 24s linear infinite;
+        0 0 25px rgba(46, 166, 255, 0.2),
+        inset 0 0 16px rgba(0, 0, 0, 0.8);
+      background: conic-gradient(from 0deg, #1e293b 0% 100%);
+      transition: none;
     }
 
-    .wheel-ticks {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 3px dashed rgba(255, 255, 255, 0.45);
+    .wheel-rotor.slow-idle {
+      animation: rotateSlow 20s linear infinite;
     }
 
-    @keyframes rotateWheel {
+    @keyframes rotateSlow {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
 
-    /* Центр колеса - статичный круг поверх */
+    /* Сектора и метки игроков на колесе */
+    .wheel-avatar-mark {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+      transform-origin: center center;
+      pointer-events: none;
+    }
+
+    .wheel-avatar-mark.is-me {
+      border: 2.5px solid var(--tg-blue-accent);
+      box-shadow: 0 0 12px var(--tg-blue-accent), 0 0 5px #fff;
+    }
+
+    .wheel-avatar-mark.is-me::after {
+      content: 'ТЫ';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--tg-blue-accent);
+      color: #fff;
+      font-size: 7px;
+      font-weight: 800;
+      padding: 1px 4px;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
+    /* Центр колеса */
     .wheel-center-content {
       position: relative;
-      z-index: 5;
-      width: 140px;
-      height: 140px;
+      z-index: 10;
+      width: 136px;
+      height: 136px;
       border-radius: 50%;
-      background: radial-gradient(circle at center, #172533 0%, #0d151e 100%);
+      background: radial-gradient(circle at center, #182736 0%, #0c141d 100%);
       border: 3px solid rgba(255, 255, 255, 0.12);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 12px;
+      padding: 10px;
       text-align: center;
     }
 
     .wheel-waiting-icon {
       color: var(--tg-blue-accent);
       animation: pulseAnim 2s ease-in-out infinite;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .wheel-waiting-text {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--tg-text);
       line-height: 1.25;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.3px;
+    }
+
+    .wheel-countdown-num {
+      font-size: 32px;
+      font-weight: 800;
+      color: #4ade80;
+      line-height: 1;
+      text-shadow: 0 0 16px rgba(74, 222, 128, 0.4);
+      animation: pulseTimer 1s infinite alternate;
+    }
+
+    .wheel-countdown-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--tg-text-secondary);
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    @keyframes pulseTimer {
+      0% { transform: scale(0.95); opacity: 0.85; }
+      100% { transform: scale(1.08); opacity: 1; }
     }
 
     @keyframes pulseAnim {
@@ -430,7 +444,7 @@
       50% { transform: scale(1.15); opacity: 1; }
     }
 
-    /* 3. Кнопка выбора валюты ставки: Gram / Gift */
+    /* ВЫБОР ВАЛЮТЫ */
     .currency-selector-card {
       display: flex;
       align-items: center;
@@ -465,17 +479,7 @@
       color: var(--tg-blue-accent);
     }
 
-    .curr-btn.active.gift-active {
-      background: rgba(168, 85, 247, 0.15);
-      border-color: rgba(168, 85, 247, 0.35);
-      color: #c084fc;
-    }
-
-    .curr-btn:active {
-      transform: scale(0.96);
-    }
-
-    /* 4. Кнопки ставок: 1, 5, 10, ALL IN */
+    /* СТАВКИ КНОПКИ */
     .bet-grid-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -496,7 +500,6 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 3px;
       transition: all 0.2s var(--ease-smooth);
     }
 
@@ -512,7 +515,7 @@
       color: #fbbf24;
     }
 
-    /* 5. Нижние кнопки: Настроить, Автоплей */
+    /* НАСТРОИТЬ И АВТОПЛЕЙ */
     .bet-actions-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -532,12 +535,10 @@
       justify-content: center;
       gap: 8px;
       cursor: pointer;
-      transition: all 0.2s var(--ease-smooth);
     }
 
     .btn-pvp-action:active {
       transform: scale(0.96);
-      background: rgba(255, 255, 255, 0.1);
     }
 
     .btn-pvp-action.autoplay-btn {
@@ -546,12 +547,27 @@
       color: var(--tg-blue-accent);
     }
 
-    /* 6. Панель "0 Игроков" и список ставок */
+    /* ТЕСТОВАЯ КНОПКА ДОБАВИТЬ БОТА ДЛЯ ПРОВЕРКИ 2-Х ИГРОКОВ */
+    .btn-add-bot-helper {
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px dashed rgba(34, 197, 94, 0.4);
+      color: #4ade80;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 7px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* СПИСОК СТАВОК */
     .players-list-panel {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-top: 2px;
     }
 
     .players-count-header {
@@ -582,7 +598,6 @@
       border-radius: 10px;
     }
 
-    /* Карточки ставок игроков */
     .bets-list {
       display: flex;
       flex-direction: column;
@@ -597,7 +612,12 @@
       background: rgba(23, 33, 43, 0.45);
       border: 1px solid var(--tg-border);
       border-radius: 16px;
-      transition: background 0.2s ease;
+      position: relative;
+    }
+
+    .bet-item-row.is-me {
+      border-color: var(--tg-border-blue);
+      background: rgba(46, 166, 255, 0.07);
     }
 
     .bet-item-left {
@@ -612,7 +632,6 @@
       border-radius: 50%;
       object-fit: cover;
       border: 1px solid var(--tg-border);
-      background: #17212b;
     }
 
     .bet-item-userinfo {
@@ -625,15 +644,24 @@
       font-size: 13px;
       font-weight: 700;
       color: var(--tg-text);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .bet-tag-you {
+      font-size: 9px;
+      font-weight: 800;
+      background: var(--tg-blue-accent);
+      color: #fff;
+      padding: 1px 5px;
+      border-radius: 6px;
     }
 
     .bet-item-amount {
       font-size: 12px;
       font-weight: 700;
       color: var(--tg-blue-accent);
-      display: flex;
-      align-items: center;
-      gap: 4px;
     }
 
     .bet-item-right {
@@ -661,40 +689,135 @@
       text-align: center;
       color: var(--tg-text-secondary);
       font-size: 13px;
-      font-weight: 500;
       border: 1px dashed var(--tg-border);
       border-radius: 16px;
     }
 
-    /* ================= СТРАНИЦА: ПРОФИЛЬ ================= */
-    .profile-container {
+    /* МОДАЛЬНОЕ ОКНО: ВЫБОР ПОДАРКОВ (GIFT) */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .gift-modal-card {
+      width: 100%;
+      max-width: 440px;
+      background: #111d29;
+      border: 1px solid var(--tg-border);
+      border-radius: 28px 28px 0 0;
+      padding: 20px 20px 34px;
+      transform: translateY(100%);
+      transition: transform 0.35s var(--ease-smooth);
       display: flex;
       flex-direction: column;
-      gap: 13px;
-      padding-top: 6px;
+      align-items: center;
+      text-align: center;
+    }
+
+    .modal-overlay.active .gift-modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-drag-pill {
+      width: 40px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.2);
+      margin-bottom: 14px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--tg-text);
+      margin-bottom: 16px;
+    }
+
+    .gift-empty-box {
+      padding: 26px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed var(--tg-border);
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .gift-empty-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: rgba(168, 85, 247, 0.12);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c084fc;
+    }
+
+    .gift-empty-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--tg-text);
+    }
+
+    .gift-empty-desc {
+      font-size: 12px;
+      color: var(--tg-text-secondary);
+      max-width: 260px;
+      line-height: 1.4;
+    }
+
+    .btn-close-modal {
+      width: 100%;
+      padding: 14px;
+      background: var(--tg-blue-accent);
+      border: none;
+      border-radius: 16px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* ПРОФИЛЬ КАРТОЧКИ */
+    .glass-card {
+      background: var(--tg-bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--tg-border);
+      border-radius: var(--tg-radius);
+      padding: 14px;
     }
 
     .profile-hero {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      margin-bottom: 4px;
+      margin-bottom: 12px;
     }
 
     .profile-avatar-wrapper {
-      position: relative;
-      width: 92px;
-      height: 92px;
+      width: 88px;
+      height: 88px;
       border-radius: 50%;
       padding: 2.5px;
-      background: linear-gradient(135deg, var(--tg-blue-accent), rgba(255, 255, 255, 0.1));
-      cursor: pointer;
-      transition: transform 0.25s var(--ease-smooth);
-    }
-
-    .profile-avatar-wrapper:active {
-      transform: scale(0.96);
+      background: linear-gradient(135deg, var(--tg-blue-accent), transparent);
     }
 
     .profile-avatar-img {
@@ -702,256 +825,49 @@
       height: 100%;
       border-radius: 50%;
       object-fit: cover;
-      background: #17212b;
-      border: 2px solid var(--tg-bg-base);
     }
 
     .profile-username {
-      margin-top: 10px;
-      font-size: 18px;
+      margin-top: 8px;
+      font-size: 17px;
       font-weight: 700;
-      color: var(--tg-text);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      letter-spacing: 0.2px;
     }
 
     .balance-card-grid {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-    }
-
-    .balance-left {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .balance-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--tg-text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
     }
 
     .balance-number {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 800;
       color: var(--tg-text);
       display: flex;
       align-items: center;
-      gap: 5px;
-      letter-spacing: 0.2px;
-    }
-
-    .balance-number .symbol {
-      color: var(--tg-blue-accent);
-      font-size: 18px;
-    }
-
-    .balance-actions-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      gap: 4px;
     }
 
     .btn-action {
-      padding: 9px 13px;
-      border-radius: 14px;
+      padding: 8px 14px;
+      border-radius: 12px;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       border: none;
-      outline: none;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: transform 0.2s var(--ease-smooth), opacity 0.2s ease, background 0.2s ease;
     }
 
-    .btn-action:active {
-      transform: scale(0.95);
-    }
-
-    .btn-deposit {
-      background: var(--tg-blue-accent);
-      color: #ffffff;
-    }
-
-    .btn-deposit:active {
-      background: var(--tg-blue-hover);
-    }
-
-    .btn-withdraw {
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--tg-text);
-      border: 1px solid var(--tg-border);
-    }
-
-    .btn-withdraw:active {
-      background: rgba(255, 255, 255, 0.1);
-    }
+    .btn-deposit { background: var(--tg-blue-accent); color: #fff; }
+    .btn-withdraw { background: rgba(255,255,255,0.06); color: #fff; }
 
     .stats-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .stat-card {
-      padding: 14px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .stat-label-wrap {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      color: var(--tg-text-secondary);
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .stat-label-wrap i {
-      color: var(--tg-blue-accent);
-      stroke-width: 2.2;
-    }
-
-    .stat-value {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--tg-text);
-      margin-top: 4px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .stat-value .cur {
-      color: var(--tg-blue-accent);
-      font-size: 16px;
-    }
-
-    .promo-card {
-      padding: 7px 7px 7px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .promo-input-wrapper {
-      display: flex;
-      align-items: center;
       gap: 10px;
-      flex: 1;
+      margin-top: 10px;
     }
 
-    .promo-input-wrapper i {
-      color: var(--tg-blue-accent);
-      flex-shrink: 0;
-    }
-
-    .promo-input {
-      width: 100%;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: var(--tg-text);
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .promo-input::placeholder {
-      color: var(--tg-text-muted);
-    }
-
-    .btn-promo {
-      background: var(--tg-blue-subtle);
-      border: 1px solid var(--tg-border-blue);
-      color: var(--tg-blue-accent);
-      padding: 9px 15px;
-      border-radius: 14px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      outline: none;
-      transition: transform 0.2s var(--ease-smooth), background 0.2s ease, color 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .btn-promo:active {
-      transform: scale(0.95);
-      background: var(--tg-blue-accent);
-      color: #fff;
-    }
-
-    .referral-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-    }
-
-    .referral-card:active {
-      background: var(--tg-bg-card-hover);
-    }
-
-    .referral-left {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-    }
-
-    .referral-icon-box {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background: var(--tg-blue-subtle);
-      border: 1px solid var(--tg-border-blue);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--tg-blue-accent);
-    }
-
-    .referral-info {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .referral-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--tg-text);
-    }
-
-    .referral-subtitle {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--tg-text-secondary);
-    }
-
-    .referral-arrow {
-      color: var(--tg-text-muted);
-      display: flex;
-      align-items: center;
-      transition: transform 0.2s var(--ease-smooth), color 0.2s ease;
-    }
-
-    .referral-card:active .referral-arrow {
-      transform: translateX(2px);
-      color: var(--tg-blue-accent);
-    }
-
-    /* Заглушки для других страниц */
+    /* ПУСТЫЕ СТРАНИЦЫ */
     .empty-card {
       padding: 45px 20px;
       margin-top: 40px;
@@ -965,32 +881,18 @@
     }
 
     .empty-icon-wrap {
-      width: 64px;
-      height: 64px;
-      border-radius: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
       background: var(--tg-blue-subtle);
-      border: 1px solid var(--tg-border-blue);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--tg-blue-accent);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
-    .empty-title {
-      font-size: 19px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .empty-desc {
-      font-size: 13px;
-      color: var(--tg-text-secondary);
-      max-width: 240px;
-      line-height: 1.4;
-    }
-
-    /* ================= НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ ================= */
+    /* НАВИГАЦИЯ */
     .nav-bar-wrapper {
       position: absolute;
       bottom: 0;
@@ -1008,8 +910,7 @@
       justify-content: space-around;
       padding: 8px 6px;
       background: var(--tg-bg-glass);
-      backdrop-filter: blur(28px) saturate(180%);
-      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      backdrop-filter: blur(28px);
       border: 1px solid var(--tg-border);
       border-radius: 24px;
     }
@@ -1018,36 +919,24 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       gap: 4px;
       padding: 8px 12px;
       border-radius: 16px;
       background: transparent;
       border: none;
-      outline: none;
       cursor: pointer;
       color: var(--tg-text-secondary);
-      transition: color 0.25s var(--ease-smooth), background 0.25s var(--ease-smooth), transform 0.2s var(--ease-smooth);
       flex: 1;
     }
 
     .nav-item span {
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.1px;
-    }
-
-    .nav-item:active {
-      transform: scale(0.94);
     }
 
     .nav-item.active {
       color: var(--tg-blue-accent);
       background: var(--tg-blue-subtle);
-    }
-
-    .nav-item.active span {
-      color: var(--tg-text);
     }
   </style>
 </head>
@@ -1055,54 +944,51 @@
 
   <div class="app-viewport">
     
-    <!-- ВЕРХНЯЯ ПАНЕЛЬ ШАПКИ -->
+    <!-- ШАПКА -->
     <header class="header">
       <div class="top-avatar-box" onclick="switchTab('profile')">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80" alt="Avatar" class="top-avatar-img">
+        <img id="myHeaderAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80" alt="Avatar" class="top-avatar-img">
       </div>
 
       <div class="online-badge">
         <div class="status-dot"></div>
-        <span class="online-text">Онлайн: 0</span>
+        <span class="online-text">Онлайн: 2</span>
       </div>
 
       <div class="header-balance-box">
         <div class="header-balance-val">
-          <span id="headerBalance">0</span>
+          <span id="headerBalance">100</span>
           <span>✦</span>
         </div>
-        <button class="header-add-btn" id="headerAddBtn" title="Пополнить">
+        <button class="header-add-btn" onclick="actionDeposit()" title="Пополнить">
           <i data-lucide="plus" style="width: 16px; height: 16px; stroke-width: 2.6;"></i>
         </button>
       </div>
     </header>
 
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <!-- КОНТЕНТ -->
     <main class="content-area">
       
-      <!-- СТРАНИЦА: ПВП (АКТИВНАЯ ПО УМОЛЧАНИЮ) -->
+      <!-- СТРАНИЦА: ПВП -->
       <section class="page active" id="page-pvp">
         <div class="pvp-container">
 
-          <!-- 1. Верхняя статистика Пвп: ПРЕД. ИГРА и ТОП ИГРА -->
+          <!-- Верхняя статистика: ПРЕД. ИГРА и ТОП ИГРА -->
           <div class="pvp-header-stats">
-            
-            <!-- Слева: ПРЕД. ИГРА + % Победы правее + Аватарка, юзернейм, сумма -->
-            <div class="pvp-stat-box">
+            <div class="pvp-stat-box" id="lastGameBox">
               <div class="stat-top-row">
                 <span class="stat-title">Пред. игра</span>
-                <span class="stat-winrate-tag">58%</span>
+                <span class="stat-winrate-tag" id="lastGameWinrate">58%</span>
               </div>
               <div class="stat-player-info">
-                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="Winner" class="stat-player-avatar">
+                <img id="lastGameAvatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="Winner" class="stat-player-avatar">
                 <div class="stat-player-text">
-                  <span class="stat-player-user">@crypto_king</span>
-                  <span class="stat-player-val">42.50 Gram</span>
+                  <span class="stat-player-user" id="lastGameUser">@crypto_king</span>
+                  <span class="stat-player-val" id="lastGameAmount">42.50 Gram</span>
                 </div>
               </div>
             </div>
 
-            <!-- Справа: ТОП ИГРА + Аватарка, юзернейм, сумма -->
             <div class="pvp-stat-box">
               <div class="stat-top-row">
                 <span class="stat-title" style="color: #fbbf24;">Топ игра</span>
@@ -1116,61 +1002,57 @@
                 </div>
               </div>
             </div>
-
           </div>
 
-          <!-- 2. Колесо рулетки по центру с медленным вращением и центром "Ожидание Игроков" -->
-          <div class="wheel-arena-wrapper">
-            <!-- Указатель стрелки сверху -->
+          <!-- Колесо рулетки по центру -->
+          <div class="wheel-arena-wrapper" id="wheelArenaWrapper">
             <svg class="wheel-pointer" viewBox="0 0 24 24">
               <polygon points="12,24 2,2 22,2"/>
             </svg>
 
             <div class="wheel-circle-outer">
-              <!-- Вращающееся колесо -->
-              <div class="wheel-rotor">
-                <div class="wheel-ticks"></div>
-              </div>
+              <!-- Вращающийся ротор -->
+              <div class="wheel-rotor slow-idle" id="wheelRotor"></div>
               
-              <!-- Центр колеса: статичный круг -->
-              <div class="wheel-center-content">
-                <i data-lucide="hourglass" class="wheel-waiting-icon" style="width: 24px; height: 24px;"></i>
-                <span class="wheel-waiting-text">Ожидание<br>Игроков</span>
+              <!-- Центр колеса -->
+              <div class="wheel-center-content" id="wheelCenterBox">
+                <i data-lucide="hourglass" class="wheel-waiting-icon" id="wheelWaitIcon" style="width: 24px; height: 24px;"></i>
+                <span class="wheel-waiting-text" id="wheelWaitText">Ожидание<br>Игроков</span>
               </div>
             </div>
           </div>
 
-          <!-- 3. Кнопка выбора валюты ставки: Gram / Gift -->
+          <!-- Выбор ставки Gram / Gift -->
           <div class="currency-selector-card">
             <button class="curr-btn active" id="btnCurGram" onclick="setCurrency('Gram')">
               <i data-lucide="gem" style="width: 16px; height: 16px;"></i>
               <span>Gram</span>
             </button>
-            <button class="curr-btn" id="btnCurGift" onclick="setCurrency('Gift')">
+            <button class="curr-btn" id="btnCurGift" onclick="openGiftModal()">
               <i data-lucide="gift" style="width: 16px; height: 16px;"></i>
               <span>Gift</span>
             </button>
           </div>
 
-          <!-- 4. Быстрые кнопки ставок: 1 Gram, 5 Gram, 10 Gram, ALL IN -->
+          <!-- Кнопки быстрых ставок -->
           <div class="bet-grid-row">
-            <button class="btn-bet-preset" onclick="placeQuickBet(1)">
+            <button class="btn-bet-preset" onclick="placeBet(1)">
               <span id="preset1Text">1 Gram</span>
             </button>
-            <button class="btn-bet-preset" onclick="placeQuickBet(5)">
+            <button class="btn-bet-preset" onclick="placeBet(5)">
               <span id="preset5Text">5 Gram</span>
             </button>
-            <button class="btn-bet-preset" onclick="placeQuickBet(10)">
+            <button class="btn-bet-preset" onclick="placeBet(10)">
               <span id="preset10Text">10 Gram</span>
             </button>
-            <button class="btn-bet-preset btn-all-in" onclick="placeQuickBet('ALL')">
+            <button class="btn-bet-preset btn-all-in" onclick="placeBet('ALL')">
               <span>ALL IN</span>
             </button>
           </div>
 
-          <!-- 5. Нижние кнопки: Настроить, Автоплей -->
+          <!-- Настроить, Автоплей и тестовая кнопка для соперника -->
           <div class="bet-actions-row">
-            <button class="btn-pvp-action" onclick="openSettingsModal()">
+            <button class="btn-pvp-action" onclick="alert('Настройки игры:\nМин. ставка: 1 Gram\nМакс. ставка: 500 Gram')">
               <i data-lucide="sliders-horizontal" style="width: 16px; height: 16px;"></i>
               <span>Настроить</span>
             </button>
@@ -1180,7 +1062,13 @@
             </button>
           </div>
 
-          <!-- 6. Панель "0 Игроков" и список ставок -->
+          <!-- Быстрый вызов соперника для проверки таймера и вращения -->
+          <button class="btn-add-bot-helper" onclick="addBotOpponent()">
+            <i data-lucide="user-plus" style="width: 14px; height: 14px;"></i>
+            <span>Добавить ставку соперника (Бот)</span>
+          </button>
+
+          <!-- 0 Игроков и список ставок -->
           <div class="players-list-panel">
             <div class="players-count-header">
               <div class="players-count-title">
@@ -1190,7 +1078,6 @@
               <span class="players-count-badge" id="bankSummary">Банк: 0 Gram</span>
             </div>
 
-            <!-- Список текущих ставок игроков -->
             <div class="bets-list" id="betsListContainer">
               <div class="empty-bets-placeholder" id="emptyBetsText">
                 Ставок пока нет. Будьте первым!
@@ -1201,131 +1088,93 @@
         </div>
       </section>
 
-      <!-- СТРАНИЦА: ИГРЫ -->
+      <!-- ДРУГИЕ СТРАНИЦЫ -->
       <section class="page" id="page-games">
         <div class="empty-card">
-          <div class="empty-icon-wrap">
-            <i data-lucide="gamepad-2" style="width: 28px; height: 28px;"></i>
-          </div>
-          <h2 class="empty-title">Игры</h2>
-          <p class="empty-desc">Каталог игр в разработке. Загляните позже!</p>
+          <div class="empty-icon-wrap"><i data-lucide="gamepad-2" style="width: 28px; height: 28px;"></i></div>
+          <h2 style="font-size: 18px; font-weight: 700;">Игры</h2>
+          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">Скоро появятся новые мини-игры!</p>
         </div>
       </section>
 
-      <!-- СТРАНИЦА: МАРКЕТ -->
       <section class="page" id="page-market">
         <div class="empty-card">
-          <div class="empty-icon-wrap">
-            <i data-lucide="shopping-bag" style="width: 28px; height: 28px;"></i>
-          </div>
-          <h2 class="empty-title">Маркет</h2>
-          <p class="empty-desc">В магазине пока нет товаров. Скоро появятся подарки и кейсы.</p>
+          <div class="empty-icon-wrap"><i data-lucide="shopping-bag" style="width: 28px; height: 28px;"></i></div>
+          <h2 style="font-size: 18px; font-weight: 700;">Маркет</h2>
+          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">В магазине пока нет доступных подарков.</p>
         </div>
       </section>
 
       <!-- СТРАНИЦА: ПРОФИЛЬ -->
       <section class="page" id="page-profile">
-        <div class="profile-container">
+        <div class="profile-hero">
+          <div class="profile-avatar-wrapper">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Avatar" class="profile-avatar-img">
+          </div>
+          <div class="profile-username" id="userName">@alex_player</div>
+        </div>
 
-          <div class="profile-hero">
-            <div class="profile-avatar-wrapper">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Avatar" class="profile-avatar-img">
+        <div class="glass-card">
+          <div class="balance-card-grid">
+            <div>
+              <span style="font-size: 11px; color: var(--tg-text-secondary); text-transform: uppercase;">Баланс</span>
+              <div class="balance-number">
+                <span id="profileBalance">100</span>
+                <span style="color: var(--tg-blue-accent);">✦</span>
+              </div>
             </div>
-            <div class="profile-username">
-              <span id="userName">@alex_player</span>
-              <i data-lucide="badge-check" style="width: 17px; height: 17px; color: var(--tg-blue-accent);"></i>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-action btn-deposit" onclick="actionDeposit()">Пополнить</button>
+              <button class="btn-action btn-withdraw" onclick="actionWithdraw()">Вывести</button>
             </div>
           </div>
+        </div>
 
+        <div class="stats-row">
           <div class="glass-card">
-            <div class="balance-card-grid">
-              <div class="balance-left">
-                <span class="balance-label">Баланс</span>
-                <div class="balance-number">
-                  <span id="profileBalance">0</span>
-                  <span class="symbol">✦</span>
-                </div>
-              </div>
-              <div class="balance-actions-right">
-                <button class="btn-action btn-deposit" onclick="actionDeposit()">
-                  <i data-lucide="plus" style="width: 14px; height: 14px; stroke-width: 2.6;"></i>
-                  <span>Пополнить</span>
-                </button>
-                <button class="btn-action btn-withdraw" onclick="actionWithdraw()">
-                  <i data-lucide="arrow-up-right" style="width: 14px; height: 14px; stroke-width: 2.4;"></i>
-                  <span>Вывести</span>
-                </button>
-              </div>
-            </div>
+            <span style="font-size: 11px; color: var(--tg-text-secondary);">Игр сыграно</span>
+            <div style="font-size: 18px; font-weight: 800; margin-top: 4px;" id="totalGamesStat">0</div>
           </div>
-
-          <div class="stats-row">
-            <div class="glass-card stat-card">
-              <div class="stat-label-wrap">
-                <i data-lucide="dices" style="width: 15px; height: 15px;"></i>
-                <span>Всего игр</span>
-              </div>
-              <div class="stat-value">0</div>
-            </div>
-
-            <div class="glass-card stat-card">
-              <div class="stat-label-wrap">
-                <i data-lucide="trophy" style="width: 15px; height: 15px;"></i>
-                <span>Всего выиграно</span>
-              </div>
-              <div class="stat-value">
-                <span>0</span>
-                <span class="cur">✦</span>
-              </div>
-            </div>
+          <div class="glass-card">
+            <span style="font-size: 11px; color: var(--tg-text-secondary);">Выиграно</span>
+            <div style="font-size: 18px; font-weight: 800; margin-top: 4px; color: #4ade80;" id="totalWonStat">0 ✦</div>
           </div>
-
-          <div class="glass-card promo-card">
-            <div class="promo-input-wrapper">
-              <i data-lucide="ticket" style="width: 17px; height: 17px;"></i>
-              <input type="text" id="promoInput" class="promo-input" placeholder="Введите промокод..." spellcheck="false" autocomplete="off">
-            </div>
-            <button class="btn-promo" onclick="activatePromo()">Активировать</button>
-          </div>
-
-          <div class="glass-card referral-card" onclick="openReferrals()">
-            <div class="referral-left">
-              <div class="referral-icon-box">
-                <i data-lucide="users" style="width: 20px; height: 20px;"></i>
-              </div>
-              <div class="referral-info">
-                <span class="referral-title">Рефералы</span>
-                <span class="referral-subtitle">0 приглашено • 0 ✦</span>
-              </div>
-            </div>
-            <div class="referral-arrow">
-              <i data-lucide="chevron-right" style="width: 19px; height: 19px;"></i>
-            </div>
-          </div>
-
         </div>
       </section>
 
     </main>
 
-    <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
+    <!-- ВСПЛЫВАЮЩИЙ МОДАЛ: ВЫБОР ПОДАРКОВ (GIFT) -->
+    <div class="modal-overlay" id="giftModal" onclick="closeGiftModal(event)">
+      <div class="gift-modal-card" onclick="event.stopPropagation()">
+        <div class="modal-drag-pill"></div>
+        <h3 class="modal-title">Выбор Подарков</h3>
+        <div class="gift-empty-box">
+          <div class="gift-empty-icon">
+            <i data-lucide="gift" style="width: 28px; height: 28px;"></i>
+          </div>
+          <div class="gift-empty-text">У вас нет подарков</div>
+          <div class="gift-empty-desc">В вашем инвентаре пока нет доступных Telegram Gifts для ставки в PvP.</div>
+        </div>
+        <button class="btn-close-modal" onclick="closeGiftModal()">Понятно</button>
+      </div>
+    </div>
+
+    <!-- НАВИГАЦИЯ -->
     <div class="nav-bar-wrapper">
       <nav class="nav-bar">
         <button class="nav-item active" onclick="switchTab('pvp')">
           <i data-lucide="swords" style="width: 20px; height: 20px;"></i>
           <span>Пвп</span>
         </button>
-
         <button class="nav-item" onclick="switchTab('games')">
           <i data-lucide="gamepad-2" style="width: 20px; height: 20px;"></i>
           <span>Игры</span>
         </button>
-
         <button class="nav-item" onclick="switchTab('market')">
           <i data-lucide="shopping-bag" style="width: 20px; height: 20px;"></i>
           <span>Маркет</span>
         </button>
-
         <button class="nav-item" onclick="switchTab('profile')">
           <i data-lucide="user" style="width: 20px; height: 20px;"></i>
           <span>Профиль</span>
@@ -1336,20 +1185,26 @@
   </div>
 
   <script>
-    // Рендер Lucide иконок
     lucide.createIcons();
 
-    // Telegram WebApp
+    // Интеграция с Telegram WebApp
     const tg = window.Telegram?.WebApp;
+    let myUsername = '@alex_player';
+    let myAvatar = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80';
+
     if (tg) {
       tg.ready();
       tg.expand();
       try {
         tg.setHeaderColor('#0b141d');
         tg.setBackgroundColor('#0b141d');
-
         if (tg.initDataUnsafe?.user?.username) {
-          document.getElementById('userName').innerText = '@' + tg.initDataUnsafe.user.username;
+          myUsername = '@' + tg.initDataUnsafe.user.username;
+          document.getElementById('userName').innerText = myUsername;
+        }
+        if (tg.initDataUnsafe?.user?.photo_url) {
+          myAvatar = tg.initDataUnsafe.user.photo_url;
+          document.getElementById('myHeaderAvatar').src = myAvatar;
         }
       } catch (e) {}
     }
@@ -1362,33 +1217,32 @@
       }
     }
 
-    // Переключение вкладок
     function switchTab(tabId) {
       haptic('selection');
-
       document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
 
-      const targetPage = document.getElementById(`page-${tabId}`);
-      if (targetPage) targetPage.classList.add('active');
+      const target = document.getElementById(`page-${tabId}`);
+      if (target) target.classList.add('active');
 
       const navButtons = Array.from(document.querySelectorAll('.nav-item'));
-      const activeBtn = navButtons.find(btn => btn.getAttribute('onclick').includes(tabId));
+      const activeBtn = navButtons.find(btn => btn.getAttribute('onclick')?.includes(tabId));
       if (activeBtn) activeBtn.classList.add('active');
     }
 
-    // Состояние баланса
-    let currentBalance = 0;
+    // Баланс
+    let currentBalance = 100;
+    let totalGames = 0;
+    let totalWon = 0;
 
     function updateBalanceDisplay() {
       const formatted = currentBalance.toLocaleString('ru-RU');
       document.getElementById('headerBalance').innerText = formatted;
       document.getElementById('profileBalance').innerText = formatted;
+      document.getElementById('totalGamesStat').innerText = totalGames;
+      document.getElementById('totalWonStat').innerText = `${totalWon} ✦`;
     }
-
-    document.getElementById('headerAddBtn').addEventListener('click', () => {
-      actionDeposit();
-    });
+    updateBalanceDisplay();
 
     function actionDeposit() {
       haptic('medium');
@@ -1402,111 +1256,326 @@
         currentBalance -= 50;
         updateBalanceDisplay();
       } else {
-        alert('Баланс 0. Недостаточно средств для вывода.');
+        alert('Недостаточно средств');
       }
     }
 
-    function activatePromo() {
-      const input = document.getElementById('promoInput');
-      const val = input.value.trim().toUpperCase();
-
-      if (!val) {
-        haptic('medium');
-        input.focus();
-        return;
-      }
-
-      haptic('success');
-      currentBalance += 100;
-      updateBalanceDisplay();
-      alert(`Промокод "${val}" активирован! Начислено +100 ✦`);
-      input.value = '';
+    // ================= МОДАЛКА ВЫБОРА ПОДАРКОВ (GIFT) =================
+    function openGiftModal() {
+      haptic('medium');
+      document.getElementById('giftModal').classList.add('active');
     }
 
-    function openReferrals() {
+    function closeGiftModal() {
       haptic('selection');
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText('https://t.me/your_bot?start=ref_00000');
-        alert('Реферальная ссылка скопирована!');
-      } else {
-        alert('Ваша ссылка: https://t.me/your_bot?start=ref_00000');
-      }
+      document.getElementById('giftModal').classList.remove('active');
     }
-
-    // ================= ЛОГИКА СТАВОК И ВАЛЮТЫ PVP =================
-    let selectedCurrency = 'Gram'; // 'Gram' или 'Gift'
-    let isAutoPlay = false;
-    let playersBets = [];
 
     function setCurrency(cur) {
       haptic('selection');
-      selectedCurrency = cur;
-
       const btnGram = document.getElementById('btnCurGram');
-      const btnGift = document.getElementById('btnCurGift');
-
-      if (cur === 'Gram') {
-        btnGram.classList.add('active');
-        btnGift.classList.remove('active', 'gift-active');
-      } else {
-        btnGift.classList.add('active', 'gift-active');
-        btnGram.classList.remove('active');
-      }
-
-      // Обновляем текст на кнопках
-      document.getElementById('preset1Text').innerText = `1 ${cur}`;
-      document.getElementById('preset5Text').innerText = `5 ${cur}`;
-      document.getElementById('preset10Text').innerText = `10 ${cur}`;
+      btnGram.classList.add('active');
     }
 
-    function placeQuickBet(amount) {
+    // ================= ПВП ИГРОВАЯ ЛОГИКА =================
+    let gameState = 'WAITING'; // 'WAITING', 'COUNTDOWN', 'SPINNING'
+    let countdownSec = 15;
+    let countdownInterval = null;
+    let isAutoPlay = false;
+
+    // Массив цветов для секторов оппонентов
+    const opponentColors = ['#ec4899', '#f59e0b', '#10b981', '#8b5cf6', '#ef4444', '#06b6d4'];
+    let bets = []; // { id, user, avatar, amount, isMe, color, winRate, startDeg, endDeg }
+
+    // Размещение ставки игроком (СУММИРОВАНИЕ В ОДНУ)
+    function placeBet(amount) {
+      if (gameState === 'SPINNING') return;
       haptic('medium');
-      const curUser = document.getElementById('userName').innerText || '@alex_player';
-      let betVal = amount === 'ALL' ? (currentBalance > 0 ? currentBalance : 10) : amount;
 
-      // Добавим демо-ставку в список ставок игроков
-      playersBets.unshift({
-        user: curUser,
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80',
-        amount: betVal,
-        currency: selectedCurrency,
-        winRate: Math.floor(Math.random() * 40) + 20
-      });
-
-      renderBetsList();
-    }
-
-    function renderBetsList() {
-      const container = document.getElementById('betsListContainer');
-      const countHeader = document.getElementById('playersCountText');
-      const bankSummary = document.getElementById('bankSummary');
-
-      const count = playersBets.length;
-      countHeader.innerText = `${count} Игроков`;
-
-      let totalBank = playersBets.reduce((acc, curr) => acc + Number(curr.amount), 0);
-      bankSummary.innerText = `Банк: ${totalBank} ${selectedCurrency}`;
-
-      if (count === 0) {
-        container.innerHTML = `<div class="empty-bets-placeholder" id="emptyBetsText">Ставок пока нет. Будьте первым!</div>`;
+      let val = amount === 'ALL' ? currentBalance : amount;
+      if (val <= 0 || currentBalance < val) {
+        alert('Недостаточно Gram для ставки!');
         return;
       }
 
-      container.innerHTML = playersBets.map(bet => `
-        <div class="bet-item-row">
+      currentBalance -= val;
+      updateBalanceDisplay();
+
+      // Проверяем: есть ли уже ставка от нас? Если есть — СУММИРУЕМ!
+      const myExistingBet = bets.find(b => b.isMe);
+      if (myExistingBet) {
+        myExistingBet.amount += val;
+      } else {
+        bets.push({
+          id: 'me',
+          user: myUsername,
+          avatar: myAvatar,
+          amount: val,
+          isMe: true,
+          color: '#2ea6ff' // Неоново-голубой для игрока
+        });
+      }
+
+      recalculateAndRender();
+
+      // Автоматическое добавление бота-соперника через 1.5с (для удобного теста 2-х игроков)
+      if (bets.length === 1 && !countdownInterval) {
+        setTimeout(() => {
+          if (bets.length === 1) addBotOpponent();
+        }, 1500);
+      }
+    }
+
+    // Добавление бота для спарринга
+    function addBotOpponent() {
+      if (gameState === 'SPINNING') return;
+      haptic('medium');
+
+      const botNames = ['@ton_shark', '@crypto_ninja', '@gram_whale', '@sol_king'];
+      const botAvatars = [
+        'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80',
+        'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=100&q=80',
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80'
+      ];
+      
+      const randomIdx = Math.floor(Math.random() * botNames.length);
+      const randomBotUser = botNames[randomIdx];
+      
+      // Если бот уже есть — суммируем, иначе добавляем
+      const existingBot = bets.find(b => b.user === randomBotUser);
+      const botAmount = (Math.floor(Math.random() * 3) + 1) * 5;
+
+      if (existingBot) {
+        existingBot.amount += botAmount;
+      } else {
+        bets.push({
+          id: 'bot_' + Date.now(),
+          user: randomBotUser,
+          avatar: botAvatars[randomIdx % botAvatars.length],
+          amount: botAmount,
+          isMe: false,
+          color: opponentColors[bets.length % opponentColors.length]
+        });
+      }
+
+      recalculateAndRender();
+    }
+
+    // Пересчет процентов победы, отрисовка секторов колеса и списка
+    function recalculateAndRender() {
+      const totalBank = bets.reduce((sum, b) => sum + b.amount, 0);
+
+      // Рассчитываем углы секторов
+      let currentAngle = 0;
+      bets.forEach(b => {
+        const rate = (b.amount / totalBank);
+        b.winRate = Math.round(rate * 100);
+        b.startDeg = currentAngle;
+        b.endDeg = currentAngle + (rate * 360);
+        currentAngle = b.endDeg;
+      });
+
+      renderWheelVisuals(totalBank);
+      renderBetsList(totalBank);
+      checkGameTimerCondition();
+    }
+
+    // Отрисовка секторов на колесе и аватарок
+    function renderWheelVisuals(totalBank) {
+      const rotor = document.getElementById('wheelRotor');
+      rotor.innerHTML = '';
+
+      if (bets.length === 0) {
+        rotor.style.background = 'conic-gradient(from 0deg, #1e293b 0% 100%)';
+        return;
+      }
+
+      // Генерация градиента conic-gradient
+      const gradientParts = bets.map(b => `${b.color} ${b.startDeg}deg ${b.endDeg}deg`);
+      rotor.style.background = `conic-gradient(from 0deg, ${gradientParts.join(', ')})`;
+
+      // Размещение аватарок на секторах колеса
+      bets.forEach(b => {
+        const midDeg = (b.startDeg + b.endDeg) / 2;
+        const mark = document.createElement('img');
+        mark.src = b.avatar;
+        mark.className = `wheel-avatar-mark ${b.isMe ? 'is-me' : ''}`;
+        
+        // Размещение по радиусу (80px от центра)
+        const radius = 80;
+        const rad = (midDeg - 90) * (Math.PI / 180);
+        const x = 110 + radius * Math.cos(rad) - 15;
+        const y = 110 + radius * Math.sin(rad) - 15;
+
+        mark.style.left = `${x}px`;
+        mark.style.top = `${y}px`;
+        rotor.appendChild(mark);
+      });
+    }
+
+    // Отрисовка списка ставок игроков
+    function renderBetsList(totalBank) {
+      const countHeader = document.getElementById('playersCountText');
+      const bankSummary = document.getElementById('bankSummary');
+      const list = document.getElementById('betsListContainer');
+
+      countHeader.innerText = `${bets.length} Игроков`;
+      bankSummary.innerText = `Банк: ${totalBank} Gram`;
+
+      if (bets.length === 0) {
+        list.innerHTML = `<div class="empty-bets-placeholder">Ставок пока нет. Будьте первым!</div>`;
+        return;
+      }
+
+      list.innerHTML = bets.map(b => `
+        <div class="bet-item-row ${b.isMe ? 'is-me' : ''}">
           <div class="bet-item-left">
-            <img src="${bet.avatar}" class="bet-item-avatar" alt="Avatar">
+            <img src="${b.avatar}" class="bet-item-avatar" alt="Ava">
             <div class="bet-item-userinfo">
-              <span class="bet-item-username">${bet.user}</span>
-              <span class="bet-item-amount">${bet.amount} ${bet.currency}</span>
+              <span class="bet-item-username">
+                ${b.user} ${b.isMe ? '<span class="bet-tag-you">ВЫ</span>' : ''}
+              </span>
+              <span class="bet-item-amount" style="color: ${b.color};">${b.amount} Gram</span>
             </div>
           </div>
           <div class="bet-item-right">
             <span class="bet-winrate-label">Шанс</span>
-            <span class="bet-winrate-val">${bet.winRate}%</span>
+            <span class="bet-winrate-val" style="color: ${b.color};">${b.winRate}%</span>
           </div>
         </div>
       `).join('');
+    }
+
+    // Проверка условия 2-х игроков и запуск таймера 15 сек
+    function checkGameTimerCondition() {
+      if (bets.length >= 2 && gameState === 'WAITING') {
+        start15SecCountdown();
+      }
+    }
+
+    // ТАЙМЕР 15 СЕКУНД ДО СТАРТА
+    function start15SecCountdown() {
+      gameState = 'COUNTDOWN';
+      countdownSec = 15;
+
+      const centerBox = document.getElementById('wheelCenterBox');
+
+      countdownInterval = setInterval(() => {
+        haptic('selection');
+        centerBox.innerHTML = `
+          <div class="wheel-countdown-num">${countdownSec}</div>
+          <div class="wheel-countdown-label">До старта</div>
+        `;
+        countdownSec--;
+
+        if (countdownSec < 0) {
+          clearInterval(countdownInterval);
+          start11SecSpin();
+        }
+      }, 1000);
+    }
+
+    // ВРАЩЕНИЕ 11 СЕКУНД С ПЛАВНЫМ ТОРМОЖЕНИЕМ И ЗУМОМ
+    function start11SecSpin() {
+      gameState = 'SPINNING';
+      haptic('medium');
+
+      const rotor = document.getElementById('wheelRotor');
+      const arenaWrapper = document.getElementById('wheelArenaWrapper');
+      const centerBox = document.getElementById('wheelCenterBox');
+
+      rotor.classList.remove('slow-idle');
+
+      centerBox.innerHTML = `
+        <i data-lucide="loader-2" class="wheel-waiting-icon" style="animation: rotateSlow 1s linear infinite; width: 28px; height: 28px;"></i>
+        <div class="wheel-countdown-label" style="color: #4ade80;">Крутится...</div>
+      `;
+      lucide.createIcons();
+
+      // Выбираем победителя по шансам
+      const totalBank = bets.reduce((sum, b) => sum + b.amount, 0);
+      const randTicket = Math.random() * 360;
+      let winner = bets.find(b => randTicket >= b.startDeg && randTicket < b.endDeg) || bets[0];
+
+      // Стрелка сверху на 12 часов (0 deg)
+      // Целевой угол поворота колеса
+      const winningMiddle = (winner.startDeg + winner.endDeg) / 2;
+      const targetDegree = (360 - winningMiddle); 
+
+      // 10 полных оборотов + точная остановка на победителе
+      const totalSpinDegree = (360 * 10) + targetDegree;
+
+      // 11 секунд плавной анимации с кинематографичным торможением
+      rotor.style.transition = 'transform 11s cubic-bezier(0.12, 0.88, 0.2, 1)';
+      rotor.style.transform = `rotate(${totalSpinDegree}deg)`;
+
+      // НА 8-й СЕКУНДЕ ПЛАВНО ПРИБЛИЖАЕМ ЭКРАН (ZOOM IN)
+      setTimeout(() => {
+        arenaWrapper.classList.add('zoomed');
+      }, 7800);
+
+      // ОКОНЧАНИЕ ВРАЩЕНИЯ ЧЕРЕЗ 11 СЕКУНД
+      setTimeout(() => {
+        onSpinFinished(winner, totalBank);
+      }, 11000);
+    }
+
+    // ПОБЕДИТЕЛЬ И СБРОС К НОВОЙ ИГРЕ
+    function onSpinFinished(winner, totalBank) {
+      haptic('success');
+      const centerBox = document.getElementById('wheelCenterBox');
+      const arenaWrapper = document.getElementById('wheelArenaWrapper');
+
+      // Показываем победителя в центре
+      centerBox.innerHTML = `
+        <img src="${winner.avatar}" style="width: 38px; height: 38px; border-radius: 50%; border: 2px solid ${winner.color}; margin-bottom: 2px;">
+        <span style="font-size: 11px; font-weight: 800; color: #4ade80;">ПОБЕДА!</span>
+        <span style="font-size: 10px; color: var(--tg-text-secondary);">${winner.user}</span>
+      `;
+
+      // Обновляем верхнюю карточку "ПРЕД. ИГРА"
+      document.getElementById('lastGameUser').innerText = winner.user;
+      document.getElementById('lastGameAmount').innerText = `${totalBank} Gram`;
+      document.getElementById('lastGameWinrate').innerText = `${winner.winRate}%`;
+      document.getElementById('lastGameAvatar').src = winner.avatar;
+
+      // Начисление приза, если выиграли вы
+      totalGames++;
+      if (winner.isMe) {
+        currentBalance += totalBank;
+        totalWon += totalBank;
+        updateBalanceDisplay();
+      }
+
+      // Через 3.5 секунды плавно отдаляем зум и сбрасываем для нового раунда
+      setTimeout(() => {
+        arenaWrapper.classList.remove('zoomed');
+        resetPvPRound();
+      }, 3500);
+    }
+
+    function resetPvPRound() {
+      const rotor = document.getElementById('wheelRotor');
+      const centerBox = document.getElementById('wheelCenterBox');
+
+      rotor.style.transition = 'none';
+      rotor.style.transform = 'rotate(0deg)';
+      rotor.classList.add('slow-idle');
+
+      centerBox.innerHTML = `
+        <i data-lucide="hourglass" class="wheel-waiting-icon" style="width: 24px; height: 24px;"></i>
+        <span class="wheel-waiting-text">Ожидание<br>Игроков</span>
+      `;
+      lucide.createIcons();
+
+      bets = [];
+      gameState = 'WAITING';
+      recalculateAndRender();
+
+      // Если включен автоплей, автоматически повторяем ставку 5 Gram
+      if (isAutoPlay) {
+        setTimeout(() => placeBet(5), 1000);
+      }
     }
 
     function toggleAutoPlay() {
@@ -1519,6 +1588,7 @@
         btn.style.background = 'rgba(239, 68, 68, 0.2)';
         btn.style.borderColor = 'rgba(239, 68, 68, 0.4)';
         btn.style.color = '#f87171';
+        if (bets.length === 0) placeBet(5);
       } else {
         btn.innerHTML = `<i data-lucide="play" style="width: 16px; height: 16px;"></i><span>Автоплей</span>`;
         btn.style.background = '';
@@ -1526,11 +1596,6 @@
         btn.style.color = '';
       }
       lucide.createIcons();
-    }
-
-    function openSettingsModal() {
-      haptic('medium');
-      alert('Настройки ставок:\n- Фильтр мин./макс. ставки\n- Автовывод при выигрыше\n- Звуки и виброотклик');
     }
   </script>
 </body>
