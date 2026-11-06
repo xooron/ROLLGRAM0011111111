@@ -17,8 +17,8 @@
   <style>
     :root {
       --tg-bg-base: #080f17;
-      --tg-glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(16, 25, 36, 0.65);
-      --tg-glass-card: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(20, 31, 45, 0.55);
+      --tg-glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(16, 25, 36, 0.7);
+      --tg-glass-card: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(20, 31, 45, 0.58);
       --tg-glass-border: rgba(255, 255, 255, 0.12);
       --tg-glass-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.22);
       --tg-glass-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.45);
@@ -70,7 +70,7 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      background: rgba(8, 15, 23, 0.82);
+      background: rgba(8, 15, 23, 0.85);
       overflow: hidden;
     }
 
@@ -83,7 +83,7 @@
       }
     }
 
-    /* КРУГЛАЯ ВАЛЮТА (1 В 1 С ФОТО) */
+    /* КРУГЛАЯ ВАЛЮТА */
     .gem-icon {
       width: 18px;
       height: 18px;
@@ -91,7 +91,6 @@
       vertical-align: -3px;
       flex-shrink: 0;
       filter: drop-shadow(0 2px 6px rgba(36, 139, 250, 0.4));
-      transition: transform 0.2s var(--ease-smooth);
     }
 
     .gem-icon-lg {
@@ -250,7 +249,7 @@
       gap: 12px;
     }
 
-    /* Верхние статы (Пред. игра и Топ игра) */
+    /* Верхние статы */
     .pvp-header-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -260,7 +259,7 @@
     .pvp-stat-column {
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 6px;
     }
 
     .pvp-stat-box {
@@ -339,17 +338,25 @@
       gap: 3px;
     }
 
-    /* КРУГЛЫЕ КНОПКИ ПОД КАРТОЧКАМИ (ИСТОРИЯ И ЧАТ) */
+    /* КНОПКИ: ИСТОРИЯ (ВЛЕВО) И ЧАТ (ВПРАВО) */
     .round-glass-btn-bar {
       display: flex;
-      align-items: center;
-      justify-content: center;
       width: 100%;
     }
 
+    .round-glass-btn-bar.to-left {
+      justify-content: flex-start;
+      padding-left: 2px;
+    }
+
+    .round-glass-btn-bar.to-right {
+      justify-content: flex-end;
+      padding-right: 2px;
+    }
+
     .round-glass-btn {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: var(--tg-glass-card);
       backdrop-filter: blur(24px) saturate(180%);
@@ -378,7 +385,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 12px 0 6px;
+      padding: 10px 0 4px;
       transition: transform 2.8s cubic-bezier(0.12, 0.88, 0.2, 1);
       transform-origin: center center;
     }
@@ -389,7 +396,7 @@
 
     .wheel-pointer {
       position: absolute;
-      top: 1px;
+      top: -2px;
       z-index: 30;
       width: 24px;
       height: 26px;
@@ -509,7 +516,7 @@
       50% { transform: scale(1.15); opacity: 1; }
     }
 
-    /* ВЫБОР СТАВКИ ВАЛЮТА И ПОДАРКИ */
+    /* ВЫБОР ВАЛЮТЫ И ПОДАРКОВ */
     .currency-selector-card {
       display: flex;
       align-items: center;
@@ -582,7 +589,6 @@
       color: #fbbf24;
     }
 
-    /* ДЕЙСТВИЯ */
     .bet-actions-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -760,17 +766,18 @@
       color: #4ade80;
     }
 
-    .empty-bets-placeholder {
+    .empty-placeholder {
       padding: 24px;
       text-align: center;
       color: var(--tg-text-secondary);
       font-size: 13px;
+      font-weight: 600;
       border: 1px dashed var(--tg-glass-border);
       border-radius: 18px;
       background: rgba(255, 255, 255, 0.02);
     }
 
-    /* ================= СТРАНИЦА: ПРОФИЛЬ ================= */
+    /* ================= ПРОФИЛЬ ================= */
     .profile-hero {
       display: flex;
       flex-direction: column;
@@ -848,7 +855,6 @@
       border: 1px solid var(--tg-glass-border);
     }
 
-    /* Статистика выше промокода */
     .stats-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -860,7 +866,6 @@
       padding: 12px 14px;
     }
 
-    /* Панель Промокода */
     .promo-card {
       padding: 6px 6px 6px 14px;
       display: flex;
@@ -905,7 +910,6 @@
       flex-shrink: 0;
     }
 
-    /* Реферальная система ниже промокода */
     .referral-card {
       margin-top: 10px;
       display: flex;
@@ -1069,15 +1073,9 @@
       background: var(--tg-blue-subtle);
       box-shadow: 0 2px 10px var(--tg-blue-glow);
     }
-
-    .empty-card {
-      padding: 45px 20px;
-      margin-top: 40px;
-      text-align: center;
-    }
   </style>
 
-  <!-- Векторный шаблон валюты (1 в 1 с фото: Круглая форма, внутри белый кристалл, внутри него синяя звезда) -->
+  <!-- Векторный шаблон круглой валюты -->
   <svg style="display:none;">
     <defs>
       <linearGradient id="gemRoundBlueGrad" x1="60" y1="30" x2="450" y2="480" gradientUnits="userSpaceOnUse">
@@ -1085,11 +1083,8 @@
         <stop offset="1" stop-color="#197fe8"/>
       </linearGradient>
       <g id="gemSymbol">
-        <!-- 1. Круглое синее основание (как на фото, но круглое) -->
         <circle cx="256" cy="256" r="256" fill="url(#gemRoundBlueGrad)"/>
-        <!-- 2. Белый огранённый кристалл -->
         <path d="M172 136H340C351 136 361.5 142 367.5 151.5L437 248C444.5 258.5 443 272.5 434 281.5L273 434C263.5 443.5 248.5 443.5 239 434L78 281.5C69 272.5 67.5 258.5 75 248L144.5 151.5C150.5 142 161 136 172 136Z" fill="#FFFFFF"/>
-        <!-- 3. Синяя 4-конечная сверкающая звезда внутри белого кристалла -->
         <path d="M305 168C304 204 280 228 244 232C280 236 304 260 305 296C306 260 330 236 366 232C330 228 306 204 305 168Z" fill="url(#gemRoundBlueGrad)"/>
       </g>
     </defs>
@@ -1128,37 +1123,37 @@
       <section class="page active" id="page-pvp">
         <div class="pvp-container">
 
-          <!-- Верхняя статистика: ПРЕД. ИГРА и ТОП ИГРА + Круглые кнопки История и Чат под ними -->
+          <!-- Статистика: Пред. игра и Топ игра + Кнопка Истории СЛЕВА, Кнопка Чата СПРАВА -->
           <div class="pvp-header-stats">
             
-            <!-- Левая колонка: ПРЕД. ИГРА + круглая кнопка История игр -->
+            <!-- Левая колонка -->
             <div class="pvp-stat-column">
               <div class="pvp-stat-box" id="lastGameBox">
                 <div class="stat-top-row">
                   <span class="stat-title">Пред. игра</span>
-                  <span class="stat-winrate-tag" id="lastGameWinrate">58%</span>
+                  <span class="stat-winrate-tag" id="lastGameWinrate">0%</span>
                 </div>
                 <div class="stat-player-info">
                   <img id="lastGameAvatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="Winner" class="stat-player-avatar">
                   <div class="stat-player-text">
-                    <span class="stat-player-user" id="lastGameUser">@crypto_king</span>
+                    <span class="stat-player-user" id="lastGameUser">Нет игр</span>
                     <span class="stat-player-val">
-                      <span id="lastGameAmount">42.50</span>
+                      <span id="lastGameAmount">0.00</span>
                       <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
                     </span>
                   </div>
                 </div>
               </div>
 
-              <!-- КРУГЛАЯ КНОПКА: ИСТОРИЯ ИГР -->
-              <div class="round-glass-btn-bar">
+              <!-- КНОПКА ИСТОРИИ ИГР (ПРЯМ В ЛЕВУЮ СТОРОНУ) -->
+              <div class="round-glass-btn-bar to-left">
                 <button class="round-glass-btn" onclick="openHistoryModal()" title="История игр">
-                  <i data-lucide="history" style="width: 19px; height: 19px;"></i>
+                  <i data-lucide="history" style="width: 20px; height: 20px;"></i>
                 </button>
               </div>
             </div>
 
-            <!-- Правая колонка: ТОП ИГРА + круглая кнопка Чат -->
+            <!-- Правая колонка -->
             <div class="pvp-stat-column">
               <div class="pvp-stat-box">
                 <div class="stat-top-row">
@@ -1166,28 +1161,28 @@
                   <i data-lucide="crown" style="width: 14px; height: 14px; color: #fbbf24;"></i>
                 </div>
                 <div class="stat-player-info">
-                  <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=100&q=80" alt="Top Player" class="stat-player-avatar">
+                  <img id="topGameAvatar" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=100&q=80" alt="Top Player" class="stat-player-avatar">
                   <div class="stat-player-text">
-                    <span class="stat-player-user">@ton_master</span>
+                    <span class="stat-player-user" id="topGameUser">@ton_master</span>
                     <span class="stat-player-val" style="color: #fbbf24;">
-                      <span>180.00</span>
+                      <span id="topGameAmount">180.00</span>
                       <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
                     </span>
                   </div>
                 </div>
               </div>
 
-              <!-- КРУГЛАЯ КНОПКА: ЧАТ ИГРОКОВ -->
-              <div class="round-glass-btn-bar">
+              <!-- КНОПКА ЧАТА (ПРЯМ В ПРАВУЮ СТОРОНУ) -->
+              <div class="round-glass-btn-bar to-right">
                 <button class="round-glass-btn" onclick="openChatModal()" title="Чат">
-                  <i data-lucide="message-circle" style="width: 19px; height: 19px;"></i>
+                  <i data-lucide="message-circle" style="width: 20px; height: 20px;"></i>
                 </button>
               </div>
             </div>
 
           </div>
 
-          <!-- Колесо рулетки по центру с кинематографичным приближением -->
+          <!-- Колесо рулетки по центру с приближением -->
           <div class="wheel-arena-wrapper" id="wheelArenaWrapper">
             <svg class="wheel-pointer" viewBox="0 0 24 24">
               <polygon points="12,24 2,2 22,2"/>
@@ -1203,7 +1198,7 @@
             </div>
           </div>
 
-          <!-- Переключатель валюты со значком из фото и Gift -->
+          <!-- Переключатель валюты -->
           <div class="currency-selector-card">
             <button class="curr-btn active" id="btnCurGem" onclick="setCurrency('Gem')">
               <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>
@@ -1215,7 +1210,7 @@
             </button>
           </div>
 
-          <!-- Кнопки быстрых ставок с иконкой валюты -->
+          <!-- Кнопки ставок -->
           <div class="bet-grid-row">
             <button class="btn-bet-preset" onclick="placeBet(1)">
               <span>1</span>
@@ -1234,9 +1229,9 @@
             </button>
           </div>
 
-          <!-- Настроить, Автоплей и тестовая кнопка для соперника -->
+          <!-- Действия -->
           <div class="bet-actions-row">
-            <button class="btn-pvp-action" onclick="alert('Настройки ставок:\nМин. ставка: 1\nМакс. ставка: 500')">
+            <button class="btn-pvp-action" onclick="alert('Настройки ставок:\nМин. ставка: 1\nМакс. ставка: 1000')">
               <i data-lucide="sliders-horizontal" style="width: 16px; height: 16px;"></i>
               <span>Настроить</span>
             </button>
@@ -1251,7 +1246,7 @@
             <span>Добавить ставку соперника (Бот)</span>
           </button>
 
-          <!-- 0 Игроков и список ставок -->
+          <!-- Список ставок -->
           <div class="players-list-panel">
             <div class="players-count-header">
               <div class="players-count-title">
@@ -1265,7 +1260,7 @@
             </div>
 
             <div class="bets-list" id="betsListContainer">
-              <div class="empty-bets-placeholder" id="emptyBetsText">
+              <div class="empty-placeholder" id="emptyBetsText">
                 Ставок пока нет. Будьте первым!
               </div>
             </div>
@@ -1276,24 +1271,24 @@
 
       <!-- ДРУГИЕ СТРАНИЦЫ -->
       <section class="page" id="page-games">
-        <div class="glass-card empty-card">
+        <div class="glass-card" style="padding: 45px 20px; text-align: center; margin-top: 40px;">
           <div class="referral-icon-box" style="margin: 0 auto 14px; width: 56px; height: 56px;"><i data-lucide="gamepad-2" style="width: 28px; height: 28px;"></i></div>
           <h2 style="font-size: 18px; font-weight: 800;">Игры</h2>
-          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">Скоро появятся новые игры!</p>
+          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">Скоро появятся новые мини-игры!</p>
         </div>
       </section>
 
       <section class="page" id="page-market">
-        <div class="glass-card empty-card">
+        <div class="glass-card" style="padding: 45px 20px; text-align: center; margin-top: 40px;">
           <div class="referral-icon-box" style="margin: 0 auto 14px; width: 56px; height: 56px;"><i data-lucide="shopping-bag" style="width: 28px; height: 28px;"></i></div>
           <h2 style="font-size: 18px; font-weight: 800;">Маркет</h2>
-          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">Магазин пополнится уникальными товарами.</p>
+          <p style="font-size: 13px; color: var(--tg-text-secondary); margin-top: 4px;">Магазин пополнится эксклюзивными подарками.</p>
         </div>
       </section>
 
-      <!-- СТРАНИЦА: ПРОФИЛЬ (СТРОГИЙ ПОРЯДОК: Баланс -> Игр сыграно/выиграно -> Промокод -> Рефералы) -->
+      <!-- СТРАНИЦА: ПРОФИЛЬ -->
       <section class="page" id="page-profile">
-        <!-- 1. Герой профиля -->
+        <!-- 1. Аватарка + юзернейм -->
         <div class="profile-hero">
           <div class="profile-avatar-wrapper">
             <div id="myProfileAvatarBox" class="profile-avatar-img"></div>
@@ -1318,7 +1313,7 @@
           </div>
         </div>
 
-        <!-- 3. Игр сыграно и выиграно (ВЫШЕ ПРОМОКОДА) -->
+        <!-- 3. Статистика (ВЫШЕ ПРОМОКОДА) -->
         <div class="stats-row">
           <div class="glass-card stat-card-glass">
             <span style="font-size: 11px; color: var(--tg-text-secondary); font-weight: 700;">Игр сыграно</span>
@@ -1333,7 +1328,7 @@
           </div>
         </div>
 
-        <!-- 4. Промокод (НИЖЕ БАЛАНСА И СТАТИСТИКИ) -->
+        <!-- 4. Промокод -->
         <div class="glass-card promo-card">
           <div class="promo-input-wrapper">
             <i data-lucide="ticket" style="width: 18px; height: 18px;"></i>
@@ -1342,15 +1337,15 @@
           <button class="btn-promo" onclick="activatePromo()">Активировать</button>
         </div>
 
-        <!-- 5. Реферальная система (НИЖЕ ПРОМОКОДА) -->
-        <div class="glass-card referral-card" onclick="openReferrals()">
+        <!-- 5. Настоящая реферальная система (НИЖЕ ПРОМОКОДА) -->
+        <div class="glass-card referral-card" onclick="openReferralsModal()">
           <div class="referral-left">
             <div class="referral-icon-box">
               <i data-lucide="users" style="width: 20px; height: 20px;"></i>
             </div>
             <div>
               <div style="font-size: 14px; font-weight: 800;">Реферальная система</div>
-              <div style="font-size: 12px; color: var(--tg-text-secondary); font-weight: 600;">Приглашайте друзей и получайте %</div>
+              <div style="font-size: 12px; color: var(--tg-text-secondary); font-weight: 600;" id="refStatsSummary">0 друзей • 0 кристаллов</div>
             </div>
           </div>
           <i data-lucide="chevron-right" style="width: 18px; height: 18px; color: var(--tg-text-muted);"></i>
@@ -1359,7 +1354,7 @@
 
     </main>
 
-    <!-- МОДАЛ: ИСТОРИЯ ИГР -->
+    <!-- МОДАЛ: ИСТОРИЯ ИГР (ИЗНАЧАЛЬНО ПУСТАЯ) -->
     <div class="modal-overlay" id="historyModal" onclick="closeModal('historyModal')">
       <div class="modal-glass-card" onclick="event.stopPropagation()">
         <div class="modal-drag-pill"></div>
@@ -1373,12 +1368,12 @@
           </button>
         </div>
         <div class="modal-scroll-list" id="historyListContainer">
-          <!-- Динамическая история игр -->
+          <!-- Заполняется из БД или показывает заглушку -->
         </div>
       </div>
     </div>
 
-    <!-- МОДАЛ: ЧАТ ИГРОКОВ -->
+    <!-- МОДАЛ: ЧАТ ИГРОКОВ (ИЗНАЧАЛЬНО ПУСТОЙ) -->
     <div class="modal-overlay" id="chatModal" onclick="closeModal('chatModal')">
       <div class="modal-glass-card" onclick="event.stopPropagation()">
         <div class="modal-drag-pill"></div>
@@ -1392,19 +1387,45 @@
           </button>
         </div>
         <div class="modal-scroll-list" id="chatMessagesContainer">
-          <div class="bet-item-row" style="padding: 8px 12px;">
-            <span style="font-size: 12px; font-weight: 700; color: var(--tg-blue-accent);">@ton_master:</span>
-            <span style="font-size: 12px; color: var(--tg-text); margin-left: 6px;">Удачи всем в новом раунде! 🚀</span>
-          </div>
-          <div class="bet-item-row" style="padding: 8px 12px;">
-            <span style="font-size: 12px; font-weight: 700; color: #4ade80;">@crypto_king:</span>
-            <span style="font-size: 12px; color: var(--tg-text); margin-left: 6px;">Залетаю на 10 кристаллов 🔥</span>
-          </div>
+          <!-- Сообщения сохраняются в БД -->
         </div>
         <div style="display: flex; gap: 8px; margin-top: 4px;">
-          <input type="text" id="chatInput" class="promo-input" placeholder="Напишите сообщение..." style="background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 14px; border: 1px solid var(--tg-glass-border);">
+          <input type="text" id="chatInput" class="promo-input" placeholder="Напишите сообщение..." style="background: rgba(255,255,255,0.06); padding: 10px 14px; border-radius: 14px; border: 1px solid var(--tg-glass-border);" onkeydown="if(event.key==='Enter') sendChatMessage()">
           <button class="btn-promo" onclick="sendChatMessage()">
             <i data-lucide="send" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДАЛ: НАСТОЯЩАЯ РЕФЕРАЛЬНАЯ СИСТЕМА -->
+    <div class="modal-overlay" id="refModal" onclick="closeModal('refModal')">
+      <div class="modal-glass-card" onclick="event.stopPropagation()">
+        <div class="modal-drag-pill"></div>
+        <div class="modal-header-row">
+          <div class="modal-title">
+            <i data-lucide="users" style="color: var(--tg-blue-accent);"></i>
+            <span>Реферальная программа</span>
+          </div>
+          <button class="btn-modal-close-icon" onclick="closeModal('refModal')">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+
+        <div class="glass-card" style="padding: 14px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px;">
+          <span style="font-size: 11px; color: var(--tg-text-secondary); font-weight: 700; text-transform: uppercase;">Ваша персональная ссылка:</span>
+          <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--tg-glass-border); padding: 10px 12px; border-radius: 12px; font-size: 12px; color: #4ade80; word-break: break-all; font-family: monospace;" id="refLinkText">
+            https://t.me/your_bot?start=ref_000000
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+          <button class="btn-action btn-deposit" style="flex: 1; padding: 12px;" onclick="shareReferralLink()">
+            <i data-lucide="share-2" style="width: 15px; height: 15px; vertical-align: -2px; display: inline-block;"></i>
+            <span>Пригласить друга</span>
+          </button>
+          <button class="btn-action btn-withdraw" style="padding: 12px 16px;" onclick="copyReferralLink()">
+            Копировать
           </button>
         </div>
       </div>
@@ -1423,11 +1444,11 @@
             <i data-lucide="x" style="width: 16px; height: 16px;"></i>
           </button>
         </div>
-        <div class="glass-card" style="padding: 26px 14px; text-align: center; margin-bottom: 16px; border: 1px dashed var(--tg-glass-border);">
+        <div class="empty-placeholder" style="margin-bottom: 16px;">
           <div class="referral-icon-box" style="margin: 0 auto 12px; background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.35); color: #c084fc;">
             <i data-lucide="gift" style="width: 24px; height: 24px;"></i>
           </div>
-          <div style="font-size: 14px; font-weight: 800;">У вас нет подарков</div>
+          <div style="font-size: 14px; font-weight: 800; color: #fff;">У вас нет подарков</div>
           <div style="font-size: 12px; color: var(--tg-text-secondary); max-width: 260px; margin: 4px auto 0; line-height: 1.4;">
             В вашем Telegram инвентаре пока нет доступных Gifts для ставок.
           </div>
@@ -1461,11 +1482,41 @@
   </div>
 
   <script>
-    lucide.createIcons();
+    // ================= 1. БАЗА ДАННЫХ И ХРАНИЛИЩЕ (LOCALSTORAGE + TELEGRAM CLOUD) =================
+    const DB = {
+      get(key, defaultVal) {
+        try {
+          const val = localStorage.getItem('tma_pvp_' + key);
+          return val !== null ? JSON.parse(val) : defaultVal;
+        } catch (e) {
+          return defaultVal;
+        }
+      },
+      set(key, val) {
+        try {
+          localStorage.setItem('tma_pvp_' + key, JSON.stringify(val));
+          if (window.Telegram?.WebApp?.CloudStorage) {
+            window.Telegram.WebApp.CloudStorage.setItem('tma_pvp_' + key, JSON.stringify(val), () => {});
+          }
+        } catch (e) {}
+      }
+    };
 
-    // ================= TELEGRAM WEB APP =================
+    // Загрузка сохранённого состояния
+    let currentBalance = DB.get('balance', 100);
+    let totalGames = DB.get('totalGames', 0);
+    let totalWon = DB.get('totalWon', 0);
+    let gameHistory = DB.get('history', []); // Изначально пустая
+    let chatMessages = DB.get('chat', []);   // Изначально пустой
+    let lastGameData = DB.get('lastGame', null);
+    let topGameData = DB.get('topGame', { user: '@ton_master', amount: 180.00, avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=100&q=80' });
+    let refStats = DB.get('refStats', { count: 0, earned: 0 });
+    let usedPromos = DB.get('usedPromos', []);
+
+    // ================= 2. TELEGRAM WEB APP И ДАННЫЕ ЮЗЕРА =================
     const tg = window.Telegram?.WebApp;
     let myUser = {
+      id: '542019283',
       username: '@alex_player',
       avatarUrl: '',
       initial: 'A'
@@ -1477,12 +1528,22 @@
       try {
         tg.setHeaderColor('#080f17');
         tg.setBackgroundColor('#080f17');
+        if (tg.enableClosingConfirmation) tg.enableClosingConfirmation();
 
         if (tg.initDataUnsafe?.user) {
           const u = tg.initDataUnsafe.user;
+          myUser.id = String(u.id);
           myUser.username = u.username ? '@' + u.username : (u.first_name || 'Игрок');
           myUser.avatarUrl = u.photo_url || '';
           myUser.initial = (u.first_name ? u.first_name[0] : 'U').toUpperCase();
+        }
+
+        // Проверка перехода по реферальной ссылке
+        const startParam = tg.initDataUnsafe?.start_param;
+        if (startParam && startParam.startsWith('ref_') && !DB.get('ref_activated', false)) {
+          DB.set('ref_activated', true);
+          currentBalance += 25; // Бонус за вход по реферальной ссылке
+          DB.set('balance', currentBalance);
         }
       } catch (e) {}
     }
@@ -1509,32 +1570,34 @@
       }
     }
 
-    function switchTab(tabId) {
-      haptic('selection');
-      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
-
-      const target = document.getElementById(`page-${tabId}`);
-      if (target) target.classList.add('active');
-
-      const navButtons = Array.from(document.querySelectorAll('.nav-item'));
-      const activeBtn = navButtons.find(btn => btn.getAttribute('onclick')?.includes(tabId));
-      if (activeBtn) activeBtn.classList.add('active');
-    }
-
-    // ================= БАЛАНС И СТАТИСТИКА =================
-    let currentBalance = 100;
-    let totalGames = 0;
-    let totalWon = 0;
-
+    // ================= 3. ИНИЦИАЛИЗАЦИЯ ИНТЕРФЕЙСА И БАЛАНСА =================
     function updateBalanceDisplay() {
       const formatted = currentBalance.toLocaleString('ru-RU');
       document.getElementById('headerBalance').innerText = formatted;
       document.getElementById('profileBalance').innerText = formatted;
       document.getElementById('totalGamesStat').innerText = totalGames;
       document.getElementById('totalWonStat').innerText = totalWon.toLocaleString('ru-RU');
+      document.getElementById('refStatsSummary').innerText = `${refStats.count} друзей • ${refStats.earned} кристаллов`;
+      
+      DB.set('balance', currentBalance);
+      DB.set('totalGames', totalGames);
+      DB.set('totalWon', totalWon);
+      DB.set('refStats', refStats);
     }
     updateBalanceDisplay();
+
+    // Отрисовка сохраненной "Пред. игра" и "Топ игра"
+    if (lastGameData) {
+      document.getElementById('lastGameUser').innerText = lastGameData.user;
+      document.getElementById('lastGameAmount').innerText = lastGameData.amount;
+      document.getElementById('lastGameWinrate').innerText = `${lastGameData.winRate}%`;
+      document.getElementById('lastGameAvatar').src = lastGameData.avatar;
+    }
+    if (topGameData) {
+      document.getElementById('topGameUser').innerText = topGameData.user;
+      document.getElementById('topGameAmount').innerText = Number(topGameData.amount).toFixed(2);
+      document.getElementById('topGameAvatar').src = topGameData.avatar;
+    }
 
     function actionDeposit() {
       haptic('medium');
@@ -1548,7 +1611,7 @@
         currentBalance -= 50;
         updateBalanceDisplay();
       } else {
-        alert('Недостаточно средств для вывода.');
+        alert('Недостаточно кристаллов для вывода.');
       }
     }
 
@@ -1556,20 +1619,53 @@
       const input = document.getElementById('promoInput');
       const val = input.value.trim().toUpperCase();
       if (!val) { input.focus(); return; }
+
+      if (usedPromos.includes(val)) {
+        alert('Этот промокод уже был активирован ранее!');
+        return;
+      }
+
       haptic('success');
       currentBalance += 50;
+      usedPromos.push(val);
+      DB.set('usedPromos', usedPromos);
       updateBalanceDisplay();
-      alert(`Промокод "${val}" активирован! Начислено +50 кристаллов!`);
+      alert(`Промокод "${val}" успешно активирован! +50 кристаллов!`);
       input.value = '';
     }
 
-    function openReferrals() {
+    // ================= 4. НАСТОЯЩАЯ РЕФЕРАЛЬНАЯ СИСТЕМА =================
+    const botName = 'PvPRoulette_bot'; // Юзернейм вашего бота
+    const myRealRefLink = `https://t.me/${botName}?start=ref_${myUser.id}`;
+
+    function openReferralsModal() {
       haptic('selection');
-      navigator.clipboard?.writeText('https://t.me/your_bot?start=ref_001');
+      document.getElementById('refLinkText').innerText = myRealRefLink;
+      openModal('refModal');
+    }
+
+    function copyReferralLink() {
+      haptic('medium');
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(myRealRefLink);
+      }
       alert('Реферальная ссылка скопирована в буфер обмена!');
     }
 
-    // ================= МОДАЛКИ (ИСТОРИЯ, ЧАТ, ПОДАРКИ) =================
+    function shareReferralLink() {
+      haptic('success');
+      const shareText = encodeURIComponent('🎮 Заходи в PvP рулетку со мной и получай стартовые кристаллы!');
+      const shareUrl = encodeURIComponent(myRealRefLink);
+      const telegramShareUrl = `https://t.me/share/url?url=${shareUrl}&text=${shareText}`;
+
+      if (tg?.openTelegramLink) {
+        tg.openTelegramLink(telegramShareUrl);
+      } else {
+        window.open(telegramShareUrl, '_blank');
+      }
+    }
+
+    // ================= 5. МОДАЛКИ: ИСТОРИЯ, ЧАТ, ПОДАРКИ =================
     function openModal(id) {
       haptic('medium');
       document.getElementById(id).classList.add('active');
@@ -1585,21 +1681,23 @@
       renderGameHistory();
       openModal('historyModal');
     }
-    function openChatModal() { openModal('chatModal'); }
+    function openChatModal() { 
+      renderChatMessages();
+      openModal('chatModal'); 
+    }
 
     function setCurrency(cur) {
       haptic('selection');
       document.getElementById('btnCurGem').classList.add('active');
     }
 
-    // История завершенных раундов
-    let gameHistory = [
-      { user: '@crypto_king', amount: 42.50, winRate: 58, avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80' },
-      { user: '@whale_tg', amount: 90.00, winRate: 74, avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=100&q=80' }
-    ];
-
+    // Отрисовка истории игр (пустая если нет игр)
     function renderGameHistory() {
       const list = document.getElementById('historyListContainer');
+      if (gameHistory.length === 0) {
+        list.innerHTML = `<div class="empty-placeholder">История игр пуста.<br>Сыграйте первый раунд!</div>`;
+        return;
+      }
       list.innerHTML = gameHistory.map(h => `
         <div class="bet-item-row">
           <div class="bet-item-left">
@@ -1617,31 +1715,44 @@
       `).join('');
     }
 
+    // Отрисовка чата (пустой если нет сообщений)
+    function renderChatMessages() {
+      const cont = document.getElementById('chatMessagesContainer');
+      if (chatMessages.length === 0) {
+        cont.innerHTML = `<div class="empty-placeholder" id="emptyChatText">В чате пока нет сообщений.<br>Напишите первым!</div>`;
+        return;
+      }
+      cont.innerHTML = chatMessages.map(m => `
+        <div class="bet-item-row" style="padding: 8px 12px;">
+          <span style="font-size: 12px; font-weight: 700; color: ${m.isMe ? 'var(--tg-blue-accent)' : '#4ade80'};">${m.user}:</span>
+          <span style="font-size: 12px; color: var(--tg-text); margin-left: 6px;">${m.text}</span>
+        </div>
+      `).join('');
+      cont.scrollTop = cont.scrollHeight;
+    }
+
     function sendChatMessage() {
       const input = document.getElementById('chatInput');
       const val = input.value.trim();
       if (!val) return;
       haptic('selection');
-      const cont = document.getElementById('chatMessagesContainer');
-      const row = document.createElement('div');
-      row.className = 'bet-item-row';
-      row.style.padding = '8px 12px';
-      row.innerHTML = `
-        <span style="font-size: 12px; font-weight: 700; color: var(--tg-blue-accent);">${myUser.username}:</span>
-        <span style="font-size: 12px; color: var(--tg-text); margin-left: 6px;">${val}</span>
-      `;
-      cont.appendChild(row);
+
+      chatMessages.push({
+        user: myUser.username,
+        text: val,
+        isMe: true
+      });
+      DB.set('chat', chatMessages);
       input.value = '';
-      cont.scrollTop = cont.scrollHeight;
+      renderChatMessages();
     }
 
-    // ================= ПВП И ИДЕАЛЬНАЯ РУЛЕТКА =================
+    // ================= 6. ПВП И РУЛЕТКА =================
     let gameState = 'WAITING';
     let countdownSec = 15;
     let countdownInterval = null;
     let isAutoPlay = false;
 
-    // Безошибочное и ультра-плавное вращение колеса
     let currentRotorDeg = 0;
     let idleAnimFrame = null;
 
@@ -1690,7 +1801,7 @@
 
       recalculateAndRender();
 
-      // Автоматическое подключение бота через 1.5 секунды для проверки таймера 15 сек
+      // Авто-добавление соперника через 1.5 сек для проверки отсчета 15 секунд
       if (bets.length === 1 && !countdownInterval) {
         setTimeout(() => {
           if (bets.length === 1) addBotOpponent();
@@ -1785,7 +1896,7 @@
       bankSummary.innerHTML = `<span>Банк: ${totalBank}</span> <svg class="gem-icon" viewBox="0 0 512 512"><use href="#gemSymbol"/></svg>`;
 
       if (bets.length === 0) {
-        list.innerHTML = `<div class="empty-bets-placeholder">Ставок пока нет. Будьте первым!</div>`;
+        list.innerHTML = `<div class="empty-placeholder">Ставок пока нет. Будьте первым!</div>`;
         return;
       }
 
@@ -1817,7 +1928,6 @@
       }
     }
 
-    // ТАЙМЕР 15 СЕКУНД ДО ВРАЩЕНИЯ
     function start15SecCountdown() {
       gameState = 'COUNTDOWN';
       countdownSec = 15;
@@ -1838,7 +1948,6 @@
       }, 1000);
     }
 
-    // ВРАЩЕНИЕ 11 СЕКУНД С ЗУМОМ ЭКРАНА
     function start11SecSpin() {
       gameState = 'SPINNING';
       if (idleAnimFrame) cancelAnimationFrame(idleAnimFrame);
@@ -1858,7 +1967,6 @@
       const randTicket = Math.random() * 360;
       let winner = bets.find(b => randTicket >= b.startDeg && randTicket < b.endDeg) || bets[0];
 
-      // Точный расчет угла остановки стрелки (стрелка на 12 часов = 0deg)
       const winningMiddle = (winner.startDeg + winner.endDeg) / 2;
       const targetSectorDeg = (360 - winningMiddle);
 
@@ -1868,17 +1976,14 @@
 
       const finalTargetDegree = currentRotorDeg + neededOffset + (360 * 10);
 
-      // 11 секунд плавного вращения с физическим торможением в конце
       rotor.style.transition = 'transform 11000ms cubic-bezier(0.1, 0.88, 0.18, 1)';
       rotor.style.transform = `rotate(${finalTargetDegree}deg)`;
       currentRotorDeg = finalTargetDegree;
 
-      // На 8.2 секунде приближаем экран (ZOOM IN)
       setTimeout(() => {
         arenaWrapper.classList.add('zoomed');
       }, 8200);
 
-      // Окончание через 11 секунд
       setTimeout(() => {
         onSpinFinished(winner, totalBank);
       }, 11000);
@@ -1895,28 +2000,49 @@
         <span style="font-size: 10px; color: var(--tg-text-secondary); max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${winner.user}</span>
       `;
 
-      // Обновляем "Пред. игра"
-      document.getElementById('lastGameUser').innerText = winner.user;
-      document.getElementById('lastGameAmount').innerText = totalBank;
-      document.getElementById('lastGameWinrate').innerText = `${winner.winRate}%`;
-      document.getElementById('lastGameAvatar').src = winner.avatar;
+      // Сохраняем "Пред. игра" в БД
+      lastGameData = {
+        user: winner.user,
+        amount: totalBank.toFixed(2),
+        winRate: winner.winRate,
+        avatar: winner.avatar
+      };
+      DB.set('lastGame', lastGameData);
 
-      // Добавляем в историю
+      document.getElementById('lastGameUser').innerText = lastGameData.user;
+      document.getElementById('lastGameAmount').innerText = lastGameData.amount;
+      document.getElementById('lastGameWinrate').innerText = `${lastGameData.winRate}%`;
+      document.getElementById('lastGameAvatar').src = lastGameData.avatar;
+
+      // Обновляем "Топ игра", если побит рекорд
+      if (!topGameData || totalBank > topGameData.amount) {
+        topGameData = {
+          user: winner.user,
+          amount: totalBank,
+          avatar: winner.avatar
+        };
+        DB.set('topGame', topGameData);
+        document.getElementById('topGameUser').innerText = topGameData.user;
+        document.getElementById('topGameAmount').innerText = Number(topGameData.amount).toFixed(2);
+        document.getElementById('topGameAvatar').src = topGameData.avatar;
+      }
+
+      // Добавляем в историю игр и сохраняем
       gameHistory.unshift({
         user: winner.user,
-        amount: totalBank,
+        amount: totalBank.toFixed(2),
         winRate: winner.winRate,
         avatar: winner.avatar
       });
+      DB.set('history', gameHistory);
 
       totalGames++;
       if (winner.isMe) {
         currentBalance += totalBank;
         totalWon += totalBank;
-        updateBalanceDisplay();
       }
+      updateBalanceDisplay();
 
-      // Сброс через 3.5 секунды
       setTimeout(() => {
         arenaWrapper.classList.remove('zoomed');
         resetPvPRound();
@@ -1966,6 +2092,21 @@
       }
       lucide.createIcons();
     }
+
+    function switchTab(tabId) {
+      haptic('selection');
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+
+      const target = document.getElementById(`page-${tabId}`);
+      if (target) target.classList.add('active');
+
+      const navButtons = Array.from(document.querySelectorAll('.nav-item'));
+      const activeBtn = navButtons.find(btn => btn.getAttribute('onclick')?.includes(tabId));
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    lucide.createIcons();
   </script>
 </body>
 </html>
